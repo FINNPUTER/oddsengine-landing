@@ -173,7 +173,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <a href="#signal-engine" class="link">How It Works</a>
       <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
       <a href="#access" class="link">Access</a>
-      <a href="/cdn-cgi/l/email-protection#0f6e6c6c6a7c7c4f606b6b7c6a616866616a216366796a" class="nav-cta">Request Access</a>
+      <a href="mailto:access@oddsengine.live" class="nav-cta">Request Access</a>
     </div>
   </div>
 </nav>
@@ -188,7 +188,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <h1>Automated Trading for Prediction Markets</h1>
       <p class="hero-sub">OddsEngine monitors crypto-linked prediction markets in real time, detects trading signals, and executes systematically. Built for short-horizon markets on <strong>BTC, ETH, SOL and XRP.</strong></p>
       <div class="hero-actions">
-        <a href="/cdn-cgi/l/email-protection#ee8f8d8d8b9d9dae818a8a9d8b808987808bc08287988b" class="btn-blue">Request Access</a>
+        <a href="#access" class="btn-blue">Request Access</a>
         <a href="https://public.oddsengine.live" class="btn-ghost" target="_blank">View Dashboard</a>
       </div>
     </div>
@@ -461,7 +461,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
         <li>Execution infrastructure</li>
         <li>Lifetime platform access</li>
       </ul>
-      <a href="/cdn-cgi/l/email-protection#64050707011717240b000017010a030d0a014a080d1201" class="price-cta">Request Access</a>
+      <a href="mailto:access@oddsengine.live" class="price-cta">Request Access</a>
       <p class="price-note">Access is limited during the initial deployment phase.</p>
     </div>
   </div>
@@ -495,14 +495,14 @@ footer .container { display: flex; justify-content: space-between; align-items: 
     <h2>Systematic trading for<br><span style="color:var(--blue)">prediction markets</span>.</h2>
     <p>Automated monitoring. Signal detection. Systematic execution.</p>
     <div class="urgency">Access is limited during the initial deployment phase</div>
-    <a href="/cdn-cgi/l/email-protection#33525050564040735c575740565d545a5d561d5f5a4556" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
+    <a href="mailto:access@oddsengine.live" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
   </div>
 </section>
 
 <footer><div class="container"><span class="footer-text">&copy; 2026 OddsEngine</span><div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div></div></footer>
 <div class="disclaimer"><div class="container"><p>OddsEngine is a trading infrastructure platform. Trading prediction markets involves risk of loss. Signal and execution performance varies based on market conditions, liquidity, and configuration parameters. OddsEngine does not provide financial advice and does not guarantee returns. Users maintain full custody of their funds. Past performance is not indicative of future results.</p></div></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
@@ -511,25 +511,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior:'smooth' }); });
 });
 
-// Live Trade Ticker
-const tbody = document.getElementById('trades-body');
-const status = document.getElementById('ticker-status');
-async function fetchTrades() {
-  try {
-    const res = await fetch('/trades.json?t=' + Date.now());
-    if (!res.ok) throw new Error(res.status);
-    const trades = await res.json();
-    if (!Array.isArray(trades) || trades.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="font-family:var(--font-mono);font-size:0.82rem;padding:32px 20px;color:var(--text-tertiary);text-align:center;">No trades executed yet.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = trades.map(t => {
-      const pnlColor = t.pnl && t.pnl.startsWith('+') ? 'var(--green)' : t.pnl && t.pnl.startsWith('-') ? 'var(--red)' : 'var(--text-secondary)';
-      return `<tr>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-tertiary);">${t.time}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);font-weight:600;">${t.asset}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.tf}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.entry}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.exit}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:${pnlColor};font-weight:600;text-align:right;">${t.pnl}</td>
-        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bot
+// Live Trade Ticker — disabled on static GitHub Pages, trades shown on public.oddsengine.live
+// fetchTrades skipped — no /trades.json on static hosting
+</script>
+</body>
+</html>
