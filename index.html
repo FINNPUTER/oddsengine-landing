@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OddsEngine — Automated Trading for Prediction Markets</title>
+<meta name="description" content="Real-time monitoring, signal detection and systematic execution for crypto-linked prediction markets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #000000;
+  --bg-elevated: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #1a1a1a;
+  --border-hover: #2a2a2a;
+  --text: #f5f5f7;
+  --text-secondary: #86868b;
+  --text-tertiary: #48484a;
+  --blue: #2997ff;
+  --blue-bright: #64b5ff;
+  --blue-glow: rgba(41,151,255,0.15);
+  --blue-subtle: rgba(41,151,255,0.08);
+  --green: #30d158;
+  --red: #ff453a;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'DM Mono', 'SF Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+.glow-top { position: fixed; top: -400px; left: 50%; transform: translateX(-50%); width: 1200px; height: 800px; background: radial-gradient(ellipse, rgba(41,151,255,0.07) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+
+section { position: relative; z-index: 1; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 16px 0; backdrop-filter: saturate(180%) blur(20px); background: rgba(0,0,0,0.72); border-bottom: 1px solid rgba(255,255,255,0.08); }
+nav .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; color: var(--text); text-decoration: none; letter-spacing: -0.3px; }
+.logo span { color: var(--text-tertiary); }
+.nav-right { display: flex; gap: 28px; align-items: center; }
+.nav-right a.link { font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+.nav-right a.link:hover { color: var(--text); }
+.nav-cta { font-family: var(--font-body); font-size: 0.82rem; padding: 8px 20px; background: var(--blue); color: #fff; border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; }
+.nav-cta:hover { background: var(--blue-bright); }
+
+/* HERO */
+.hero { display: flex; align-items: center; justify-content: center; text-align: center; padding: 160px 0 0; position: relative; }
+.hero-inner { max-width: 820px; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; color: var(--blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(3.2rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -3px; margin-bottom: 28px; background: linear-gradient(180deg, #f5f5f7 30%, #86868b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; max-width: 520px; margin: 0 auto 48px; font-weight: 400; }
+.hero-sub strong { color: var(--text); font-weight: 600; }
+.hero-actions { display: flex; gap: 16px; justify-content: center; align-items: center; }
+.btn-blue { font-family: var(--font-body); font-size: 0.95rem; padding: 14px 32px; background: var(--blue); color: #fff; border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-blue:hover { background: var(--blue-bright); transform: scale(1.02); }
+.btn-ghost { font-family: var(--font-body); font-size: 0.95rem; padding: 14px 32px; background: transparent; color: var(--blue); border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+.btn-ghost:hover { text-decoration: underline; }
+
+/* HERO SCREENSHOT */
+.hero-screenshot { margin-top: 72px; padding: 0 24px 120px; }
+.screenshot-frame { background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 120px var(--blue-glow), 0 40px 80px rgba(0,0,0,0.6); }
+.screenshot-bar { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.screenshot-dot { width: 10px; height: 10px; border-radius: 50%; }
+.screenshot-dot.r { background: #ff5f57; }
+.screenshot-dot.y { background: #febc2e; }
+.screenshot-dot.g { background: #28c840; }
+.screenshot-bar-title { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-tertiary); margin-left: 12px; letter-spacing: 0.5px; }
+.screenshot-body { padding: 0; }
+.terminal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+.t-cell { background: var(--bg-card); padding: 20px 18px; }
+.t-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.t-val { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 3px; }
+.t-sub { font-size: 0.72rem; color: var(--text-tertiary); }
+.t-row { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-tertiary); display: flex; justify-content: space-between; padding: 4px 0; }
+.feed-row { padding: 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.03); font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary); display: flex; gap: 16px; align-items: baseline; }
+.feed-row:last-child { border-bottom: none; }
+.feed-time { color: var(--text-tertiary); font-size: 0.6rem; min-width: 38px; }
+.feed-tag { font-size: 0.58rem; padding: 2px 6px; border-radius: 3px; font-weight: 500; }
+.feed-tag.entry { background: rgba(41,151,255,0.12); color: var(--blue); }
+.feed-tag.exit { background: rgba(48,209,88,0.12); color: var(--green); }
+.feed-tag.skip { background: rgba(255,255,255,0.05); color: var(--text-tertiary); }
+
+/* FEATURE SECTIONS */
+.feature-section { padding: 160px 0; }
+.feature-section .container { max-width: 980px; }
+.feature-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; }
+.feature-headline { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
+.feature-body { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 560px; font-weight: 400; }
+
+/* TWO COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.two-col.reverse { direction: rtl; }
+.two-col.reverse > * { direction: ltr; }
+
+/* STEPS */
+.steps-section { padding: 140px 0; border-top: 1px solid var(--border); }
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 80px; }
+.step-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 2px; margin-bottom: 16px; }
+.step h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.3px; }
+.step p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; font-weight: 400; }
+
+/* PRICING */
+.pricing-section { padding: 160px 0; text-align: center; }
+.price-card { max-width: 440px; margin: 60px auto 0; background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 20px; padding: 52px 44px; text-align: center; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 80px var(--blue-glow), 0 24px 60px rgba(0,0,0,0.5); }
+.price-card::before { content: ''; position: absolute; top: -1px; left: 20%; right: 20%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); border-radius: 2px; }
+.price-label { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-tertiary); margin-bottom: 20px; }
+.price-number { font-size: 5rem; font-weight: 800; letter-spacing: -4px; line-height: 1; margin-bottom: 4px; }
+.price-number .cur { font-size: 2rem; color: var(--text-secondary); vertical-align: top; letter-spacing: 0; }
+.price-context { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 400; }
+.price-fact { font-family: var(--font-mono); font-size: 0.78rem; color: var(--blue); padding: 10px 20px; background: var(--blue-subtle); border-radius: 8px; display: inline-block; margin-bottom: 36px; }
+.price-list { list-style: none; text-align: left; margin-bottom: 36px; }
+.price-list li { padding: 10px 0; font-size: 0.92rem; color: var(--text-secondary); display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); font-weight: 400; }
+.price-list li:last-child { border-bottom: none; }
+.price-list li::before { content: ''; width: 4px; height: 4px; background: var(--blue); border-radius: 50%; flex-shrink: 0; }
+.price-cta { display: block; width: 100%; font-size: 0.95rem; padding: 16px; border-radius: 980px; border: none; background: var(--blue); color: #fff; cursor: pointer; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; font-family: var(--font-body); }
+.price-cta:hover { background: var(--blue-bright); transform: scale(1.01); }
+.price-note { margin-top: 16px; font-size: 0.75rem; color: var(--text-tertiary); }
+
+/* FAQ */
+.faq-section { padding: 140px 0; border-top: 1px solid var(--border); }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 60px; }
+.faq-item { padding: 28px; border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.3s; }
+.faq-item:hover { border-color: var(--border-hover); }
+.faq-q { font-size: 0.98rem; font-weight: 600; margin-bottom: 10px; }
+.faq-a { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; font-weight: 400; }
+
+/* FINAL CTA */
+.final-cta { padding: 200px 0 160px; text-align: center; position: relative; }
+.final-cta::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(41,151,255,0.06) 0%, transparent 60%); pointer-events: none; }
+.final-cta h2 { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; letter-spacing: -3px; line-height: 1.05; margin-bottom: 20px; }
+.final-cta p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 400; }
+.final-cta .urgency { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 44px; }
+
+footer { border-top: 1px solid var(--border); padding: 32px 0; }
+footer .container { display: flex; justify-content: space-between; align-items: center; }
+.footer-text { font-size: 0.75rem; color: var(--text-tertiary); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.75rem; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text-secondary); }
+.disclaimer { padding: 20px 0 40px; text-align: center; }
+.disclaimer p { font-size: 0.65rem; color: var(--text-tertiary); max-width: 640px; margin: 0 auto; line-height: 1.7; }
+
+@media (max-width: 768px) {
+  .hero h1 { letter-spacing: -2px; }
+  .two-col, .two-col.reverse { grid-template-columns: 1fr; gap: 48px; direction: ltr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  footer .container { flex-direction: column; gap: 12px; }
+  .nav-right a.link { display: none; }
+  .price-card { margin: 60px 0 0; }
+  .terminal-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 480px) {
+  .terminal-grid { grid-template-columns: 1fr !important; }
+}
+
+.reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<div class="glow-top"></div>
+
+<nav>
+  <div class="container">
+    <a href="#" class="logo">OddsEngine<span>.live</span></a>
+    <div class="nav-right">
+      <a href="#signal-engine" class="link">How It Works</a>
+      <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
+      <a href="#access" class="link">Access</a>
+      <a href="/cdn-cgi/l/email-protection#0f6e6c6c6a7c7c4f606b6b7c6a616866616a216366796a" class="nav-cta">Request Access</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- 1. HERO -->
+<!-- ============================================================ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">OddsEngine</div>
+      <h1>Automated Trading for Prediction Markets</h1>
+      <p class="hero-sub">OddsEngine monitors crypto-linked prediction markets in real time, detects trading signals, and executes systematically. Built for short-horizon markets on <strong>BTC, ETH, SOL and XRP.</strong></p>
+      <div class="hero-actions">
+        <a href="/cdn-cgi/l/email-protection#ee8f8d8d8b9d9dae818a8a9d8b808987808bc08287988b" class="btn-blue">Request Access</a>
+        <a href="https://public.oddsengine.live" class="btn-ghost" target="_blank">View Dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO DASHBOARD SCREENSHOT -->
+<div class="hero-screenshot reveal">
+  <div class="container" style="max-width:1040px;">
+    <div class="screenshot-frame">
+      <div class="screenshot-bar">
+        <span class="screenshot-dot r"></span>
+        <span class="screenshot-dot y"></span>
+        <span class="screenshot-dot g"></span>
+        <span class="screenshot-bar-title">OddsEngine — Trading Dashboard</span>
+      </div>
+      <div class="screenshot-body">
+        <!-- TOP METRICS ROW -->
+        <div class="terminal-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="t-cell">
+            <div class="t-label">Markets Active</div>
+            <div class="t-val" style="color:var(--blue);">143</div>
+            <div class="t-sub">BTC · ETH · SOL · XRP</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">Open Positions</div>
+            <div class="t-val" style="color:var(--text);">4</div>
+            <div class="t-sub">Across 2 timeframes</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">Signals Today</div>
+            <div class="t-val" style="color:var(--text);">67</div>
+            <div class="t-sub">5m · 15m · 1h windows</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">System Status</div>
+            <div class="t-val" style="color:var(--green);">Online</div>
+            <div class="t-sub">All feeds connected</div>
+          </div>
+        </div>
+        <!-- SIGNAL FEED -->
+        <div style="border-top:1px solid var(--border);">
+          <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);">Live Signal Feed</div>
+          <div class="feed-row"><span class="feed-time">14:44</span><span class="feed-tag exit">EXIT</span><span>BTC 15m — TP triggered — hold 48s — filled 0.54</span></div>
+          <div class="feed-row"><span class="feed-time">14:42</span><span class="feed-tag entry">ENTRY</span><span>ETH 15m — signal score 16/21 — limit posted 0.47</span></div>
+          <div class="feed-row"><span class="feed-time">14:38</span><span class="feed-tag skip">SKIP</span><span>SOL 5m — score 5/21 — below threshold — no action</span></div>
+          <div class="feed-row"><span class="feed-time">14:31</span><span class="feed-tag exit">EXIT</span><span>BTC 15m — TP triggered — hold 2m 14s — filled 0.61</span></div>
+          <div class="feed-row"><span class="feed-time">14:15</span><span class="feed-tag entry">ENTRY</span><span>XRP 15m — signal score 14/21 — limit posted 0.52</span></div>
+          <div class="feed-row"><span class="feed-time">14:00</span><span class="feed-tag skip">SKIP</span><span>ETH 5m — spread too wide — market filtered — no action</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. SIGNAL ENGINE -->
+<!-- ============================================================ -->
+<section class="feature-section" id="signal-engine" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="reveal" style="max-width:620px;">
+      <div class="feature-eyebrow">Signal Engine</div>
+      <div class="feature-headline">Detect divergence.<br>Execute systematically.</div>
+      <div class="feature-body">OddsEngine continuously scans prediction markets and compares prices against the underlying crypto asset. When divergence appears between the crypto market and the prediction market price, the system generates a signal. Signals are filtered through a risk layer and executed automatically.</div>
+    </div>
+    <div class="steps-grid reveal" style="margin-top:72px;">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">01</div>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Market Monitoring</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Continuously scans prediction markets across multiple timeframes — 5-minute, 15-minute, and hourly windows — while streaming real-time price data from Coinbase and Binance.</p>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Assets</span><span style="color:var(--blue);">BTC · ETH · SOL · XRP</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Markets</span><span style="color:var(--blue);">140+</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">02</div>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Signal Detection</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Detects price divergences between crypto markets and prediction markets. Each signal is scored against a multi-indicator threshold. Signals below the threshold are logged and skipped.</p>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Scoring</span><span style="color:var(--blue);">Multi-indicator</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Filtering</span><span style="color:var(--blue);">Liquidity + spread</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">03</div>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Systematic Execution</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Executes trades using predefined risk parameters — position sizing, take-profit targets, stop-loss levels, and exposure limits. Every order and fill is logged to the dashboard.</p>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Execution</span><span style="color:var(--blue);">Automated</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Latency</span><span style="color:var(--blue);">&lt;2s</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 5. TRADING DASHBOARD -->
+<!-- ============================================================ -->
+<section class="feature-section" id="dashboard" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <div class="feature-eyebrow">Dashboard</div>
+      <div class="feature-headline">Live operational visibility.</div>
+      <div class="feature-body" style="max-width:520px;margin:0 auto;">The trading dashboard provides real-time monitoring of signals, open positions, execution events, market spreads, and system health.</div>
+    </div>
+    <div class="reveal terminal-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;">
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Signals</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Real-time</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Every signal scored and logged</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Entry signals</span><span style="color:var(--blue);">Logged</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Skipped signals</span><span>Logged</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Score breakdown</span><span style="color:var(--blue);">Per trade</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Positions</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Live tracking</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Open, pending, and resolved</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Entry price</span><span style="color:var(--blue);">Tracked</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Hold duration</span><span>Tracked</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Exit reason</span><span style="color:var(--blue);">Logged</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Execution Log</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Full audit</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Every order and fill recorded</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Order type</span><span style="color:var(--blue);">Maker / Taker</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Fill confirmation</span><span>Logged</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Latency</span><span style="color:var(--blue);">Measured</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Spreads</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Monitored</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Per-market bid/ask tracking</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Spread width</span><span style="color:var(--blue);">Real-time</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Liquidity depth</span><span>Checked</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Quality filter</span><span style="color:var(--green);">Active</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">System Health</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--green);margin-bottom:4px;">Operational</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Engine and feed status</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>WS feeds</span><span style="color:var(--green);">Connected</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Signal engine</span><span style="color:var(--green);">Online</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Execution</span><span style="color:var(--green);">Ready</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);padding:32px 28px;">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Markets</div>
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--blue);margin-bottom:4px;">140+</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Active markets in scope</div>
+        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Crypto-linked</span><span style="color:var(--blue);">BTC ETH SOL XRP</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Timeframes</span><span>5m · 15m · 1h</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Illiquid filtered</span><span>900+</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LIVE TRADES -->
+<!-- ============================================================ -->
+<section class="feature-section" style="border-top:1px solid var(--border);padding:120px 0;">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <div class="feature-eyebrow">Live Trades</div>
+      <div class="feature-headline">Recent executions.</div>
+    </div>
+    <div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.4);">
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;">Execution Log</span>
+        <span id="ticker-status" style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;animation:blink 2s ease-in-out infinite;"></span>LIVE</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="trades-table" style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:500;">Time</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:500;">Asset</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:500;">Market</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:500;">Entry</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:500;">Exit</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:right;border-bottom:1px solid var(--border);font-weight:500;">PnL</th>
+              <th style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;padding:14px 20px;text-align:right;border-bottom:1px solid var(--border);font-weight:500;">Hold</th>
+            </tr>
+          </thead>
+          <tbody id="trades-body">
+            <tr><td colspan="7" style="font-family:var(--font-mono);font-size:0.82rem;padding:32px 20px;color:var(--text-tertiary);text-align:center;">No trades executed yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 6. SYSTEM ARCHITECTURE -->
+<!-- ============================================================ -->
+<section class="feature-section" style="border-top:1px solid var(--border);">
+  <div class="container" style="max-width:680px;">
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <div class="feature-eyebrow">Architecture</div>
+      <div class="feature-headline">End-to-end pipeline.</div>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;align-items:center;">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Data Ingestion</div>
+        <div style="font-size:1.05rem;font-weight:600;">Market Data</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Coinbase · Binance · Polymarket CLOB</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
+      <div style="background:var(--bg-card);border:1px solid var(--blue);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 40px var(--blue-glow);">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Signal Generation</div>
+        <div style="font-size:1.05rem;font-weight:600;">Signal Engine</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">21 indicators · Multi-timeframe scoring</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Risk Controls</div>
+        <div style="font-size:1.05rem;font-weight:600;">Risk Layer</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Position sizing · Stop-loss · Exposure limits</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Order Management</div>
+        <div style="font-size:1.05rem;font-weight:600;">Execution</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Polymarket CLOB · Maker/Taker · &lt;2s latency</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
+      <div style="background:var(--bg-card);border:1px solid var(--green);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 30px rgba(48,209,88,0.08);">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Interface</div>
+        <div style="font-size:1.05rem;font-weight:600;">Dashboard</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Signals · Positions · Execution log · System health</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 7. ACCESS -->
+<!-- ============================================================ -->
+<section class="pricing-section" id="access">
+  <div class="container">
+    <div class="reveal">
+      <div class="feature-eyebrow">Access</div>
+      <div class="feature-headline" style="text-align:center;">Private Access</div>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-label">Limited Availability</div>
+      <div class="price-number"><span class="cur">$</span>50,000</div>
+      <p class="price-context">One-time access to the OddsEngine platform.</p>
+      <div class="price-fact">OddsEngine is currently available through limited private access</div>
+      <ul class="price-list">
+        <li>Full platform access</li>
+        <li>Trading dashboard</li>
+        <li>Signal engine</li>
+        <li>Execution infrastructure</li>
+        <li>Lifetime platform access</li>
+      </ul>
+      <a href="/cdn-cgi/l/email-protection#64050707011717240b000017010a030d0a014a080d1201" class="price-cta">Request Access</a>
+      <p class="price-note">Access is limited during the initial deployment phase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FAQ -->
+<!-- ============================================================ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="feature-eyebrow">FAQ</div>
+      <div class="feature-headline">Common questions.</div>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq-item"><div class="faq-q">What does OddsEngine trade?</div><div class="faq-a">Crypto-linked prediction markets on Polymarket — specifically short-horizon markets tied to BTC, ETH, SOL, and XRP price movements across 5-minute, 15-minute, and hourly windows.</div></div>
+      <div class="faq-item"><div class="faq-q">How are signals generated?</div><div class="faq-a">A 21-indicator scoring engine compares real-time crypto prices from Coinbase and Binance against Polymarket orderbook data. Each market window receives a composite score. Only signals above the configured threshold are acted on.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you have custody of my funds?</div><div class="faq-a">No. OddsEngine operates on a self-custody model. You maintain your own Polymarket wallet and private keys. The platform generates signals and executes on your behalf, but never holds or transfers funds independently.</div></div>
+      <div class="faq-item"><div class="faq-q">What risk controls are in place?</div><div class="faq-a">Position sizing relative to bankroll, configurable stop-loss levels, maximum simultaneous exposure limits, per-trade size caps, and market quality filters that reject illiquid or wide-spread markets before execution.</div></div>
+      <div class="faq-item"><div class="faq-q">What infrastructure is required?</div><div class="faq-a">OddsEngine runs on a dedicated VPS with WebSocket connections to Coinbase, Binance, and Polymarket. Signals and execution are delivered via Telegram. You need a funded Polymarket wallet on Polygon.</div></div>
+      <div class="faq-item"><div class="faq-q">What are the risks?</div><div class="faq-a">Trading prediction markets involves risk of loss. Signal quality varies with market conditions, liquidity, and execution timing. OddsEngine provides trading infrastructure — not financial advice. Past performance does not guarantee future results.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 8. FINAL CTA -->
+<!-- ============================================================ -->
+<section class="final-cta">
+  <div class="container reveal">
+    <h2>Systematic trading for<br><span style="color:var(--blue)">prediction markets</span>.</h2>
+    <p>Automated monitoring. Signal detection. Systematic execution.</p>
+    <div class="urgency">Access is limited during the initial deployment phase</div>
+    <a href="/cdn-cgi/l/email-protection#33525050564040735c575740565d545a5d561d5f5a4556" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
+  </div>
+</section>
+
+<footer><div class="container"><span class="footer-text">&copy; 2026 OddsEngine</span><div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div></div></footer>
+<div class="disclaimer"><div class="container"><p>OddsEngine is a trading infrastructure platform. Trading prediction markets involves risk of loss. Signal and execution performance varies based on market conditions, liquidity, and configuration parameters. OddsEngine does not provide financial advice and does not guarantee returns. Users maintain full custody of their funds. Past performance is not indicative of future results.</p></div></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior:'smooth' }); });
+});
+
+// Live Trade Ticker
+const tbody = document.getElementById('trades-body');
+const status = document.getElementById('ticker-status');
+async function fetchTrades() {
+  try {
+    const res = await fetch('/trades.json?t=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    const trades = await res.json();
+    if (!Array.isArray(trades) || trades.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="font-family:var(--font-mono);font-size:0.82rem;padding:32px 20px;color:var(--text-tertiary);text-align:center;">No trades executed yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = trades.map(t => {
+      const pnlColor = t.pnl && t.pnl.startsWith('+') ? 'var(--green)' : t.pnl && t.pnl.startsWith('-') ? 'var(--red)' : 'var(--text-secondary)';
+      return `<tr>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-tertiary);">${t.time}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);font-weight:600;">${t.asset}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.tf}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.entry}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);">${t.exit}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04);color:${pnlColor};font-weight:600;text-align:right;">${t.pnl}</td>
+        <td style="font-family:var(--font-mono);font-size:0.82rem;padding:14px 20px;border-bot
