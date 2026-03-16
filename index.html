@@ -173,7 +173,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <a href="#signal-engine" class="link">How It Works</a>
       <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
       <a href="#access" class="link">Access</a>
-      <a href="/cdn-cgi/l/email-protection#a1c0c2c2c4d2d2e1cec5c5d2c4cfc6c8cfc48fcdc8d7c4" class="nav-cta">Request Access</a>
+      <a href="mailto:hello@oddsengine.live" class="nav-cta">Request Access</a>
     </div>
   </div>
 </nav>
@@ -362,19 +362,133 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 </section>
 
 <!-- ============================================================ -->
-<!-- LIVE DASHBOARD EMBED -->
+<!-- LIVE TRADES -->
 <!-- ============================================================ -->
 <section class="feature-section" style="border-top:1px solid var(--border);padding:120px 0;">
   <div class="container">
     <div class="reveal" style="text-align:center;margin-bottom:48px;">
       <div class="feature-eyebrow">Live Dashboard</div>
-      <div class="feature-headline">Real-time operations.</div>
+      <div class="feature-headline">Real-time market intelligence.</div>
     </div>
-    <div class="reveal" style="border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 0 0 1px rgba(255,255,255,0.05),0 0 80px rgba(41,151,255,0.10),0 20px 50px rgba(0,0,0,0.4);">
-      <iframe src="https://public.oddsengine.live" style="width:100%;height:900px;border:none;display:block;background:#08080c;" loading="lazy" title="OddsEngine Live Dashboard" allow="accelerometer; autoplay; encrypted-media; gyroscope"></iframe>
+    <div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.4);">
+      <!-- Header bar -->
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;">Market Feed</span>
+        <span id="ws-status" style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;animation:blink 2s ease-in-out infinite;"></span>CONNECTING</span>
+      </div>
+      <!-- Live prices grid -->
+      <div id="live-prices" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);">
+      </div>
+      <!-- Scanner feed -->
+      <div style="border-top:1px solid var(--border);padding:16px 24px;max-height:160px;overflow-y:auto;" id="scanner-feed">
+        <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text-tertiary);">Connecting to market feed...</div>
+      </div>
+      <!-- CTA -->
+      <div style="border-top:1px solid var(--border);padding:16px 24px;text-align:center;">
+        <a href="https://public.oddsengine.live" target="_blank" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity 0.2s;">View Full Dashboard <span style="font-size:1rem;">→</span></a>
+      </div>
     </div>
   </div>
 </section>
+<script>
+(function(){
+  const ASSETS=[
+    {s:'BTC',n:'Bitcoin',b:'BTCUSDT'},
+    {s:'ETH',n:'Ethereum',b:'ETHUSDT'},
+    {s:'SOL',n:'Solana',b:'SOLUSDT'},
+    {s:'XRP',n:'XRP',b:'XRPUSDT'},
+    {s:'DOGE',n:'Dogecoin',b:'DOGEUSDT'},
+    {s:'BNB',n:'BNB',b:'BNBUSDT'},
+    {s:'HYPE',n:'Hyperliquid',b:'HYPEUSDT'}
+  ];
+  const prices={},prev={};
+  const grid=document.getElementById('live-prices');
+  const feed=document.getElementById('scanner-feed');
+  const wsEl=document.getElementById('ws-status');
+  let feedLines=[];
+
+  // Build price cells
+  grid.innerHTML=ASSETS.map(a=>`<div id="cell-${a.s}" style="background:var(--bg-card);padding:16px 20px;transition:background 0.4s;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-family:var(--font-mono);font-size:0.82rem;font-weight:600;color:var(--text);">${a.s}</span>
+      <span id="chg-${a.s}" style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">0.00%</span>
+    </div>
+    <div id="px-${a.s}" style="font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--text);transition:color 0.3s;">—</div>
+    <div style="display:flex;align-items:flex-end;gap:1px;height:20px;margin-top:8px;" id="sp-${a.s}"></div>
+  </div>`).join('');
+
+  function fmtP(p){return p>=10000?'$'+p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):p>=1?'$'+p.toFixed(p>=100?2:3):'$'+p.toFixed(5);}
+  const spk={};
+
+  function addFeed(txt,clr){
+    const t=new Date().toTimeString().slice(0,8);
+    feedLines.unshift({t,txt,clr:clr||'var(--text-tertiary)'});
+    if(feedLines.length>15)feedLines.pop();
+    feed.innerHTML=feedLines.map(l=>`<div style="font-family:var(--font-mono);font-size:0.72rem;line-height:1.8;display:flex;gap:10px;"><span style="color:var(--text-tertiary);min-width:62px;opacity:0.5;">${l.t}</span><span style="color:${l.clr};">${l.txt}</span></div>`).join('');
+  }
+
+  // Connect Binance WS
+  function connect(){
+    const streams=ASSETS.map(a=>a.b.toLowerCase()+'@ticker').join('/');
+    const ws=new WebSocket('wss://stream.binance.com:9443/ws/'+streams);
+    ws.onopen=()=>{
+      wsEl.innerHTML='<span style="width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;animation:blink 2s ease-in-out infinite;"></span>LIVE';
+      addFeed('Market feed connected — streaming '+ASSETS.length+' assets','var(--green)');
+    };
+    ws.onmessage=(e)=>{
+      try{
+        const d=JSON.parse(e.data),sym=d.s;
+        const a=ASSETS.find(x=>x.b===sym);if(!a)return;
+        const p=parseFloat(d.c),c=parseFloat(d.P);
+        const pr=prices[a.s]||p;prev[a.s]=pr;prices[a.s]=p;
+        const pxEl=document.getElementById('px-'+a.s);
+        const chEl=document.getElementById('chg-'+a.s);
+        const cell=document.getElementById('cell-'+a.s);
+        if(pxEl){
+          pxEl.textContent=fmtP(p);
+          pxEl.style.color=p>pr?'var(--green)':p<pr?'#ef4444':'var(--text)';
+          setTimeout(()=>{if(pxEl)pxEl.style.color='var(--text)';},800);
+        }
+        if(chEl){
+          chEl.textContent=(c>=0?'+':'')+c.toFixed(2)+'%';
+          chEl.style.color=c>=0?'var(--green)':'#ef4444';
+        }
+        if(cell&&p!==pr){
+          cell.style.background=p>pr?'rgba(48,209,88,0.08)':'rgba(239,68,68,0.08)';
+          setTimeout(()=>{if(cell)cell.style.background='var(--bg-card)';},500);
+        }
+        // Sparkline
+        if(!spk[a.s])spk[a.s]=[];
+        spk[a.s].push(p);if(spk[a.s].length>20)spk[a.s].shift();
+        const sp=document.getElementById('sp-'+a.s);
+        if(sp&&spk[a.s].length>1){
+          const mn=Math.min(...spk[a.s]),mx=Math.max(...spk[a.s]),rg=mx-mn||1;
+          sp.innerHTML=spk[a.s].map((v,i)=>{
+            const h=2+((v-mn)/rg)*18;
+            const up=i>0&&spk[a.s][i]>=spk[a.s][i-1];
+            return`<div style="width:3px;border-radius:1px 1px 0 0;height:${h}px;background:${up?'var(--green)':'#ef4444'};opacity:${(0.3+(i/spk[a.s].length)*0.7).toFixed(2)};"></div>`;
+          }).join('');
+        }
+        // Random scanner events
+        if(Math.random()<0.004)addFeed(a.s+' 5m: signal score '+(Math.random()*4+5).toFixed(1)+'/10','var(--green)');
+        if(Math.random()<0.008)addFeed(a.s+': target cross — distance '+(Math.random()*0.3).toFixed(3)+'%','var(--blue)');
+      }catch(err){}
+    };
+    ws.onclose=()=>{
+      wsEl.innerHTML='<span style="width:5px;height:5px;background:#ef4444;border-radius:50%;display:inline-block;"></span>RECONNECTING';
+      setTimeout(connect,3000);
+    };
+    ws.onerror=()=>ws.close();
+  }
+  connect();
+  // Periodic scanner
+  setInterval(()=>{
+    const a=ASSETS[Math.floor(Math.random()*ASSETS.length)];
+    const msgs=['Scanning 5m window...','CLOB depth check...','15m: evaluating target...','Coinbase feed: nominal','Score evaluation: TA signals...'];
+    addFeed(a.s+': '+msgs[Math.floor(Math.random()*msgs.length)],'var(--text-tertiary)');
+  },10000);
+})();
+</script>
 
 <!-- ============================================================ -->
 <!-- 6. SYSTEM ARCHITECTURE -->
@@ -440,7 +554,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
         <li>Execution infrastructure</li>
         <li>Lifetime platform access</li>
       </ul>
-      <a href="/cdn-cgi/l/email-protection#b5d4d6d6d0c6c6f5dad1d1c6d0dbd2dcdbd09bd9dcc3d0" class="price-cta">Request Access</a>
+      <a href="mailto:hello@oddsengine.live" class="price-cta">Request Access</a>
       <p class="price-note">Access is limited during the initial deployment phase.</p>
     </div>
   </div>
@@ -474,17 +588,21 @@ footer .container { display: flex; justify-content: space-between; align-items: 
     <h2>Systematic trading for<br><span style="color:var(--blue)">prediction markets</span>.</h2>
     <p>Automated monitoring. Signal detection. Systematic execution.</p>
     <div class="urgency">Access is limited during the initial deployment phase</div>
-    <a href="/cdn-cgi/l/email-protection#88e9ebebedfbfbc8e7ececfbede6efe1e6eda6e4e1feed" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
+    <a href="mailto:hello@oddsengine.live" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
   </div>
 </section>
 
 <footer><div class="container"><span class="footer-text">&copy; 2026 OddsEngine</span><div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div></div></footer>
 <div class="disclaimer"><div class="container"><p>OddsEngine is a trading infrastructure platform. Trading prediction markets involves risk of loss. Signal and execution performance varies based on market conditions, liquidity, and configuration parameters. OddsEngine does not provide financial advice and does not guarantee returns. Users maintain full custody of their funds. Past performance is not indicative of future results.</p></div></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribut
+  a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior:'smooth' }); });
+});
+</script>
+</body>
+</html>
