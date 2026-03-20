@@ -154,6 +154,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   .nav-right a.link { display: none; }
   .price-card { margin: 60px 0 0; }
   .terminal-grid { grid-template-columns: 1fr 1fr !important; }
+  .split-grid { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 480px) {
   .terminal-grid { grid-template-columns: 1fr !important; }
@@ -173,7 +174,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <a href="#signal-engine" class="link">How It Works</a>
       <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
       <a href="#access" class="link">Access</a>
-      <a href="/cdn-cgi/l/email-protection#aacbc9c9cfd9d9eac5ceced9cfc4cdc3c4cf84c6c3dccf" class="nav-cta">Request Access</a>
+      <a href="https://t.me/OddsEngine" class="nav-cta" target="_blank">Join Channel</a>
     </div>
   </div>
 </nav>
@@ -186,9 +187,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
     <div class="hero-inner">
       <div class="hero-eyebrow">OddsEngine</div>
       <h1>Automated Trading for Prediction Markets</h1>
-      <p class="hero-sub">OddsEngine monitors crypto-linked prediction markets in real time, detects trading signals, and executes systematically. Built for short-horizon markets on <strong>BTC, ETH, SOL and XRP.</strong></p>
+      <p class="hero-sub">OddsEngine detects structural inefficiencies in prediction markets and executes systematically — 24/7, fully automated. <strong>You profit. We take a share.</strong></p>
       <div class="hero-actions">
-        <a href="#access" class="btn-blue">Request Access</a>
+        <a href="https://t.me/OddsEngine" class="btn-blue" target="_blank">Join Channel</a>
         <a href="https://public.oddsengine.live" class="btn-ghost" target="_blank">View Dashboard</a>
       </div>
     </div>
@@ -211,17 +212,17 @@ footer .container { display: flex; justify-content: space-between; align-items: 
           <div class="t-cell">
             <div class="t-label">Markets Active</div>
             <div class="t-val" style="color:var(--blue);">143</div>
-            <div class="t-sub">BTC · ETH · SOL · XRP</div>
+            <div class="t-sub">Prediction markets</div>
           </div>
           <div class="t-cell">
             <div class="t-label">Open Positions</div>
             <div class="t-val" style="color:var(--text);">4</div>
-            <div class="t-sub">Across 2 timeframes</div>
+            <div class="t-sub">Currently active</div>
           </div>
           <div class="t-cell">
             <div class="t-label">Signals Today</div>
             <div class="t-val" style="color:var(--text);">67</div>
-            <div class="t-sub">5m · 15m · 1h windows</div>
+            <div class="t-sub">Scored and filtered</div>
           </div>
           <div class="t-cell">
             <div class="t-label">System Status</div>
@@ -232,12 +233,12 @@ footer .container { display: flex; justify-content: space-between; align-items: 
         <!-- SIGNAL FEED -->
         <div style="border-top:1px solid var(--border);">
           <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);">Live Signal Feed</div>
-          <div class="feed-row"><span class="feed-time">14:44</span><span class="feed-tag exit">EXIT</span><span>BTC 15m — TP triggered — hold 48s — filled 0.54</span></div>
-          <div class="feed-row"><span class="feed-time">14:42</span><span class="feed-tag entry">ENTRY</span><span>ETH 15m — signal score 16/21 — limit posted 0.47</span></div>
-          <div class="feed-row"><span class="feed-time">14:38</span><span class="feed-tag skip">SKIP</span><span>SOL 5m — score 5/21 — below threshold — no action</span></div>
-          <div class="feed-row"><span class="feed-time">14:31</span><span class="feed-tag exit">EXIT</span><span>BTC 15m — TP triggered — hold 2m 14s — filled 0.61</span></div>
-          <div class="feed-row"><span class="feed-time">14:15</span><span class="feed-tag entry">ENTRY</span><span>XRP 15m — signal score 14/21 — limit posted 0.52</span></div>
-          <div class="feed-row"><span class="feed-time">14:00</span><span class="feed-tag skip">SKIP</span><span>ETH 5m — spread too wide — market filtered — no action</span></div>
+          <div class="feed-row"><span class="feed-time">14:44</span><span class="feed-tag exit">EXIT</span><span>Position closed — TP triggered — hold 48s — filled</span></div>
+          <div class="feed-row"><span class="feed-time">14:42</span><span class="feed-tag entry">ENTRY</span><span>Signal detected — threshold exceeded — limit posted</span></div>
+          <div class="feed-row"><span class="feed-time">14:38</span><span class="feed-tag skip">SKIP</span><span>Signal below threshold — no action</span></div>
+          <div class="feed-row"><span class="feed-time">14:31</span><span class="feed-tag exit">EXIT</span><span>Position closed — TP triggered — hold 2m 14s — filled</span></div>
+          <div class="feed-row"><span class="feed-time">14:15</span><span class="feed-tag entry">ENTRY</span><span>Signal detected — divergence confirmed — limit posted</span></div>
+          <div class="feed-row"><span class="feed-time">14:00</span><span class="feed-tag skip">SKIP</span><span>Spread too wide — market filtered — no action</span></div>
         </div>
       </div>
     </div>
@@ -251,26 +252,26 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="reveal" style="max-width:620px;">
       <div class="feature-eyebrow">Signal Engine</div>
-      <div class="feature-headline">Detect divergence.<br>Execute systematically.</div>
-      <div class="feature-body">OddsEngine continuously scans prediction markets and compares prices against the underlying crypto asset. When divergence appears between the crypto market and the prediction market price, the system generates a signal. Signals are filtered through a risk layer and executed automatically.</div>
+      <div class="feature-headline">Detect inefficiency.<br>Execute systematically.</div>
+      <div class="feature-body">OddsEngine continuously scans prediction markets for structural pricing inefficiencies. When the system detects a divergence, it generates a signal, filters it through a proprietary risk layer, and executes automatically — no manual intervention required.</div>
     </div>
     <div class="steps-grid reveal" style="margin-top:72px;">
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">01</div>
         <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Market Monitoring</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Continuously scans prediction markets across multiple timeframes — 5-minute, 15-minute, and hourly windows — while streaming real-time price data from Coinbase and Binance.</p>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Continuously scans prediction markets across multiple timeframes, streaming real-time reference price data from multiple exchange feeds.</p>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Assets</span><span style="color:var(--blue);">BTC · ETH · SOL · XRP</span></div>
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Markets</span><span style="color:var(--blue);">140+</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Coverage</span><span style="color:var(--blue);">Multi-asset</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Frequency</span><span style="color:var(--blue);">Real-time</span></div>
         </div>
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">02</div>
         <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Signal Detection</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Detects price divergences between crypto markets and prediction markets. Each signal is scored against a multi-indicator threshold. Signals below the threshold are logged and skipped.</p>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Identifies pricing inefficiencies using a proprietary multi-factor scoring engine. Every signal is scored against a threshold — only high-conviction setups are acted on.</p>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Scoring</span><span style="color:var(--blue);">Multi-indicator</span></div>
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Filtering</span><span style="color:var(--blue);">Liquidity + spread</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Scoring</span><span style="color:var(--blue);">Proprietary</span></div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Filtering</span><span style="color:var(--blue);">Liquidity + quality</span></div>
         </div>
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
@@ -352,9 +353,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
         <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--blue);margin-bottom:4px;">140+</div>
         <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Active markets in scope</div>
         <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Crypto-linked</span><span style="color:var(--blue);">BTC ETH SOL XRP</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Timeframes</span><span>5m · 15m · 1h</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Illiquid filtered</span><span>900+</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Type</span><span style="color:var(--blue);">Crypto-linked</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Timeframes</span><span>Multiple</span></div>
+          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Low-quality filtered</span><span>900+</span></div>
         </div>
       </div>
     </div>
@@ -368,7 +369,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="reveal" style="text-align:center;margin-bottom:48px;">
       <div class="feature-eyebrow">Live Feed</div>
-      <div class="feature-headline">Market pulse.</div>
+      <div class="feature-headline">Reference prices.</div>
     </div>
     <div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.4);">
 
@@ -430,13 +431,13 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
         <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Data Ingestion</div>
         <div style="font-size:1.05rem;font-weight:600;">Market Data</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Coinbase · Binance · Polymarket CLOB</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Multiple exchange feeds · Prediction market orderbooks</div>
       </div>
       <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
       <div style="background:var(--bg-card);border:1px solid var(--blue);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 40px var(--blue-glow);">
         <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Signal Generation</div>
         <div style="font-size:1.05rem;font-weight:600;">Signal Engine</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">21 indicators · Multi-timeframe scoring</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Proprietary scoring · Multi-factor analysis</div>
       </div>
       <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
@@ -448,7 +449,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
         <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Order Management</div>
         <div style="font-size:1.05rem;font-weight:600;">Execution</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Polymarket CLOB · Maker/Taker · &lt;2s latency</div>
+        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">On-chain settlement · Maker/Taker · Sub-second latency</div>
       </div>
       <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
       <div style="background:var(--bg-card);border:1px solid var(--green);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 30px rgba(48,209,88,0.08);">
@@ -467,22 +468,45 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="reveal">
       <div class="feature-eyebrow">Access</div>
-      <div class="feature-headline" style="text-align:center;">Private Access</div>
+      <div class="feature-headline" style="text-align:center;">You profit. We take a share.</div>
     </div>
     <div class="price-card reveal">
-      <div class="price-label">Limited Availability</div>
-      <div class="price-number"><span class="cur">$</span>50,000</div>
-      <p class="price-context">One-time access to the OddsEngine platform.</p>
-      <div class="price-fact">OddsEngine is currently available through limited private access</div>
+      <div class="price-label">Performance-Aligned</div>
+      <div class="price-number"><span class="cur">$</span>2,800</div>
+      <p class="price-context">One-time access fee + 70/30 profit split.</p>
+      <div class="price-fact">You keep 70% of all profits — we earn only when you do</div>
       <ul class="price-list">
-        <li>Full platform access</li>
-        <li>Trading dashboard</li>
-        <li>Signal engine</li>
-        <li>Execution infrastructure</li>
-        <li>Lifetime platform access</li>
+        <li>Full OddsEngine platform access</li>
+        <li>Automated signal detection and execution</li>
+        <li>Live trading dashboard</li>
+        <li>Self-custody — your wallet, your keys</li>
+        <li>Real-time Telegram alerts</li>
+        <li>High water mark — no double-dipping on profits</li>
       </ul>
-      <a href="/cdn-cgi/l/email-protection#eb8a88888e9898ab848f8f988e858c82858ec587829d8e" class="price-cta">Request Access</a>
-      <p class="price-note">Access is limited during the initial deployment phase.</p>
+      <a href="https://t.me/OddsEngine" class="price-cta" target="_blank">Join Channel</a>
+      <p class="price-note">DM for access after joining. Limited spots during deployment phase.</p>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="reveal" style="max-width:680px;margin:80px auto 0;text-align:center;">
+      <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:32px;">How the split works</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="split-grid">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">01</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">You deposit</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Fund your own wallet. You maintain full custody at all times.</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">02</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">System trades</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">OddsEngine detects signals and executes automatically on your account.</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--green);letter-spacing:2px;margin-bottom:12px;">03</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">You keep 70%</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Monthly settlement. If the system doesn't profit — you pay nothing extra.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -497,12 +521,12 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <div class="feature-headline">Common questions.</div>
     </div>
     <div class="faq-grid reveal">
-      <div class="faq-item"><div class="faq-q">What does OddsEngine trade?</div><div class="faq-a">Crypto-linked prediction markets on Polymarket — specifically short-horizon markets tied to BTC, ETH, SOL, and XRP price movements across 5-minute, 15-minute, and hourly windows.</div></div>
-      <div class="faq-item"><div class="faq-q">How are signals generated?</div><div class="faq-a">A 21-indicator scoring engine compares real-time crypto prices from Coinbase and Binance against Polymarket orderbook data. Each market window receives a composite score. Only signals above the configured threshold are acted on.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you have custody of my funds?</div><div class="faq-a">No. OddsEngine operates on a self-custody model. You maintain your own Polymarket wallet and private keys. The platform generates signals and executes on your behalf, but never holds or transfers funds independently.</div></div>
-      <div class="faq-item"><div class="faq-q">What risk controls are in place?</div><div class="faq-a">Position sizing relative to bankroll, configurable stop-loss levels, maximum simultaneous exposure limits, per-trade size caps, and market quality filters that reject illiquid or wide-spread markets before execution.</div></div>
-      <div class="faq-item"><div class="faq-q">What infrastructure is required?</div><div class="faq-a">OddsEngine runs on a dedicated VPS with WebSocket connections to Coinbase, Binance, and Polymarket. Signals and execution are delivered via Telegram. You need a funded Polymarket wallet on Polygon.</div></div>
-      <div class="faq-item"><div class="faq-q">What are the risks?</div><div class="faq-a">Trading prediction markets involves risk of loss. Signal quality varies with market conditions, liquidity, and execution timing. OddsEngine provides trading infrastructure — not financial advice. Past performance does not guarantee future results.</div></div>
+      <div class="faq-item"><div class="faq-q">What does OddsEngine trade?</div><div class="faq-a">Crypto-linked prediction markets. The system focuses on short-horizon markets where structural pricing inefficiencies occur regularly.</div></div>
+      <div class="faq-item"><div class="faq-q">How does the profit split work?</div><div class="faq-a">You pay a one-time $2,800 access fee. After that, you keep 70% of all profits — OddsEngine takes 30%. Settlement is monthly with a high water mark, meaning we never charge twice on the same gains. If the system doesn't generate profit in a given month, you owe nothing extra.</div></div>
+      <div class="faq-item"><div class="faq-q">Do you have custody of my funds?</div><div class="faq-a">No. You maintain your own wallet and private keys at all times. OddsEngine executes on your behalf but never holds, transfers, or withdraws your funds independently.</div></div>
+      <div class="faq-item"><div class="faq-q">What risk controls are in place?</div><div class="faq-a">Position sizing relative to bankroll, maximum exposure limits, per-trade size caps, and market quality filters that reject low-liquidity setups before any execution.</div></div>
+      <div class="faq-item"><div class="faq-q">How do I get started?</div><div class="faq-a">Join the Telegram channel to see system updates and performance. When you're ready, DM for access — you'll receive onboarding instructions, wallet setup guidance, and full platform access.</div></div>
+      <div class="faq-item"><div class="faq-q">What are the risks?</div><div class="faq-a">Trading prediction markets involves risk of loss. Performance varies with market conditions, liquidity, and timing. OddsEngine provides trading infrastructure — not financial advice. Past performance does not guarantee future results.</div></div>
     </div>
   </div>
 </section>
@@ -512,17 +536,15 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <!-- ============================================================ -->
 <section class="final-cta">
   <div class="container reveal">
-    <h2>Systematic trading for<br><span style="color:var(--blue)">prediction markets</span>.</h2>
-    <p>Automated monitoring. Signal detection. Systematic execution.</p>
-    <div class="urgency">Access is limited during the initial deployment phase</div>
-    <a href="/cdn-cgi/l/email-protection#83e2e0e0e6f0f0c3ece7e7f0e6ede4eaede6adefeaf5e6" class="btn-blue" style="font-size:1rem;padding:16px 44px;">Request Access</a>
+    <h2>The system trades.<br><span style="color:var(--blue)">You keep 70%</span>.</h2>
+    <p>$2,800 access fee. Profit split. Self-custody. Monthly settlement.</p>
+    <div class="urgency">Limited spots during deployment phase</div>
+    <a href="https://t.me/OddsEngine" class="btn-blue" style="font-size:1rem;padding:16px 44px;" target="_blank">Join Channel</a>
   </div>
 </section>
 
 <footer><div class="container"><span class="footer-text">&copy; 2026 OddsEngine</span><div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div></div></footer>
-<div class="disclaimer"><div class="container"><p>OddsEngine is a trading infrastructure platform. Trading prediction markets involves risk of loss. Signal and execution performance varies based on market conditions, liquidity, and configuration parameters. OddsEngine does not provide financial advice and does not guarantee returns. Users maintain full custody of their funds. Past performance is not indicative of future results.</p></div></div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<div class="disclaimer"><div class="container"><p>OddsEngine is a trading infrastructure platform. Trading prediction markets involves risk of loss including loss of principal. Performance varies based on market conditions, liquidity, and configuration parameters. The 70/30 profit split applies only to net new profits above the high water mark. OddsEngine does not provide financial advice and does not guarantee returns. Users maintain full custody of their funds at all times. Past performance is not indicative of future results.</p></div></div>
 
 <!-- LIVE PRICE FEED -->
 <script>
