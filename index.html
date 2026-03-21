@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OddsEngine — Automated Trading for Prediction Markets</title>
-<meta name="description" content="Real-time monitoring, signal detection and systematic execution for crypto-linked prediction markets.">
+<title>OddsEngine — Execution Infrastructure for Prediction Markets</title>
+<meta name="description" content="Systematic detection and execution of structural pricing inefficiencies across crypto-linked prediction markets.">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -170,7 +171,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 
 <nav>
   <div class="container">
-    <a href="#" class="logo">OddsEngine<span>.live</span></a>
+    <a href="#" class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="OddsEngine" style="width:22px;height:22px;">OddsEngine<span>.live</span></a>
     <div class="nav-right">
       <a href="#signal-engine" class="link">How It Works</a>
       <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
@@ -187,11 +188,11 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="hero-inner">
       <div class="hero-eyebrow">OddsEngine</div>
-      <h1>Automated Trading for Prediction Markets</h1>
-      <p class="hero-sub">OddsEngine detects structural inefficiencies in prediction markets and executes systematically — 24/7, fully automated. <strong>You profit. We take a share.</strong></p>
+      <h1>Execution Infrastructure for Prediction Markets</h1>
+      <p class="hero-sub">Systematic detection and execution of structural pricing inefficiencies across crypto-linked prediction markets. Fully automated. 24/7.</p>
       <div class="hero-actions">
         <a href="https://t.me/OddsEngine" class="btn-blue" target="_blank">Join Channel</a>
-        <a href="https://public.oddsengine.live" class="btn-ghost" target="_blank">View Dashboard</a>
+        <a href="https://public.oddsengine.live" class="btn-ghost" target="_blank">System Status</a>
       </div>
     </div>
   </div>
@@ -252,15 +253,15 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <section class="feature-section" id="signal-engine" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="reveal" style="max-width:620px;">
-      <div class="feature-eyebrow">Signal Engine</div>
-      <div class="feature-headline">Detect inefficiency.<br>Execute systematically.</div>
-      <div class="feature-body">OddsEngine continuously scans prediction markets for structural pricing inefficiencies. When the system detects an opportunity, it generates a signal, filters it through a proprietary risk layer, and executes automatically — no manual intervention required.</div>
+      <div class="feature-eyebrow">System</div>
+      <div class="feature-headline">Detection. Decision.<br>Execution.</div>
+      <div class="feature-body">The system continuously ingests market data, scores pricing inefficiencies against a proprietary threshold, and routes qualified signals through a risk layer before automated execution. No manual intervention at any stage.</div>
     </div>
     <div class="steps-grid reveal" style="margin-top:72px;">
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">01</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Market Monitoring</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Continuously scans prediction markets across multiple timeframes, streaming real-time reference price data from multiple exchange feeds.</p>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Detection</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Ingests real-time reference pricing from multiple exchange feeds. Scans prediction market orderbooks across multiple timeframes for structural mispricing.</p>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Coverage</span><span style="color:var(--blue);">Multi-asset</span></div>
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Frequency</span><span style="color:var(--blue);">Real-time</span></div>
@@ -268,8 +269,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">02</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Signal Detection</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Identifies pricing inefficiencies using a proprietary multi-factor scoring engine. Every signal is scored against a threshold — only high-conviction setups are acted on.</p>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Decision</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Each signal is scored against a proprietary multi-factor threshold. Sub-threshold signals are logged and discarded. Only qualified setups proceed to execution.</p>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Scoring</span><span style="color:var(--blue);">Proprietary</span></div>
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Filtering</span><span style="color:var(--blue);">Liquidity + quality</span></div>
@@ -277,8 +278,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       </div>
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">03</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Systematic Execution</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Executes trades using predefined risk parameters — position sizing, exposure limits, and automated exit conditions. Every order and fill is logged to the dashboard.</p>
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Execution</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Orders are routed with predefined position sizing, exposure limits, and exit parameters. Every fill, rejection, and state change is logged to the execution audit trail.</p>
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Execution</span><span style="color:var(--blue);">Automated</span></div>
           <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Latency</span><span style="color:var(--blue);">&lt;2s</span></div>
@@ -294,9 +295,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <section class="feature-section" id="dashboard" style="border-top:1px solid var(--border);">
   <div class="container">
     <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <div class="feature-eyebrow">Dashboard</div>
-      <div class="feature-headline">Live operational visibility.</div>
-      <div class="feature-body" style="max-width:520px;margin:0 auto;">The trading dashboard provides real-time monitoring of signals, open positions, execution events, market spreads, and system health.</div>
+      <div class="feature-eyebrow">Visibility</div>
+      <div class="feature-headline">Full operational transparency.</div>
+      <div class="feature-body" style="max-width:520px;margin:0 auto;">Every signal, position, execution event, and system state change is recorded and visible in real time. Nothing is hidden.</div>
     </div>
     <div class="reveal terminal-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;">
       <div style="background:var(--bg-card);padding:32px 28px;">
@@ -369,8 +370,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <section class="feature-section" style="border-top:1px solid var(--border);padding:120px 0;">
   <div class="container">
     <div class="reveal" style="text-align:center;margin-bottom:48px;">
-      <div class="feature-eyebrow">Live Feed</div>
-      <div class="feature-headline">Reference prices.</div>
+      <div class="feature-eyebrow">Market Data</div>
+      <div class="feature-headline">Live reference feeds.</div>
     </div>
     <div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.4);">
 
@@ -426,7 +427,7 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container" style="max-width:680px;">
     <div class="reveal" style="text-align:center;margin-bottom:64px;">
       <div class="feature-eyebrow">Architecture</div>
-      <div class="feature-headline">End-to-end pipeline.</div>
+      <div class="feature-headline">System pipeline.</div>
     </div>
     <div class="reveal" style="display:flex;flex-direction:column;align-items:center;">
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
@@ -469,8 +470,8 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="reveal">
       <div class="feature-eyebrow">Access</div>
-      <div class="feature-headline" style="text-align:center;">You profit. We take a share.</div>
-      <p style="text-align:center;font-size:1rem;color:var(--text-secondary);max-width:520px;margin:16px auto 0;">One-time access fee. Per-trade profit split. Settled automatically after every winning trade — not monthly.</p>
+      <div class="feature-headline" style="text-align:center;">Performance-aligned access.</div>
+      <p style="text-align:center;font-size:1rem;color:var(--text-secondary);max-width:520px;margin:16px auto 0;">One-time access fee. Per-trade profit share. Incentives are structurally aligned — the system earns only when it performs.</p>
     </div>
 
     <!-- 3 TIER CARDS -->
@@ -534,18 +535,18 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="split-grid">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
           <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">01</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">You deposit</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Fund your own wallet. You maintain full custody at all times.</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Self-custody</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">You fund and control your own wallet. OddsEngine never holds or accesses your capital.</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
           <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">02</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">System trades</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">OddsEngine detects signals and executes automatically on your account.</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Automated execution</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">The system detects, evaluates, and executes on your account. No manual input required.</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
           <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--green);letter-spacing:2px;margin-bottom:12px;">03</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Settled per trade</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Profit split applied automatically after every winning trade. Transparent and instant.</div>
+          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Per-trade settlement</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Profit share is applied automatically after each resolved trade. Fully transparent. No invoicing.</div>
         </div>
       </div>
     </div>
@@ -559,9 +560,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
       <div style="font-family:var(--font-mono);font-size:4rem;font-weight:800;color:var(--text);letter-spacing:-3px;margin-bottom:16px;">25</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--blue);text-transform:uppercase;letter-spacing:3px;margin-bottom:24px;">Total spots available</div>
-      <p style="font-size:1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:32px;">OddsEngine is capacity-limited by design. The system operates within market liquidity constraints — adding participants beyond this threshold would degrade execution quality for everyone.</p>
-      <p style="font-size:0.88rem;color:var(--text-tertiary);line-height:1.7;">Once 25 spots are filled, access closes. No waitlist. No exceptions.</p>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--blue);text-transform:uppercase;letter-spacing:3px;margin-bottom:24px;">Capacity constraint</div>
+      <p style="font-size:1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:32px;">Execution quality degrades with participant count. The system operates within fixed liquidity parameters — each additional participant increases orderbook impact and reduces fill efficiency.</p>
+      <p style="font-size:0.88rem;color:var(--text-tertiary);line-height:1.7;">Current capacity is capped at 25 participants. Access closes when filled.</p>
     </div>
   </div>
 </section>
@@ -577,12 +578,12 @@ footer .container { display: flex; justify-content: space-between; align-items: 
     </div>
     <div class="faq-grid reveal">
       <div class="faq-item"><div class="faq-q">What does OddsEngine trade?</div><div class="faq-a">Crypto-linked prediction markets. The system focuses on short-horizon markets where structural pricing inefficiencies occur regularly.</div></div>
-      <div class="faq-item"><div class="faq-q">How does the profit split work?</div><div class="faq-a">You pay a one-time access fee and choose your tier. The split is applied automatically after every winning trade — not monthly. Starter keeps 50%, Professional 70%, Premium 80%. You see every trade in real time on your dashboard.</div></div>
+      <div class="faq-item"><div class="faq-q">How does the access model work?</div><div class="faq-a">One-time access fee based on tier selection. Profit share is deducted automatically per resolved trade — not invoiced monthly. Starter retains 50%, Professional 70%, Premium 80%. All settlement is visible on the dashboard in real time.</div></div>
       <div class="faq-item"><div class="faq-q">Do you have custody of my funds?</div><div class="faq-a">No. You maintain your own wallet and private keys at all times. OddsEngine executes on your behalf but never holds, transfers, or withdraws your funds independently.</div></div>
       <div class="faq-item"><div class="faq-q">What risk controls are in place?</div><div class="faq-a">Position sizing relative to bankroll, maximum exposure limits, per-trade size caps, and market quality filters that reject low-liquidity setups before any execution.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I get started?</div><div class="faq-a">Join the Telegram channel to see system updates and performance. When you're ready, DM for access — you'll receive onboarding instructions, wallet setup guidance, and full platform access.</div></div>
+      <div class="faq-item"><div class="faq-q">How do I request access?</div><div class="faq-a">Join the Telegram channel for system updates and performance data. When ready, DM for onboarding — includes wallet setup, platform configuration, and access provisioning.</div></div>
       <div class="faq-item"><div class="faq-q">What's the difference between the tiers?</div><div class="faq-a">All tiers include the same platform, execution, and dashboard. The only difference is the profit split. Higher tier = you keep a larger share of every winning trade.</div></div>
-      <div class="faq-item"><div class="faq-q">Why only 25 spots?</div><div class="faq-a">The system operates within market liquidity constraints. Adding too many participants would degrade execution quality and fill rates for everyone. 25 is the maximum for optimal performance. Once filled, access closes.</div></div>
+      <div class="faq-item"><div class="faq-q">Why is access capped at 25?</div><div class="faq-a">Execution quality is inversely correlated with participant count. Each additional account increases orderbook impact and reduces fill rates. 25 is the current ceiling for maintaining system-level performance guarantees.</div></div>
       <div class="faq-item"><div class="faq-q">What are the risks?</div><div class="faq-a">Trading prediction markets involves risk of loss. Performance varies with market conditions, liquidity, and timing. OddsEngine provides trading infrastructure — not financial advice. Past performance does not guarantee future results.</div></div>
     </div>
   </div>
@@ -593,9 +594,9 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <!-- ============================================================ -->
 <section class="final-cta">
   <div class="container reveal">
-    <h2>The system trades.<br><span style="color:var(--blue)">You keep 70%</span>.</h2>
-    <p>Per-trade settlement. Self-custody. Three tiers — you choose your split.</p>
-    <div class="urgency">Accepting a limited number of participants</div>
+    <h2>Systematic execution.<br><span style="color:var(--blue)">Aligned incentives</span>.</h2>
+    <p>Self-custody. Per-trade settlement. Performance-aligned access.</p>
+    <div class="urgency">25 participant capacity</div>
     <a href="https://t.me/OddsEngine" class="btn-blue" style="font-size:1rem;padding:16px 44px;" target="_blank">Join Channel</a>
   </div>
 </section>
