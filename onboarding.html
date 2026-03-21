@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OddsEngine — Onboarding</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #000000;
+  --bg-card: #111111;
+  --border: #1a1a1a;
+  --border-hover: #2a2a2a;
+  --text: #f5f5f7;
+  --text-secondary: #86868b;
+  --text-tertiary: #48484a;
+  --blue: #2997ff;
+  --blue-subtle: rgba(41,151,255,0.08);
+  --green: #30d158;
+  --orange: #f59e0b;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', 'SF Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+.container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* NAV */
+nav { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 64px; }
+nav .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo span { color: var(--text-tertiary); }
+.nav-badge { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); background: rgba(245,158,11,0.08); padding: 4px 12px; border-radius: 4px; }
+
+/* HEADER */
+.header { margin-bottom: 64px; }
+.header-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; }
+.header h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 16px; }
+.header p { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+
+/* PROGRESS */
+.progress-bar { display: flex; gap: 4px; margin-bottom: 64px; }
+.progress-segment { height: 3px; flex: 1; background: var(--border); border-radius: 2px; }
+.progress-segment.active { background: var(--blue); }
+
+/* STEPS */
+.step { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+.step:last-of-type { border-bottom: none; }
+.step-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+.step-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--blue); letter-spacing: 2px; min-width: 24px; }
+.step-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.3px; }
+.step-body { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 20px; padding-left: 40px; }
+
+/* INSTRUCTION BOX */
+.instruction { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-left: 40px; margin-bottom: 16px; }
+.instruction-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+.instruction-text { font-size: 0.92rem; color: var(--text); line-height: 1.7; }
+.instruction-text a { color: var(--blue); text-decoration: none; }
+.instruction-text a:hover { text-decoration: underline; }
+
+/* URL BOX */
+.url-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-family: var(--font-mono); font-size: 0.85rem; color: var(--blue); display: flex; align-items: center; justify-content: space-between; }
+.url-box .copy-btn { background: transparent; border: 1px solid var(--border-hover); color: var(--text-tertiary); padding: 4px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.68rem; cursor: pointer; transition: all 0.2s; }
+.url-box .copy-btn:hover { color: var(--text); border-color: var(--text-tertiary); }
+
+/* WARNING BOX */
+.warning { background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15); border-radius: 12px; padding: 20px 24px; margin-left: 40px; margin-bottom: 16px; }
+.warning-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.warning-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* SUCCESS BOX */
+.success { background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.15); border-radius: 12px; padding: 20px 24px; margin-left: 40px; }
+.success-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--green); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.success-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* CHECKLIST */
+.checklist { list-style: none; margin-left: 40px; }
+.checklist li { padding: 10px 0; font-size: 0.92rem; color: var(--text-secondary); display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.checklist li:last-child { border-bottom: none; }
+.check { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-hover); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.6rem; color: transparent; }
+.check.done { border-color: var(--green); color: var(--green); background: rgba(48,209,88,0.08); }
+
+/* TIER INFO */
+.tier-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-left: 40px; margin-bottom: 16px; }
+.tier-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.tier-row:last-child { border-bottom: none; }
+.tier-label { color: var(--text-tertiary); }
+.tier-value { font-family: var(--font-mono); color: var(--text); font-weight: 500; }
+.tier-value.blue { color: var(--blue); }
+.tier-value.green { color: var(--green); }
+
+/* FOOTER */
+.ob-footer { margin-top: 80px; padding: 32px 0; border-top: 1px solid var(--border); }
+.ob-footer p { font-size: 0.72rem; color: var(--text-tertiary); line-height: 1.7; text-align: center; }
+.ob-footer a { color: var(--blue); text-decoration: none; }
+
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.8rem; }
+  .step-body, .instruction, .warning, .success, .checklist, .tier-card { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="https://oddsengine.live" class="logo"><img src="logo.png" alt="" style="width:22px;height:22px;">OddsEngine<span>.live</span></a>
+    <span class="nav-badge">Onboarding</span>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Setup Guide</div>
+    <h1>Get connected in<br>under 10 minutes.</h1>
+    <p>Follow these steps to connect your wallet to OddsEngine. Once complete, the system begins trading on your account automatically.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-segment active"></div>
+    <div class="progress-segment active"></div>
+    <div class="progress-segment active"></div>
+    <div class="progress-segment active"></div>
+    <div class="progress-segment active"></div>
+    <div class="progress-segment"></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">01</span>
+      <span class="step-title">Create a Polymarket account</span>
+    </div>
+    <p class="step-body">Go to Polymarket and create an account. This is the prediction market platform where OddsEngine executes trades.</p>
+    <div class="instruction">
+      <div class="instruction-label">Go to</div>
+      <div class="url-box">
+        <span>https://polymarket.com</span>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('https://polymarket.com');this.textContent='Copied';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+      </div>
+      <div class="instruction-text" style="margin-top:12px;">Sign up with email or connect an existing wallet. If you're new, email signup is the fastest option.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">02</span>
+      <span class="step-title">Set up your wallet</span>
+    </div>
+    <p class="step-body">You need a Polygon-compatible wallet to hold your funds. We recommend Phantom — it supports Polygon, is easy to use, and works on mobile and desktop.</p>
+    <div class="instruction">
+      <div class="instruction-label">Download Phantom</div>
+      <div class="url-box">
+        <span>https://phantom.app</span>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('https://phantom.app');this.textContent='Copied';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+      </div>
+      <div class="instruction-text" style="margin-top:12px;">Install Phantom → Create or import a wallet → Switch to Polygon network.</div>
+    </div>
+    <div class="warning">
+      <div class="warning-label">Important</div>
+      <div class="warning-text">Create a <strong>new, dedicated wallet</strong> only for OddsEngine. Do not use your primary wallet. This keeps your funds separated and your main wallet secure.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">03</span>
+      <span class="step-title">Fund your wallet with USDC</span>
+    </div>
+    <p class="step-body">Transfer USDC to your Polygon wallet. This is your trading bankroll — the system trades with these funds. You maintain full custody at all times.</p>
+    <div class="instruction">
+      <div class="instruction-label">Requirements</div>
+      <div class="instruction-text">
+        <strong>Token:</strong> USDC (or USDC.e) on Polygon network<br>
+        <strong>Amount:</strong> Your chosen bankroll — the system adapts position sizing automatically<br>
+        <strong>Gas:</strong> Keep a small amount of POL (Polygon) for transaction fees (~$1 worth is sufficient)
+      </div>
+    </div>
+    <div class="warning">
+      <div class="warning-label">Network</div>
+      <div class="warning-text">Make sure you send USDC on the <strong>Polygon</strong> network. Sending on Ethereum mainnet will result in funds on the wrong chain.</div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">04</span>
+      <span class="step-title">Deposit on Polymarket</span>
+    </div>
+    <p class="step-body">Once your wallet is funded, deposit USDC into your Polymarket account. This makes the funds available for trading.</p>
+    <div class="instruction">
+      <div class="instruction-label">How to deposit</div>
+      <div class="instruction-text">
+        1. Go to <a href="https://polymarket.com">polymarket.com</a> and connect your wallet<br>
+        2. Click <strong>"Deposit"</strong> in the top right<br>
+        3. Enter the amount you want to deposit<br>
+        4. Approve and confirm the transaction in your wallet
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">05</span>
+      <span class="step-title">Generate your API Key</span>
+    </div>
+    <p class="step-body">Polymarket allows you to create API keys that grant trade-only access. This key lets OddsEngine execute trades on your account — without any ability to withdraw or transfer your funds.</p>
+    <div class="instruction">
+      <div class="instruction-label">Steps</div>
+      <div class="instruction-text">
+        1. Go to <a href="https://polymarket.com">polymarket.com</a> → Profile → Settings<br>
+        2. Navigate to <strong>API Keys</strong><br>
+        3. Click <strong>"Create API Key"</strong><br>
+        4. Copy the <strong>API Key</strong> and <strong>API Secret</strong><br>
+        5. Send both to OddsEngine via Telegram DM (encrypted)
+      </div>
+    </div>
+    <div class="warning">
+      <div class="warning-label">Security</div>
+      <div class="warning-text">
+        <strong>Your private key stays with you.</strong> You never share your wallet's private key or seed phrase with anyone — including OddsEngine. The API key only grants trade permission. You can revoke it at any time from your Polymarket settings.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-header">
+      <span class="step-num">06</span>
+      <span class="step-title">Confirmation</span>
+    </div>
+    <p class="step-body">Once we receive your API key, OddsEngine configures your account and begins trading within 24 hours. You'll receive a confirmation via Telegram.</p>
+    <div class="success">
+      <div class="success-label">What happens next</div>
+      <div class="success-text">
+        The system starts trading on your account automatically. You can monitor every trade on your dashboard in real time. Profit share is calculated per trade — fully transparent, fully auditable.
+      </div>
+    </div>
+
+    <!-- YOUR TIER -->
+    <div class="tier-card" style="margin-top:24px;">
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Your Access</div>
+      <div class="tier-row"><span class="tier-label">Tier</span><span class="tier-value blue">[Your Tier]</span></div>
+      <div class="tier-row"><span class="tier-label">Profit split</span><span class="tier-value green">[Your Split]</span></div>
+      <div class="tier-row"><span class="tier-label">Settlement</span><span class="tier-value">Per trade (automatic)</span></div>
+      <div class="tier-row"><span class="tier-label">Dashboard</span><span class="tier-value blue">public.oddsengine.live</span></div>
+      <div class="tier-row"><span class="tier-label">Support</span><span class="tier-value">Telegram DM</span></div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div style="margin-top:48px;margin-bottom:64px;">
+    <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;">Setup Checklist</div>
+    <ul class="checklist">
+      <li><span class="check">✓</span>Polymarket account created</li>
+      <li><span class="check">✓</span>Dedicated wallet set up (Phantom)</li>
+      <li><span class="check">✓</span>USDC deposited on Polygon</li>
+      <li><span class="check">✓</span>Funds deposited on Polymarket</li>
+      <li><span class="check">✓</span>API Key generated and sent to OddsEngine</li>
+      <li><span class="check">✓</span>Confirmation received — system active</li>
+    </ul>
+  </div>
+
+  <!-- FAQ -->
+  <div style="margin-bottom:64px;">
+    <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;">Common Questions</div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Can OddsEngine withdraw my funds?</div>
+      <div style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;">No. The API key only grants trade permission. Withdrawals require your private key, which you never share. You can revoke the API key at any time.</div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Can I withdraw my funds at any time?</div>
+      <div style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;">Yes. Your wallet, your keys. You can withdraw from Polymarket back to your wallet at any time. Note that open positions may need to resolve first.</div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">How do I stop OddsEngine from trading?</div>
+      <div style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;">Revoke your API key in Polymarket settings. The system loses trade access immediately. You can also DM us on Telegram to pause your account.</div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">How is the profit share calculated?</div>
+      <div style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;">After each profitable trade, the system calculates your share based on your tier. The split is logged on your dashboard. Settlement details are visible in real time.</div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">What if I need help during setup?</div>
+      <div style="font-size:0.88rem;color:var(--text-secondary);line-height:1.7;">DM us on Telegram. We'll walk you through any step in real time.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ob-footer">
+  <div class="container">
+    <p>&copy; 2026 OddsEngine · <a href="https://oddsengine.live">oddsengine.live</a> · <a href="https://t.me/OddsEngine">Telegram</a></p>
+    <p style="margin-top:12px;">Trading prediction markets involves risk of loss. Past performance is not indicative of future results. OddsEngine does not provide financial advice.</p>
+  </div>
+</div>
+
+</body>
+</html>
