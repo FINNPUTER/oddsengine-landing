@@ -121,6 +121,9 @@ nav .container { display: flex; justify-content: space-between; align-items: cen
 .price-cta:hover { background: var(--blue-bright); transform: scale(1.01); }
 .price-note { margin-top: 16px; font-size: 0.75rem; color: var(--text-tertiary); }
 
+.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.products-section { padding: 100px 0 140px; }
+
 /* FAQ */
 .faq-section { padding: 140px 0; border-top: 1px solid var(--border); }
 .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 60px; }
@@ -146,20 +149,42 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 .disclaimer p { font-size: 0.65rem; color: var(--text-tertiary); max-width: 640px; margin: 0 auto; line-height: 1.7; }
 
 @media (max-width: 768px) {
-  .hero h1 { letter-spacing: -2px; }
+  .hero { padding: 120px 0 0; }
+  .hero h1 { letter-spacing: -2px; font-size: 2.4rem; }
+  .hero-sub { font-size: 1rem; }
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .hero-screenshot { margin-top: 48px; padding: 0 12px 80px; }
   .two-col, .two-col.reverse { grid-template-columns: 1fr; gap: 48px; direction: ltr; }
-  .steps-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; gap: 20px; }
   .faq-grid { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; }
+  .products-grid { grid-template-columns: 1fr; gap: 16px; }
+  .products-grid > div { padding: 28px 20px !important; }
+  .products-section { padding: 60px 0 80px; }
   footer .container { flex-direction: column; gap: 12px; }
   .nav-right a.link { display: none; }
-  .price-card { margin: 60px 0 0; }
+  .price-card { margin: 60px 0 0; padding: 36px 24px; }
   .terminal-grid { grid-template-columns: 1fr 1fr !important; }
   .split-grid { grid-template-columns: 1fr !important; }
   .ref-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .feature-section { padding: 80px 0; }
+  .feature-headline { font-size: 2rem; letter-spacing: -1px; }
+  .feature-body { font-size: 1rem; }
+  .final-cta { padding: 100px 0 80px; }
+  .final-cta h2 { font-size: 2.2rem; letter-spacing: -2px; }
+  .container { padding: 0 16px; }
+  .price-number { font-size: 3.5rem; }
+  .disclaimer p { font-size: 0.6rem !important; }
 }
 @media (max-width: 480px) {
   .terminal-grid { grid-template-columns: 1fr !important; }
+  .hero h1 { font-size: 2rem; }
+  .feature-headline { font-size: 1.7rem; }
+  .final-cta h2 { font-size: 1.8rem; }
+  .hero-screenshot { padding: 0 8px 60px; }
+  .btn-blue, .btn-ghost { font-size: 0.88rem; padding: 12px 28px; width: 100%; text-align: center; justify-content: center; }
+  .nav-cta { padding: 6px 14px; font-size: 0.75rem; }
+  .price-number { font-size: 2.8rem; }
+  .steps-grid { gap: 14px; }
 }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -251,13 +276,13 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 <!-- ============================================================ -->
 <!-- 1.5 PRODUCTS -->
 <!-- ============================================================ -->
-<section class="feature-section" style="padding:100px 0 140px;border-top:1px solid var(--border);">
+<section class="feature-section products-section" style="border-top:1px solid var(--border);">
   <div class="container" style="max-width:980px;">
     <div style="text-align:center;margin-bottom:72px;" class="reveal">
       <div class="feature-eyebrow">Two Engines, One Platform</div>
       <div class="feature-headline">Built for prediction markets.</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="reveal">
+    <div class="products-grid reveal">
       <!-- Crypto Card -->
       <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);border-radius:2px;"></div>
