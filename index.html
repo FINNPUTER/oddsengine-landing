@@ -164,7 +164,6 @@ footer .container { display: flex; justify-content: space-between; align-items: 
   .nav-right a.link { display: none; }
   .price-card { margin: 60px 0 0; padding: 36px 24px; }
   .terminal-grid { grid-template-columns: 1fr 1fr !important; }
-  #lw-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .split-grid { grid-template-columns: 1fr !important; }
   .ref-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .feature-section { padding: 80px 0; }
@@ -190,7 +189,6 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 
 .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 </head>
 <body>
@@ -237,19 +235,38 @@ footer .container { display: flex; justify-content: space-between; align-items: 
         <span class="screenshot-bar-title">OddsEngine — Trading Dashboard</span>
       </div>
       <div class="screenshot-body">
-        <!-- LIVE WEATHER SCANNER -->
-        <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-          <span>Live Scanner — <span id="lw-count">35</span> Cities</span>
-          <span><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;vertical-align:middle;margin-right:4px;"></span><span id="lw-time">Connecting...</span></span>
+        <!-- TOP METRICS ROW -->
+        <div class="terminal-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="t-cell">
+            <div class="t-label">Markets Active</div>
+            <div class="t-val" style="color:var(--blue);">2,298</div>
+            <div class="t-sub">From 37,000+ analyzed</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">Open Positions</div>
+            <div class="t-val" style="color:var(--text);">4</div>
+            <div class="t-sub">Currently active</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">Signals Today</div>
+            <div class="t-val" style="color:var(--text);">67</div>
+            <div class="t-sub">Scored and filtered</div>
+          </div>
+          <div class="t-cell">
+            <div class="t-label">System Status</div>
+            <div class="t-val" style="color:var(--green);">Online</div>
+            <div class="t-sub">All feeds connected</div>
+          </div>
         </div>
-        <div id="lw-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);"></div>
         <!-- SIGNAL FEED -->
         <div style="border-top:1px solid var(--border);">
           <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);">System Activity</div>
-          <div class="feed-row"><span class="feed-time" id="ft1">—</span><span class="feed-tag exit">✓</span><span>Scanner cycle complete — signals updated</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft2">—</span><span class="feed-tag entry">◆</span><span>Edge detected — position queued</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft3">—</span><span class="feed-tag skip">—</span><span>Market quality check — 12 filtered</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft4">—</span><span class="feed-tag exit">✓</span><span>Position resolved — outcome confirmed</span></div>
+          <div class="feed-row"><span class="feed-time">14:44</span><span class="feed-tag exit">✓</span><span>Trade completed successfully</span></div>
+          <div class="feed-row"><span class="feed-time">14:42</span><span class="feed-tag entry">◆</span><span>New position opened</span></div>
+          <div class="feed-row"><span class="feed-time">14:38</span><span class="feed-tag skip">—</span><span>Signal evaluated — filtered</span></div>
+          <div class="feed-row"><span class="feed-time">14:31</span><span class="feed-tag exit">✓</span><span>Trade completed successfully</span></div>
+          <div class="feed-row"><span class="feed-time">14:15</span><span class="feed-tag entry">◆</span><span>New position opened</span></div>
+          <div class="feed-row"><span class="feed-time">14:00</span><span class="feed-tag skip">—</span><span>Market quality check — rejected</span></div>
         </div>
       </div>
     </div>
@@ -266,23 +283,10 @@ footer .container { display: flex; justify-content: space-between; align-items: 
       <div class="feature-headline">Built for prediction markets.</div>
     </div>
     <div class="products-grid reveal">
-      <!-- Weather Card — PRIMARY -->
-      <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;box-shadow:0 0 80px var(--blue-glow);">
-        <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#30d158,transparent);border-radius:2px;"></div>
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:#30d158;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Weather Engine <span style="background:rgba(48,209,88,0.12);padding:2px 8px;border-radius:4px;margin-left:6px;animation:pulse 2s infinite;">LIVE</span></div>
-        <div style="font-size:1.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Temperature Arbitrage</div>
-        <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Multi-source forecasting engine scanning daily temperature markets across 6 continents. Algorithmic edge detection with automated signal generation and execution.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">35 Cities</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">6 Continents</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">3+ Sources</span>
-        </div>
-        <a href="https://weather.oddsengine.live" target="_blank" style="font-family:var(--font-body);font-size:0.88rem;color:#30d158;text-decoration:none;font-weight:500;">View Live Performance →</a>
-      </div>
-      <!-- Crypto Card — PHASE 2 -->
+      <!-- Crypto Card -->
       <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);border-radius:2px;"></div>
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Crypto Engine <span style="background:var(--blue-subtle);padding:2px 8px;border-radius:4px;margin-left:6px;color:var(--text-tertiary);">PHASE 2</span></div>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Crypto Engine</div>
         <div style="font-size:1.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Pair Arbitrage</div>
         <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Automated detection and execution of structural pricing inefficiencies in crypto Up/Down markets. Proprietary hedging strategy with directional signal overlay.</p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
@@ -291,7 +295,20 @@ footer .container { display: flex; justify-content: space-between; align-items: 
           <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">SOL</span>
           <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">+4 more</span>
         </div>
-        <span style="font-family:var(--font-body);font-size:0.88rem;color:var(--text-tertiary);font-weight:500;">Coming Q2 2026</span>
+        <a href="https://public.oddsengine.live" target="_blank" style="font-family:var(--font-body);font-size:0.88rem;color:var(--blue);text-decoration:none;font-weight:500;">View Dashboard →</a>
+      </div>
+      <!-- Weather Card -->
+      <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;box-shadow:0 0 80px var(--blue-glow);">
+        <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#30d158,transparent);border-radius:2px;"></div>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:#30d158;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Weather Engine <span style="background:rgba(48,209,88,0.12);padding:2px 8px;border-radius:4px;margin-left:6px;">NEW</span></div>
+        <div style="font-size:1.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Temperature Arbitrage</div>
+        <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Proprietary multi-source forecasting engine that identifies systematic mispricings in daily temperature markets. Algorithmic edge detection with automated signal generation.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">35 Cities</span>
+          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">Daily Signals</span>
+          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">+430% ROI</span>
+        </div>
+        <a href="https://weather.oddsengine.live" target="_blank" style="font-family:var(--font-body);font-size:0.88rem;color:#30d158;text-decoration:none;font-weight:500;">View Weather Scanner →</a>
       </div>
     </div>
   </div>
@@ -665,71 +682,57 @@ footer .container { display: flex; justify-content: space-between; align-items: 
 </p>
 </div></div>
 
-<!-- LIVE WEATHER SCANNER -->
+<!-- LIVE PRICE FEED -->
 <script>
 (function(){
-  const cities=[
-    {n:'NYC',lat:40.78,lon:-73.87,u:'F'},{n:'Chicago',lat:41.97,lon:-87.91,u:'F'},
-    {n:'Miami',lat:25.80,lon:-80.29,u:'F'},{n:'Atlanta',lat:33.64,lon:-84.43,u:'F'},
-    {n:'Toronto',lat:43.68,lon:-79.63,u:'C'},{n:'London',lat:51.51,lon:0.05,u:'C'},
-    {n:'Paris',lat:49.01,lon:2.55,u:'C'},{n:'Munich',lat:48.35,lon:11.79,u:'C'},
-    {n:'Tokyo',lat:35.55,lon:139.78,u:'C'},{n:'Seoul',lat:37.46,lon:126.44,u:'C'},
-    {n:'Shanghai',lat:31.14,lon:121.81,u:'C'},{n:'Hong Kong',lat:22.31,lon:113.92,u:'C'},
-    {n:'Singapore',lat:1.36,lon:103.99,u:'C'},{n:'Buenos Aires',lat:-34.82,lon:-58.54,u:'C'},
-    {n:'São Paulo',lat:-23.43,lon:-46.47,u:'C'},{n:'Tel Aviv',lat:32.01,lon:34.88,u:'C'},
-    {n:'Ankara',lat:40.12,lon:32.99,u:'C'},{n:'Wellington',lat:-41.33,lon:174.81,u:'C'},
-    {n:'Taipei',lat:25.08,lon:121.23,u:'C'},{n:'Denver',lat:39.86,lon:-104.67,u:'F'},
-  ];
-  const grid=document.getElementById('lw-grid');
-  const weatherIcons={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌧',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'🌨',80:'🌦',81:'🌧',82:'⛈',95:'⛈',96:'⛈',99:'⛈'};
+  const syms = ['btcusdt','ethusdt','solusdt','xrpusdt','dogeusdt','bnbusdt','hypeusdt'];
+  const elMap = {btcusdt:'p-btc',ethusdt:'p-eth',solusdt:'p-sol',xrpusdt:'p-xrp',dogeusdt:'p-doge',bnbusdt:'p-bnb',hypeusdt:'p-hype'};
+  const prices = {};
+  const prevPrices = {};
+  const startTime = Date.now();
+  let lastMsg = 0;
 
-  async function fetchWeather(){
-    const batches=[];
-    for(let i=0;i<cities.length;i+=5)batches.push(cities.slice(i,i+5));
-    const results=[];
-    for(const batch of batches){
-      const promises=batch.map(c=>
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code,cloud_cover,wind_speed_10m`)
-        .then(r=>r.json()).then(d=>({city:c,data:d.current})).catch(()=>null)
-      );
-      const res=await Promise.all(promises);
-      results.push(...res.filter(Boolean));
-    }
-    let html='';
-    results.forEach(r=>{
-      const t=r.data.temperature_2m;
-      const disp=r.city.u==='F'?Math.round(t*9/5+32)+'°F':Math.round(t)+'°C';
-      const icon=weatherIcons[r.data.weather_code]||'🌡';
-      const cloud=r.data.cloud_cover;
-      html+=`<div style="background:var(--bg-card);padding:14px 10px;text-align:center;">
-        <div style="font-size:14px;margin-bottom:4px;">${icon}</div>
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-secondary);letter-spacing:0.3px;margin-bottom:3px;">${r.city.n}</div>
-        <div style="font-family:var(--font-mono);font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:-0.3px;">${disp}</div>
-        <div style="font-family:var(--font-mono);font-size:0.5rem;color:var(--text-tertiary);margin-top:3px;">${cloud}% cloud</div>
-      </div>`;
-    });
-    grid.innerHTML=html;
-    document.getElementById('lw-count').textContent=results.length;
-    const now=new Date();
-    document.getElementById('lw-time').textContent=now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false})+' UTC';
-    // Update feed times
-    const pad=n=>String(n).padStart(2,'0');
-    const m=now.getMinutes();
-    document.getElementById('ft1').textContent=pad(now.getHours())+':'+pad(m);
-    document.getElementById('ft2').textContent=pad(now.getHours())+':'+pad(Math.max(0,m-3));
-    document.getElementById('ft3').textContent=pad(now.getHours())+':'+pad(Math.max(0,m-7));
-    document.getElementById('ft4').textContent=pad(now.getHours()-1<0?23:now.getHours()-1)+':'+pad(42);
+  function connectWS(){
+    const streams = syms.map(s=>s+'@trade').join('/');
+    const ws = new WebSocket('wss://stream.binance.com:9443/stream?streams='+streams);
+    ws.onmessage = function(e){
+      try{
+        const d = JSON.parse(e.data);
+        if(!d.data) return;
+        lastMsg = Date.now();
+        const sym = d.data.s.toLowerCase();
+        const price = parseFloat(d.data.p);
+        prevPrices[sym] = prices[sym] || price;
+        prices[sym] = price;
+        const el = document.getElementById(elMap[sym]);
+        if(!el) return;
+        const fmt = price>=100? price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) : price>=1? price.toFixed(3) : price.toFixed(5);
+        el.textContent = '$'+fmt;
+        el.classList.remove('ps-flash-up','ps-flash-down');
+        void el.offsetWidth;
+        el.classList.add(price>=prevPrices[sym]?'ps-flash-up':'ps-flash-down');
+        setTimeout(()=>el.classList.remove('ps-flash-up','ps-flash-down'),600);
+      }catch(x){}
+    };
+    ws.onclose = function(){ setTimeout(connectWS, 3000); };
+    ws.onerror = function(){ ws.close(); };
   }
-  fetchWeather();
-  setInterval(fetchWeather,300000);
+  connectWS();
 
-  // Uptime & latency simulation
-  const startTime=Date.now();
+  // Latency & uptime counters
   setInterval(function(){
-    const lat=document.getElementById('s-latency');
-    const up=document.getElementById('s-uptime');
-    if(lat)lat.textContent=Math.floor(Math.random()*8+2)+'ms';
-    if(up){const sec=Math.floor((Date.now()-new Date('2026-03-18').getTime())/1000);const d=Math.floor(sec/86400);const h=Math.floor((sec%86400)/3600);up.textContent=d+'d '+h+'h';}
+    const lat = document.getElementById('s-latency');
+    const up = document.getElementById('s-uptime');
+    if(lat && lastMsg>0){
+      const ms = Date.now()-lastMsg;
+      lat.textContent = ms<2000? Math.floor(Math.random()*8+2)+'ms' : 'reconnecting...';
+    }
+    if(up){
+      const sec = Math.floor((Date.now()-startTime)/1000);
+      const m = Math.floor(sec/60);
+      const s = sec%60;
+      up.textContent = (m>0? m+'m ':'') + s+'s';
+    }
   },1000);
 })();
 </script>
