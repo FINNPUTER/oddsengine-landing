@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OddsEngine — Execution Infrastructure for Prediction Markets</title>
-<meta name="description" content="Systematic detection and execution of structural pricing inefficiencies across crypto and weather prediction markets on Polymarket.">
-
-<!-- Open Graph (Telegram / WhatsApp / Social Preview) -->
-<meta property="og:title" content="OddsEngine · Execution Infrastructure for Prediction Markets">
-<meta property="og:description" content="Systematic detection and execution of structural pricing inefficiencies across crypto and weather prediction markets. Fully automated. 24/7.">
+<title>OddsEngine — Prediction Market Intelligence</title>
+<meta name="description" content="Scan live weather markets. Calculate outcome probabilities. Build optimized 3–5 outcome portfolios. Published before resolution, scored after.">
+<meta property="og:title" content="OddsEngine · Prediction Market Intelligence">
+<meta property="og:description" content="Probability distributions for Polymarket temperature markets. Published before resolution, scored against the station after.">
 <meta property="og:image" content="https://oddsengine.live/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -16,23 +14,20 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OddsEngine">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OddsEngine · Prediction Market Infrastructure">
-<meta name="twitter:description" content="Systematic detection and execution of structural pricing inefficiencies. Fully automated.">
+<meta name="twitter:title" content="OddsEngine · Prediction Market Intelligence">
+<meta name="twitter:description" content="Probability distributions for weather prediction markets. Published before resolution, scored after.">
 <meta name="twitter:image" content="https://oddsengine.live/og-image.png">
-
-<!-- PWA / App Icon -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="OddsEngine">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#1e90ff">
-
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --bg: #000000;
   --bg-elevated: #0a0a0a;
@@ -49,760 +44,770 @@
   --blue-subtle: rgba(41,151,255,0.08);
   --green: #30d158;
   --red: #ff453a;
+  --amber: #f59e0b;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'DM Mono', 'SF Mono', monospace;
 }
-html { scroll-behavior: smooth; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-.glow-top { position: fixed; top: -400px; left: 50%; transform: translateX(-50%); width: 1200px; height: 800px; background: radial-gradient(ellipse, rgba(41,151,255,0.07) 0%, transparent 60%); pointer-events: none; z-index: 0; }
-
-section { position: relative; z-index: 1; }
-.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-
-/* NAV */
-nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 16px 0; backdrop-filter: saturate(180%) blur(20px); background: rgba(0,0,0,0.72); border-bottom: 1px solid rgba(255,255,255,0.08); }
-nav .container { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; color: var(--text); text-decoration: none; letter-spacing: -0.3px; }
-.logo span { color: var(--text-tertiary); }
-.nav-right { display: flex; gap: 28px; align-items: center; }
-.nav-right a.link { font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
-.nav-right a.link:hover { color: var(--text); }
-.nav-cta { font-family: var(--font-body); font-size: 0.82rem; padding: 8px 20px; background: var(--blue); color: #fff; border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; }
-.nav-cta:hover { background: var(--blue-bright); }
-
-/* HERO */
-.hero { display: flex; align-items: center; justify-content: center; text-align: center; padding: 160px 0 0; position: relative; }
-.hero-inner { max-width: 820px; }
-.hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; color: var(--blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; }
-.hero h1 { font-size: clamp(3.2rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -3px; margin-bottom: 28px; background: linear-gradient(180deg, #f5f5f7 30%, #86868b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero-sub { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.65; max-width: 520px; margin: 0 auto 48px; font-weight: 400; }
-.hero-sub strong { color: var(--text); font-weight: 600; }
-.hero-actions { display: flex; gap: 16px; justify-content: center; align-items: center; }
-.btn-blue { font-family: var(--font-body); font-size: 0.95rem; padding: 14px 32px; background: var(--blue); color: #fff; border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
-.btn-blue:hover { background: var(--blue-bright); transform: scale(1.02); }
-.btn-ghost { font-family: var(--font-body); font-size: 0.95rem; padding: 14px 32px; background: transparent; color: var(--blue); border: none; border-radius: 980px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; }
-.btn-ghost:hover { text-decoration: underline; }
-
-/* HERO SCREENSHOT */
-.hero-screenshot { margin-top: 72px; padding: 0 24px 120px; }
-.screenshot-frame { background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 120px var(--blue-glow), 0 40px 80px rgba(0,0,0,0.6); }
-.screenshot-bar { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-.screenshot-dot { width: 10px; height: 10px; border-radius: 50%; }
-.screenshot-dot.r { background: #ff5f57; }
-.screenshot-dot.y { background: #febc2e; }
-.screenshot-dot.g { background: #28c840; }
-.screenshot-bar-title { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-tertiary); margin-left: 12px; letter-spacing: 0.5px; }
-.screenshot-body { padding: 0; }
-.terminal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
-.t-cell { background: var(--bg-card); padding: 20px 18px; }
-.t-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
-.t-val { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 3px; }
-.t-sub { font-size: 0.72rem; color: var(--text-tertiary); }
-.t-row { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-tertiary); display: flex; justify-content: space-between; padding: 4px 0; }
-.feed-row { padding: 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.03); font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary); display: flex; gap: 16px; align-items: baseline; }
-.feed-row:last-child { border-bottom: none; }
-.feed-time { color: var(--text-tertiary); font-size: 0.6rem; min-width: 38px; }
-.feed-tag { font-size: 0.58rem; padding: 2px 6px; border-radius: 3px; font-weight: 500; }
-.feed-tag.entry { background: rgba(41,151,255,0.12); color: var(--blue); }
-.feed-tag.exit { background: rgba(48,209,88,0.12); color: var(--green); }
-.feed-tag.skip { background: rgba(255,255,255,0.05); color: var(--text-tertiary); }
-
-/* FEATURE SECTIONS */
-.feature-section { padding: 160px 0; }
-.feature-section .container { max-width: 980px; }
-.feature-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; }
-.feature-headline { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
-.feature-body { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 560px; font-weight: 400; }
-
-/* TWO COL */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.two-col.reverse { direction: rtl; }
-.two-col.reverse > * { direction: ltr; }
-
-/* STEPS */
-.steps-section { padding: 140px 0; border-top: 1px solid var(--border); }
-.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 80px; }
-.step-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 2px; margin-bottom: 16px; }
-.step h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.3px; }
-.step p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; font-weight: 400; }
-
-/* PRICING */
-.pricing-section { padding: 160px 0; text-align: center; }
-.price-card { max-width: 440px; margin: 60px auto 0; background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 20px; padding: 52px 44px; text-align: center; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 80px var(--blue-glow), 0 24px 60px rgba(0,0,0,0.5); }
-.price-card::before { content: ''; position: absolute; top: -1px; left: 20%; right: 20%; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); border-radius: 2px; }
-.price-label { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-tertiary); margin-bottom: 20px; }
-.price-number { font-size: 5rem; font-weight: 800; letter-spacing: -4px; line-height: 1; margin-bottom: 4px; }
-.price-number .cur { font-size: 2rem; color: var(--text-secondary); vertical-align: top; letter-spacing: 0; }
-.price-context { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 400; }
-.price-fact { font-family: var(--font-mono); font-size: 0.78rem; color: var(--blue); padding: 10px 20px; background: var(--blue-subtle); border-radius: 8px; display: inline-block; margin-bottom: 36px; }
-.price-list { list-style: none; text-align: left; margin-bottom: 36px; }
-.price-list li { padding: 10px 0; font-size: 0.92rem; color: var(--text-secondary); display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); font-weight: 400; }
-.price-list li:last-child { border-bottom: none; }
-.price-list li::before { content: ''; width: 4px; height: 4px; background: var(--blue); border-radius: 50%; flex-shrink: 0; }
-.price-cta { display: block; width: 100%; font-size: 0.95rem; padding: 16px; border-radius: 980px; border: none; background: var(--blue); color: #fff; cursor: pointer; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; font-family: var(--font-body); }
-.price-cta:hover { background: var(--blue-bright); transform: scale(1.01); }
-.price-note { margin-top: 16px; font-size: 0.75rem; color: var(--text-tertiary); }
-
-.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.products-section { padding: 100px 0 140px; }
-
-/* FAQ */
-.faq-section { padding: 140px 0; border-top: 1px solid var(--border); }
-.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 60px; }
-.faq-item { padding: 28px; border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.3s; }
-.faq-item:hover { border-color: var(--border-hover); }
-.faq-q { font-size: 0.98rem; font-weight: 600; margin-bottom: 10px; }
-.faq-a { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; font-weight: 400; }
-
-/* FINAL CTA */
-.final-cta { padding: 200px 0 160px; text-align: center; position: relative; }
-.final-cta::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(41,151,255,0.06) 0%, transparent 60%); pointer-events: none; }
-.final-cta h2 { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; letter-spacing: -3px; line-height: 1.05; margin-bottom: 20px; }
-.final-cta p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 400; }
-.final-cta .urgency { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-tertiary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 44px; }
-
-footer { border-top: 1px solid var(--border); padding: 32px 0; }
-footer .container { display: flex; justify-content: space-between; align-items: center; }
-.footer-text { font-size: 0.75rem; color: var(--text-tertiary); }
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 0.75rem; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--text-secondary); }
-.disclaimer { padding: 20px 0 40px; text-align: center; }
-.disclaimer p { font-size: 0.65rem; color: var(--text-tertiary); max-width: 640px; margin: 0 auto; line-height: 1.7; }
-
-@media (max-width: 768px) {
-  .hero { padding: 120px 0 0; }
-  .hero h1 { letter-spacing: -2px; font-size: 2.4rem; }
-  .hero-sub { font-size: 1rem; }
-  .hero-actions { flex-direction: column; gap: 12px; }
-  .hero-screenshot { margin-top: 48px; padding: 0 12px 80px; }
-  .two-col, .two-col.reverse { grid-template-columns: 1fr; gap: 48px; direction: ltr; }
-  .steps-grid { grid-template-columns: 1fr; gap: 20px; }
-  .faq-grid { grid-template-columns: 1fr; }
-  .products-grid { grid-template-columns: 1fr; gap: 16px; }
-  .products-grid > div { padding: 28px 20px !important; }
-  .products-section { padding: 60px 0 80px; }
-  footer .container { flex-direction: column; gap: 12px; }
-  .nav-right a.link { display: none; }
-  .price-card { margin: 60px 0 0; padding: 36px 24px; }
-  .terminal-grid { grid-template-columns: 1fr 1fr !important; }
-  #lw-grid { grid-template-columns: repeat(3, 1fr) !important; }
-  .split-grid { grid-template-columns: 1fr !important; }
-  .ref-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .feature-section { padding: 80px 0; }
-  .feature-headline { font-size: 2rem; letter-spacing: -1px; }
-  .feature-body { font-size: 1rem; }
-  .final-cta { padding: 100px 0 80px; }
-  .final-cta h2 { font-size: 2.2rem; letter-spacing: -2px; }
-  .container { padding: 0 16px; }
-  .price-number { font-size: 3.5rem; }
-  .disclaimer p { font-size: 0.6rem !important; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body {
+  background:var(--bg); color:var(--text); font-family:var(--font-body);
+  font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
-@media (max-width: 480px) {
-  .terminal-grid { grid-template-columns: 1fr !important; }
-  #lw-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .hero h1 { font-size: 2rem; }
-  .feature-headline { font-size: 1.7rem; }
-  .final-cta h2 { font-size: 1.8rem; }
-  .hero-screenshot { padding: 0 8px 60px; }
-  .btn-blue, .btn-ghost { font-size: 0.88rem; padding: 12px 28px; width: 100%; text-align: center; justify-content: center; }
-  .nav-cta { padding: 6px 14px; font-size: 0.75rem; }
-  .price-number { font-size: 2.8rem; }
-  .steps-grid { gap: 14px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after { animation:none !important; transition:none !important; }
 }
+.container { max-width:1080px; margin:0 auto; padding:0 24px; }
+a { color:inherit; }
+:focus-visible { outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
 
-.reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ── Nav ── */
+nav {
+  position:fixed; top:0; width:100%; z-index:100; padding:16px 0;
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  background:rgba(0,0,0,0.72); border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-inner { display:flex; align-items:center; justify-content:space-between; }
+.logo { display:flex; align-items:center; gap:10px; text-decoration:none;
+  font-family:var(--font-mono); font-size:0.95rem; font-weight:500;
+  color:var(--text); letter-spacing:-0.3px; }
+.logo img { width:26px; height:26px; border-radius:6px; }
+.nav-right { display:flex; align-items:center; gap:26px; }
+.nav-right a.link { font-size:0.82rem; color:var(--text-secondary);
+  text-decoration:none; transition:color .2s; }
+.nav-right a.link:hover { color:var(--text); }
+@media (max-width:860px) { .nav-right a.link { display:none; } }
+
+.lang { background:none; border:1px solid var(--border-hover); color:var(--text-secondary);
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.06em; padding:6px 11px;
+  border-radius:980px; cursor:pointer; transition:all .2s; }
+.lang:hover { border-color:var(--text-secondary); color:var(--text); }
+.btn { display:inline-flex; align-items:center; gap:8px; font-size:0.85rem;
+  font-weight:500; padding:10px 20px; border-radius:980px; text-decoration:none;
+  transition:all .2s; border:1px solid transparent; white-space:nowrap; }
+.btn-primary { background:var(--blue); color:#fff; }
+.btn-primary:hover { background:var(--blue-bright); box-shadow:0 0 24px var(--blue-glow); }
+.btn-secondary { border-color:var(--border-hover); color:var(--text); }
+.btn-secondary:hover { border-color:var(--text-secondary); background:rgba(255,255,255,0.04); }
+
+/* ── Type ── */
+h1 { font-size:clamp(2.6rem, 6vw, 4.2rem); font-weight:700; line-height:1.06;
+  letter-spacing:-0.035em;
+  background:linear-gradient(180deg, #fff 30%, #86868b 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; }
+h2 { font-size:clamp(1.9rem, 3.6vw, 2.9rem); font-weight:700;
+  letter-spacing:-0.03em; line-height:1.1; margin-bottom:16px; }
+h3 { font-size:1.05rem; font-weight:600; letter-spacing:-0.01em; margin-bottom:8px; }
+p { color:var(--text-secondary); font-size:0.98rem; line-height:1.65; max-width:62ch; }
+.mono { font-family:var(--font-mono); }
+
+.section-label { font-family:var(--font-mono); font-size:0.7rem; font-weight:500;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--blue);
+  margin-bottom:18px; }
+
+/* ── Hero ── */
+header { padding:180px 0 100px; position:relative; }
+header::before { content:""; position:absolute; top:0; left:50%;
+  transform:translateX(-50%); width:1100px; height:640px; pointer-events:none;
+  background:radial-gradient(ellipse at center, var(--blue-glow) 0%, transparent 60%); }
+.hero { position:relative; display:grid; grid-template-columns:1fr 1fr;
+  gap:56px; align-items:center; }
+@media (max-width:940px) { .hero { grid-template-columns:1fr; gap:44px; }
+  header { padding:140px 0 72px; } }
+.badge { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono);
+  font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-secondary); border:1px solid var(--border); border-radius:980px;
+  padding:6px 14px; margin-bottom:26px; background:var(--bg-card); }
+.dot { width:6px; height:6px; border-radius:50%; background:var(--green);
+  animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero-sub { margin:24px 0 32px; font-size:1.08rem; max-width:44ch; }
+.hero-sub strong { color:var(--text); font-weight:500; }
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+/* ── Panels ── */
+.panel { background:var(--bg-card); border:1px solid var(--border);
+  border-radius:16px; overflow:hidden; }
+.panel-bar { display:flex; align-items:center; padding:11px 14px;
+  border-bottom:1px solid var(--border); background:var(--bg-elevated); }
+.dots { display:flex; gap:6px; }
+.dots i { width:10px; height:10px; border-radius:50%; display:block; }
+.panel-title { font-family:var(--font-mono); font-size:0.65rem; color:var(--text-tertiary);
+  margin-left:12px; letter-spacing:0.06em; }
+.panel-body { padding:22px; }
+.panel-body svg { width:100%; height:auto; display:block; }
+
+.bar-rise { transform-origin:bottom; animation:rise .8s cubic-bezier(.2,.8,.3,1) backwards; }
+@keyframes rise { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+.tick-drop { animation:drop .6s cubic-bezier(.2,.8,.3,1) backwards; }
+@keyframes drop { from{opacity:0; transform:translateY(-12px)} to{opacity:1} }
+
+/* ── Sections ── */
+.feature-section { padding:130px 0; border-top:1px solid var(--border); }
+.two { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+@media (max-width:940px) { .two { grid-template-columns:1fr; gap:36px; }
+  .feature-section { padding:88px 0; } }
+
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px; margin-top:44px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px;
+  padding:26px; transition:all .2s; }
+.card:hover { background:var(--bg-card-hover); border-color:var(--border-hover); }
+.card .k { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
+.card p { font-size:0.88rem; }
+
+.note { border-left:2px solid var(--blue); background:var(--blue-subtle);
+  border-radius:0 10px 10px 0; padding:16px 20px; margin-top:26px; }
+.note p { font-size:0.9rem; max-width:none; }
+.note b { color:var(--text); font-weight:600; }
+
+/* ── Signal ── */
+.signal { font-family:var(--font-mono); font-size:0.76rem; line-height:1.9;
+  white-space:pre-wrap; color:var(--text-secondary); padding:22px;
+  overflow-x:auto; }
+.signal b { color:var(--text); font-weight:500; }
+.signal .hi { color:var(--blue); }
+.signal .g { color:var(--green); }
+.signal .d { color:var(--text-tertiary); }
+
+/* ── Big numbers ── */
+.bignums { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; }
+.bn { background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
+  padding:30px 26px; }
+.bn-v { font-size:3.2rem; font-weight:700; letter-spacing:-0.04em; line-height:1;
+  color:var(--text); }
+.bn-v span { font-size:1.6rem; font-weight:600; margin-left:2px; }
+.bn-l { font-size:0.95rem; color:var(--text); font-weight:500; margin-top:12px; }
+.bn-s { font-size:0.82rem; color:var(--text-tertiary); margin-top:6px; line-height:1.5; }
+@media (max-width:860px) { .bignums { grid-template-columns:1fr; } }
+
+/* ── Technical disclosure ── */
+.tech { margin-top:32px; border:1px solid var(--border); border-radius:14px;
+  background:var(--bg-card); overflow:hidden; }
+.tech summary { padding:18px 24px; cursor:pointer; font-family:var(--font-mono);
+  font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-secondary); list-style:none; transition:color .2s; }
+.tech summary::-webkit-details-marker { display:none; }
+.tech summary::before { content:"+ "; color:var(--blue); }
+.tech[open] summary::before { content:"− "; }
+.tech summary:hover { color:var(--text); }
+.tech-body { padding:0 24px 26px; }
+.tech-body p { font-size:0.88rem; }
+.t { width:100%; border-collapse:collapse; margin-top:16px; font-family:var(--font-mono);
+  font-size:0.78rem; }
+.t th { text-align:right; padding:8px 10px; color:var(--text-tertiary);
+  border-bottom:1px solid var(--border); font-weight:400; }
+.t th:first-child, .t td:first-child { text-align:left; }
+.t td { text-align:right; padding:7px 10px; color:var(--text-secondary);
+  border-bottom:1px solid var(--border); }
+.t tr.hl td { color:var(--text); background:var(--blue-subtle); font-weight:500; }
+.t .pos { color:var(--green); }
+.t .neg { color:var(--amber); }
+
+/* ── Stats ── */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+.stat { background:var(--bg-elevated); border:1px solid var(--border);
+  border-radius:12px; padding:18px; }
+.stat .n { font-size:1.05rem; font-weight:600; color:var(--text-secondary);
+  letter-spacing:-0.01em; }
+.stat .l { font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text-tertiary); margin-top:6px; }
+@media (max-width:640px) { .stats { grid-template-columns:1fr; } }
+
+/* ── Pricing ── */
+.tiers { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; }
+.tier { background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
+  padding:30px; display:flex; flex-direction:column; }
+.tier.now { border-color:var(--blue); box-shadow:0 0 40px var(--blue-glow); }
+.tier .name { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
+.tier .price { font-size:2.1rem; font-weight:700; letter-spacing:-0.03em; }
+.tier .per { font-family:var(--font-mono); font-size:0.68rem; color:var(--text-tertiary);
+  margin-bottom:20px; }
+.tier ul { list-style:none; flex:1; margin-bottom:24px; }
+.tier li { font-size:0.86rem; color:var(--text-secondary); padding:7px 0 7px 20px;
+  position:relative; }
+.tier li::before { content:""; position:absolute; left:0; top:14px; width:8px;
+  height:1px; background:var(--text-tertiary); }
+.tier .btn { width:100%; justify-content:center; }
+@media (max-width:860px) { .tiers { grid-template-columns:1fr; } }
+
+/* ── Footer ── */
+footer { padding:64px 0 72px; border-top:1px solid var(--border); }
+.disc { font-size:0.78rem; color:var(--text-tertiary); line-height:1.75; max-width:76ch; }
+.footer-bot { display:flex; justify-content:space-between; align-items:center;
+  gap:20px; margin-top:34px; padding-top:26px; border-top:1px solid var(--border);
+  flex-wrap:wrap; }
+.footer-bot span { font-family:var(--font-mono); font-size:0.68rem;
+  color:var(--text-tertiary); }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { font-size:0.75rem; color:var(--text-tertiary); text-decoration:none;
+  transition:color .2s; }
+.footer-links a:hover { color:var(--text-secondary); }
 </style>
 </head>
 <body>
-<div class="glow-top"></div>
 
-<nav>
-  <div class="container">
-    <a href="#" class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="OddsEngine" style="width:22px;height:22px;">OddsEngine<span>.live</span></a>
-    <div class="nav-right">
-      <a href="#signal-engine" class="link">How It Works</a>
-      <a href="https://weather.oddsengine.live" class="link" target="_blank">Weather</a>
-      <a href="https://public.oddsengine.live" class="link" target="_blank">Dashboard</a>
-      <a href="#access" class="link">Access</a>
-      <a href="https://t.me/OddsEngine" class="nav-cta" target="_blank">Join Channel</a>
+<nav><div class="container nav-inner">
+  <a href="#" class="logo"><img src="logo.png" alt="">OddsEngine</a>
+  <div class="nav-right">
+    <a href="#discovery" class="link">The finding</a>
+    <a href="#engine" class="link" data-de="Engine">Engine</a>
+    <a href="#signals" class="link" data-de="Signale">Signals</a>
+    <a href="#record" class="link" data-de="Bilanz">Track record</a>
+    <a href="#api" class="link" data-de="API">API</a>
+    <button id="lang" class="lang" aria-label="Deutsch">DE</button>
+    <a href="#access" class="btn btn-primary" data-de="Zugang">Get access</a>
+  </div>
+</div></nav>
+
+<header><div class="container"><div class="hero">
+  <div>
+    <div class="badge" data-de="Backtest über 300 aufgelöste Märkte"><span class="dot"></span>Backtested on 300 resolved markets</div>
+    <h1 data-de="Wir veröffentlichen die Wahrscheinlichkeit, bevor die Temperatur passiert.">We publish the probability before the temperature happens.</h1>
+    <p class="hero-sub" data-de="Live-Wettermärkte scannen. Wahrscheinlichkeiten je Ausgang berechnen. Optimierte 3–5-Outcome-Portfolios bauen.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Backtest über 300 aufgelöste Märkte: Die Engine sagte 84,9 %. Eingetreten ist es in 84,7 % der Fälle.&lt;/strong&gt;">Scan live weather markets. Calculate outcome probabilities.
+      Build optimized 3–5 outcome portfolios.<br><br>
+      <strong>Backtest, 300 resolved markets: the engine said 84.9%. It happened
+      84.7% of the time.</strong></p>
+    <div class="hero-btns">
+      <a href="#signals" class="btn btn-primary" data-de="Signal ansehen">See a signal</a>
+      <a href="#record" class="btn btn-secondary" data-de="Bilanz ansehen">See the scoring</a>
     </div>
   </div>
-</nav>
 
-<!-- ============================================================ -->
-<!-- 1. HERO -->
-<!-- ============================================================ -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-inner">
-      <div class="hero-eyebrow">OddsEngine</div>
-      <h1>Execution Infrastructure for Prediction Markets</h1>
-      <p class="hero-sub">Systematic detection and execution of structural pricing inefficiencies across <strong>crypto</strong> and <strong>weather</strong> prediction markets. Fully automated. 24/7.</p>
-      <div class="hero-actions">
-        <a href="https://t.me/OddsEngine" class="btn-blue" target="_blank">Join Channel</a>
-        <a href="https://weather.oddsengine.live" class="btn-ghost" target="_blank">Weather Scanner</a>
-      </div>
+  <div class="panel">
+    <div class="panel-bar">
+      <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+      <span class="panel-title">ensemble → distribution → block</span>
+    </div>
+    <div class="panel-body">
+      <svg viewBox="0 0 460 296" role="img" aria-label="Ensemble member maxima dressed into a probability distribution, with the selected 33 to 35 degree block highlighted against market prices">
+        <g stroke="#48484a" stroke-width="1.5">
+          <line class="tick-drop" x1="118" y1="14" x2="118" y2="26" style="animation-delay:.05s"/>
+          <line class="tick-drop" x1="176" y1="14" x2="176" y2="26" style="animation-delay:.1s"/>
+          <line class="tick-drop" x1="205" y1="14" x2="205" y2="26" style="animation-delay:.15s"/>
+          <line class="tick-drop" x1="228" y1="14" x2="228" y2="26" style="animation-delay:.2s"/>
+          <line class="tick-drop" x1="241" y1="14" x2="241" y2="26" style="animation-delay:.25s"/>
+          <line class="tick-drop" x1="252" y1="14" x2="252" y2="26" style="animation-delay:.3s"/>
+          <line class="tick-drop" x1="264" y1="14" x2="264" y2="26" style="animation-delay:.35s"/>
+          <line class="tick-drop" x1="277" y1="14" x2="277" y2="26" style="animation-delay:.4s"/>
+          <line class="tick-drop" x1="290" y1="14" x2="290" y2="26" style="animation-delay:.45s"/>
+          <line class="tick-drop" x1="312" y1="14" x2="312" y2="26" style="animation-delay:.5s"/>
+          <line class="tick-drop" x1="336" y1="14" x2="336" y2="26" style="animation-delay:.55s"/>
+          <line class="tick-drop" x1="382" y1="14" x2="382" y2="26" style="animation-delay:.6s"/>
+        </g>
+        <text x="8" y="23" font-family="DM Mono" font-size="8.5" fill="#48484a">MEMBER MAX</text>
+
+        <rect x="204" y="34" width="174" height="198" rx="4" fill="#2997ff" opacity=".07"/>
+        <line x1="204" y1="34" x2="204" y2="232" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>
+        <line x1="378" y1="34" x2="378" y2="232" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".45"/>
+        <line x1="30" y1="232" x2="440" y2="232" stroke="#1a1a1a"/>
+
+        <g>
+          <rect class="bar-rise" x="94"  y="226" width="46" height="6"   rx="2" fill="#48484a" style="animation-delay:.7s"/>
+          <rect class="bar-rise" x="152" y="194" width="46" height="38"  rx="2" fill="#48484a" style="animation-delay:.78s"/>
+          <rect class="bar-rise" x="210" y="118" width="46" height="114" rx="2" fill="#2997ff" style="animation-delay:.86s"/>
+          <rect class="bar-rise" x="268" y="58"  width="46" height="174" rx="2" fill="#2997ff" style="animation-delay:.94s"/>
+          <rect class="bar-rise" x="326" y="174" width="46" height="58"  rx="2" fill="#2997ff" style="animation-delay:1.02s"/>
+        </g>
+        <g font-family="DM Mono" font-size="10" text-anchor="middle">
+          <text x="117" y="219" fill="#48484a">1%</text>
+          <text x="175" y="187" fill="#48484a">7%</text>
+          <text x="233" y="111" fill="#f5f5f7">24%</text>
+          <text x="291" y="51"  fill="#f5f5f7">37%</text>
+          <text x="349" y="167" fill="#f5f5f7">25%</text>
+        </g>
+        <g font-family="DM Mono" font-size="9.5" fill="#48484a" text-anchor="middle">
+          <text x="117" y="248">31°</text><text x="175" y="248">32°</text>
+          <text x="233" y="248">33°</text><text x="291" y="248">34°</text>
+          <text x="349" y="248">35°</text>
+        </g>
+        <g font-family="DM Mono" font-size="9.5">
+          <text x="30" y="269" fill="#48484a">MARKET</text>
+          <text x="233" y="269" fill="#86868b" text-anchor="middle">44.0¢</text>
+          <text x="291" y="269" fill="#86868b" text-anchor="middle">34.0¢</text>
+          <text x="349" y="269" fill="#86868b" text-anchor="middle">7.9¢</text>
+        </g>
+        <line x1="30" y1="279" x2="440" y2="279" stroke="#1a1a1a"/>
+        <g font-family="DM Mono" font-size="9.5">
+          <text x="30" y="293" fill="#48484a">BLOCK 33–35°  ·  COVERAGE 86%  ·  COST 85.9¢</text>
+          <text x="440" y="293" fill="#2997ff" text-anchor="end">EDGE +0.1pp</text>
+        </g>
+      </svg>
     </div>
   </div>
-</section>
+</div></div></header>
 
-<!-- HERO DASHBOARD SCREENSHOT -->
-<div class="hero-screenshot reveal">
-  <div class="container" style="max-width:1040px;">
-    <div class="screenshot-frame">
-      <div class="screenshot-bar">
-        <span class="screenshot-dot r"></span>
-        <span class="screenshot-dot y"></span>
-        <span class="screenshot-dot g"></span>
-        <span class="screenshot-bar-title">OddsEngine — Trading Dashboard</span>
+<section class="feature-section" id="engine"><div class="container">
+  <div class="section-label">Multi-model ensemble · resolution-station accurate</div>
+  <h2 data-de="So funktioniert es">How it works</h2>
+  <p>Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
+    We forecast the whole distribution and compare it to what the market is
+    actually charging. Where the gap is worth taking, we post.</p>
+
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Market Discovery">Market discovery</div>
+      <h3 data-de="Jeder Live-Markt, automatisch">Every live market, automatically</h3>
+      <p>No fixed city list. The engine reads the market feed and extracts the
+        brackets, the unit, the deadline and the resolution rules — including
+        which station the market actually settles on. New cities appear the day
+        they list.</p></div>
+    <div class="card"><div class="k" data-de="Probability Engine">Probability engine</div>
+      <h3 data-de="Eine Verteilung, keine Schätzung">A distribution, not a guess</h3>
+      <p>A large multi-model ensemble, read at the exact station in the rules —
+        not the city centre, which can be a full bracket away. Every bracket
+        gets a probability. They sum to 100%.</p></div>
+    <div class="card"><div class="k" data-de="Ausführbare Preise">Executable prices</div>
+      <h3 data-de="Der Briefkurs, nicht das Etikett">The ask, not the sticker</h3>
+      <p>The displayed percentage is not a price you can fill. Every leg is
+        checked against the live order book. If it can't absorb the order,
+        there is no signal.</p></div>
+    <div class="card"><div class="k" data-de="Portfolio-Bau">Portfolio construction</div>
+      <h3 data-de="Eine Quote, egal welches trifft">One quote, whichever lands</h3>
+      <p>3–5 neighbouring brackets, split so the payout is identical whichever
+        one is the day's high. One number to read, one outcome to check.</p></div>
+  </div>
+
+  <div class="note"><p><b>Most markets produce nothing.</b> The engine stays
+    silent when the edge is thin, the book is shallow, the spread is wide, or
+    the models disagree. A channel posting twenty signals a day is posting
+    fifteen bad ones.</p></div>
+</div></section>
+
+<section class="feature-section" id="signals"><div class="container">
+  <div class="two">
+    <div>
+      <div class="section-label">Telegram · published before resolution</div>
+      <h2 data-de="So sieht ein Signal aus">What a signal looks like</h2>
+      <p>Every number the engine used, in the message. You decide what to buy — the
+        allocation is a suggestion, not an instruction.</p>
+      <div class="note"><p>Two lines most signal channels leave out:
+        <b>Market price of block</b> and <b>Edge</b>. Without them a coverage
+        number is a boast. With them you can see exactly why the signal exists —
+        and check it yourself before you click. Every leg is a one-tap link
+        straight to the market. You buy with your own wallet; we never hold keys.</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title">t.me/oddsengine · 14:10 UTC</span>
       </div>
-      <div class="screenshot-body">
-        <!-- LIVE WEATHER SCANNER -->
-        <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-          <span>Live Scanner — <span id="lw-count">35</span> Cities</span>
-          <span><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;vertical-align:middle;margin-right:4px;"></span><span id="lw-time">Connecting...</span></span>
-        </div>
-        <div id="lw-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);">
-          <div style="background:var(--bg-card);padding:12px 8px;text-align:center;grid-column:1/-1;"><span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">Loading live conditions for 35 cities...</span></div>
-        </div>
-        <!-- SIGNAL FEED -->
-        <div style="border-top:1px solid var(--border);">
-          <div style="padding:10px 18px;font-family:var(--font-mono);font-size:0.58rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border);">System Activity</div>
-          <div class="feed-row"><span class="feed-time" id="ft1">—</span><span class="feed-tag exit">✓</span><span>Scanner cycle complete — signals updated</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft2">—</span><span class="feed-tag entry">◆</span><span>Edge detected — position queued</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft3">—</span><span class="feed-tag skip">—</span><span>Market quality check — 12 filtered</span></div>
-          <div class="feed-row"><span class="feed-time" id="ft4">—</span><span class="feed-tag exit">✓</span><span>Position resolved — outcome confirmed</span></div>
-        </div>
-      </div>
+      <div class="signal"><b>ODDSENGINE — MILAN</b>
+<span class="d">
+Market:
+Highest temperature at Milano Malpensa
+July 12, 2026
+
+Mode:</span>
+Balanced
+<span class="d">
+Selected range:</span>
+33°C · 34°C · 35°C
+<span class="d">
+Engine probabilities:</span>
+33°C — 24%
+34°C — 38%
+35°C — 29%
+<span class="d">
+Combined coverage:</span>
+<b>91%</b>
+<span class="d">
+Current executable prices:</span>
+33°C — 44.0¢
+34°C — 34.0¢
+35°C — 7.9¢
+<span class="d">
+Market price of block:</span>
+<b>85.9¢</b>
+<span class="d">
+Edge:</span>
+<b class="g">+5.1pp</b>
+<span class="d">
+Budget:</span>
+$10.00
+<span class="d">
+Suggested allocation:</span>
+33°C — $5.12
+34°C — $3.96
+35°C — $0.92
+<span class="d">
+Quote if covered:</span>
+<b class="hi">1.16x</b>
+<span class="d">
+Estimated payout:</span>
+$11.64
+<span class="d">
+Outside-range risk:</span>
+9%</div>
     </div>
   </div>
-</div>
+</div></section>
 
-<!-- ============================================================ -->
-<!-- 1.5 PRODUCTS -->
-<!-- ============================================================ -->
-<section class="feature-section products-section" style="border-top:1px solid var(--border);">
-  <div class="container" style="max-width:980px;">
-    <div style="text-align:center;margin-bottom:72px;" class="reveal">
-      <div class="feature-eyebrow">Two Engines, One Platform</div>
-      <div class="feature-headline">Built for prediction markets.</div>
-    </div>
-    <div class="products-grid reveal">
-      <!-- Weather Card — PRIMARY -->
-      <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;box-shadow:0 0 80px var(--blue-glow);">
-        <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#30d158,transparent);border-radius:2px;"></div>
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:#30d158;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Weather Engine <span style="background:rgba(48,209,88,0.12);padding:2px 8px;border-radius:4px;margin-left:6px;animation:pulse 2s infinite;">LIVE</span></div>
-        <div style="font-size:1.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Temperature Arbitrage</div>
-        <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Multi-source forecasting engine scanning daily temperature markets across 6 continents. Algorithmic edge detection with automated signal generation and execution.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">35 Cities</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">6 Continents</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:rgba(48,209,88,0.08);color:#30d158;border-radius:6px;">3+ Sources</span>
-        </div>
-        <a href="https://weather.oddsengine.live" target="_blank" style="font-family:var(--font-body);font-size:0.88rem;color:#30d158;text-decoration:none;font-weight:500;">View Live Performance →</a>
-      </div>
-      <!-- Crypto Card — PHASE 2 -->
-      <div style="background:var(--bg-card);border:1px solid var(--border-hover);border-radius:16px;padding:40px 32px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);border-radius:2px;"></div>
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Crypto Engine <span style="background:var(--blue-subtle);padding:2px 8px;border-radius:4px;margin-left:6px;color:var(--text-tertiary);">PHASE 2</span></div>
-        <div style="font-size:1.6rem;font-weight:800;letter-spacing:-1px;margin-bottom:12px;">Structural Edge Detection</div>
-        <p style="font-size:0.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Automated detection and execution of pricing inefficiencies in crypto prediction markets. Proprietary multi-factor signal engine with integrated risk management.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">BTC</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">ETH</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">SOL</span>
-          <span style="font-family:var(--font-mono);font-size:0.68rem;padding:4px 10px;background:var(--blue-subtle);color:var(--blue);border-radius:6px;">+4 more</span>
-        </div>
-        <span style="font-family:var(--font-body);font-size:0.88rem;color:var(--text-tertiary);font-weight:500;">Coming Q2 2026</span>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="feature-section" id="discovery"><div class="container">
+  <div class="section-label">Real money · on-chain · 244 markets · Mar–Apr 2026</div>
+  <h2>How we found it</h2>
+  <p>Before any of this was a model, it was 901 bets with real money across 23
+    cities in 18 days. Crude method — read the station, bet the number, hedge a
+    degree either side. No distribution, no optimizer.</p>
+  <p style="margin-top:14px">It finished <b style="color:var(--green)">+16.9%</b>.
+    But the interesting part isn't the total. It's what happens when you sort
+    every bet by what it cost.</p>
 
-<!-- ============================================================ -->
-<!-- 2. SIGNAL ENGINE -->
-<!-- ============================================================ -->
-<section class="feature-section" id="signal-engine" style="border-top:1px solid var(--border);">
-  <div class="container">
-    <div class="reveal" style="max-width:620px;">
-      <div class="feature-eyebrow">System</div>
-      <div class="feature-headline">Detection. Decision.<br>Execution.</div>
-      <div class="feature-body">The system continuously ingests market data, scores pricing inefficiencies against a proprietary threshold, and routes qualified signals through a risk layer before automated execution. No manual intervention at any stage.</div>
-    </div>
-    <div class="steps-grid reveal" style="margin-top:72px;">
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">01</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Detection</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Ingests real-time reference pricing from multiple exchange feeds. Scans prediction market orderbooks across multiple timeframes for structural mispricing.</p>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Coverage</span><span style="color:var(--blue);">Multi-asset</span></div>
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Frequency</span><span style="color:var(--blue);">Real-time</span></div>
-        </div>
+  <div class="two" style="margin-top:44px; align-items:start">
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title">return by entry price · settled on-chain</span>
       </div>
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">02</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Decision</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Each signal is scored against a proprietary multi-factor threshold. Sub-threshold signals are logged and discarded. Only qualified setups proceed to execution.</p>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Scoring</span><span style="color:var(--blue);">Proprietary</span></div>
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Filtering</span><span style="color:var(--blue);">Liquidity + quality</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:40px 32px;transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:16px;">03</div>
-        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px;">Execution</h3>
-        <p style="font-size:0.88rem;color:var(--text-secondary);line-height:1.65;">Orders are routed with predefined position sizing, exposure limits, and exit parameters. Every fill, rejection, and state change is logged to the execution audit trail.</p>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Execution</span><span style="color:var(--blue);">Automated</span></div>
-          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);display:flex;justify-content:space-between;padding:4px 0;"><span>Latency</span><span style="color:var(--blue);">&lt;2s</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="panel-body">
+        <svg viewBox="0 0 380 250" role="img" aria-label="Return by entry price: bets under 1 cent lost everything, bets between 5 and 20 cents returned 91 and 51 percent, favourites near break even">
+          <line x1="150" y1="16" x2="150" y2="216" stroke="#2a2a2a"/>
+          <text x="150" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">0%</text>
+          <text x="60" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">−100%</text>
+          <text x="330" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">+100%</text>
 
-<!-- ============================================================ -->
-<!-- 5. TRADING DASHBOARD -->
-<!-- ============================================================ -->
-<section class="feature-section" id="dashboard" style="border-top:1px solid var(--border);">
-  <div class="container">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <div class="feature-eyebrow">Visibility</div>
-      <div class="feature-headline">Full operational transparency.</div>
-      <div class="feature-body" style="max-width:520px;margin:0 auto;">Every signal, position, execution event, and system state change is recorded and visible in real time. Nothing is hidden.</div>
+          <g font-family="DM Mono" font-size="9.5" fill="#86868b" text-anchor="end">
+            <text x="46" y="30">under 1¢</text>
+            <text x="46" y="58">1–3¢</text>
+            <text x="46" y="86">3–5¢</text>
+            <text x="46" y="114">5–10¢</text>
+            <text x="46" y="142">10–20¢</text>
+            <text x="46" y="170">20–35¢</text>
+            <text x="46" y="198">35–60¢</text>
+          </g>
+
+          <rect x="60" y="20" width="90" height="14" rx="2" fill="#ff453a"/>
+          <text x="54" y="31" font-family="Inter" font-size="11" font-weight="700" fill="#ff453a" text-anchor="end" opacity="0"></text>
+          <text x="155" y="31" font-family="Inter" font-size="11" font-weight="600" fill="#ff453a">−100%  ·  every bet lost</text>
+
+          <rect x="150" y="48" width="39" height="14" rx="2" fill="#30d158" opacity=".55"/>
+          <text x="194" y="59" font-family="Inter" font-size="11" font-weight="600" fill="#86868b">+43%</text>
+
+          <rect x="150" y="76" width="1" height="14" rx="2" fill="#48484a"/>
+          <text x="156" y="87" font-family="Inter" font-size="11" font-weight="600" fill="#48484a">+1%</text>
+
+          <rect x="150" y="104" width="82" height="14" rx="2" fill="#30d158"/>
+          <text x="237" y="115" font-family="Inter" font-size="11" font-weight="700" fill="#30d158">+91%</text>
+
+          <rect x="150" y="132" width="46" height="14" rx="2" fill="#30d158"/>
+          <text x="201" y="143" font-family="Inter" font-size="11" font-weight="700" fill="#30d158">+51%</text>
+
+          <rect x="143" y="160" width="7" height="14" rx="2" fill="#ff453a" opacity=".7"/>
+          <text x="138" y="171" font-family="Inter" font-size="11" font-weight="600" fill="#86868b" text-anchor="end">−8%</text>
+
+          <rect x="150" y="188" width="3" height="14" rx="2" fill="#48484a"/>
+          <text x="158" y="199" font-family="Inter" font-size="11" font-weight="600" fill="#48484a">+3%</text>
+
+          <rect x="150" y="100" width="82" height="50" fill="none" stroke="#2997ff"
+                stroke-dasharray="3 3" opacity=".6" rx="3"/>
+          <text x="240" y="153" font-family="DM Mono" font-size="8.5" fill="#2997ff">the money is here</text>
+        </svg>
+      </div>
     </div>
-    <div class="reveal terminal-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;">
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Signals</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Real-time</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Every signal scored and logged</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Entry signals</span><span style="color:var(--blue);">Logged</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Skipped signals</span><span>Logged</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Score breakdown</span><span style="color:var(--blue);">Per trade</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Positions</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Live tracking</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Open, pending, and resolved</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Entry price</span><span style="color:var(--blue);">Tracked</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Duration</span><span>Tracked</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Exit reason</span><span style="color:var(--blue);">Logged</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Execution Log</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Full audit</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Every order and fill recorded</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Order type</span><span style="color:var(--blue);">Automated</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Fill confirmation</span><span>Logged</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Latency</span><span style="color:var(--blue);">Measured</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Spreads</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:4px;">Monitored</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Per-market bid/ask tracking</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Spread width</span><span style="color:var(--blue);">Real-time</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Liquidity depth</span><span>Checked</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Quality filter</span><span style="color:var(--green);">Active</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">System Health</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--green);margin-bottom:4px;">Operational</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Engine and feed status</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>WS feeds</span><span style="color:var(--green);">Connected</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Signal engine</span><span style="color:var(--green);">Online</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Execution</span><span style="color:var(--green);">Ready</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg-card);padding:32px 28px;">
-        <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">Markets</div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-1px;color:var(--blue);margin-bottom:4px;">2,000+</div>
-        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">Actively monitored from 37,000+</div>
-        <div style="padding-top:12px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);">
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Type</span><span style="color:var(--blue);">Crypto-linked</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Timeframes</span><span>Multiple</span></div>
-          <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>Low-quality filtered</span><span>35,000+</span></div>
-        </div>
-      </div>
+    <div>
+      <h3 style="font-size:1.3rem; margin-bottom:14px;">Read the shape, not the total</h3>
+      <p><b style="color:var(--red)">The lottery tickets went to zero.</b> 35 bets
+        under a cent. Not one came in. That money was donated, not invested.</p>
+      <p style="margin-top:14px"><b style="color:var(--text)">The favourites paid
+        nothing.</b> 90 bets between 20 and 60 cents, for −8% and +3%. That's where
+        the market is efficient and everyone else is looking.</p>
+      <p style="margin-top:14px"><b style="color:var(--green)">The middle paid
+        everything.</b> 79 bets between 5 and 20 cents: +91% and +51%. The boring
+        range nobody wants.</p>
+      <div class="note" style="margin-top:24px"><p>That curve is
+        <b>favourite–longshot bias</b> — the most documented effect in betting
+        markets. Found here by accident, with real money, before we built anything
+        to look for it.</p></div>
+      <div class="note" style="margin-top:14px; border-left-color:var(--amber);
+        background:rgba(245,158,11,0.06)"><p><b>The honest caveat:</b> roughly half
+        of all payouts came from ten lucky hits — one $1 bet returned $55. Strip
+        those and the total is near zero. 18 days is not proof of anything. That's
+        exactly why we then backtested 300 markets with a real model.</p></div>
     </div>
   </div>
-</section>
 
-<!-- ============================================================ -->
-<!-- LIVE DASHBOARD PREVIEW -->
-<!-- ============================================================ -->
-<section class="feature-section" style="border-top:1px solid var(--border);padding:120px 0;">
-  <div class="container">
-    <div class="reveal" style="text-align:center;margin-bottom:48px;">
-      <div class="feature-eyebrow">Market Data</div>
-      <div class="feature-headline">Live reference feeds.</div>
+  <div class="note" style="margin-top:32px"><p><b>This is not OddsEngine's track
+    record.</b> It was a different, cruder system — a person reading a station and
+    hedging by hand. We show it because it's where the pattern surfaced, in real
+    money, independently of the model that came after. Two datasets that never met,
+    same conclusion.</p></div>
+</div></section>
+
+<section class="feature-section" id="record"><div class="container">
+  <div class="two">
+    <div>
+      <div class="section-label">Backtest · 300 resolved markets · Dec 2025 – Mar 2026</div>
+      <h2 data-de="Die einzige Aussage, die zählt">The only claim worth making</h2>
+      <p>Not return. Not win rate. Both are easy to fake and easy to get by
+        accident. The question is simpler:</p>
+      <p style="color:var(--text); font-size:1.25rem; font-weight:600;
+        letter-spacing:-0.02em; margin:22px 0; line-height:1.3;">
+        When we say 90%, does it happen 90% of the time?</p>
+      <p>Scored against markets that had already resolved, using the forecast
+        runs as they existed at the time — not today's models looking backwards.
+        Truth is the settled market itself.</p>
+      <div class="note"><p><b>This is a backtest, not a live record.</b> No order
+        book depth, no slippage. The live number will be lower — it always is.
+        The live record starts now, in public, and every miss goes on it.</p></div>
     </div>
-    <div class="reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.4);">
-
-      <!-- STATUS BAR -->
-      <div style="padding:14px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;">Market Feed</span>
-        <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--green);display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;animation:blink 2s ease-in-out infinite;"></span>LIVE</span>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title">269 markets · what we said vs what happened</span>
       </div>
+      <div class="panel-body">
+        <svg viewBox="0 0 380 250" role="img" aria-label="Three bars: the engine said 84.9 percent, it actually happened 84.7 percent, and the market charged 77.2 percent for the same blocks">
+          <line x1="60" y1="196" x2="356" y2="196" stroke="#1a1a1a"/>
+          <g stroke="#141414" stroke-dasharray="2 4">
+            <line x1="60" y1="40" x2="356" y2="40"/><line x1="60" y1="118" x2="356" y2="118"/>
+          </g>
+          <text x="52" y="44" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="end">100%</text>
+          <text x="52" y="122" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="end">50%</text>
+          <text x="52" y="199" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="end">0</text>
 
-      <!-- LIVE PRICES - Row 1 -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);">
-        <div class="ps-cell"><span class="ps-label">BTC</span><span class="ps-price" id="p-btc">—</span></div>
-        <div class="ps-cell"><span class="ps-label">ETH</span><span class="ps-price" id="p-eth">—</span></div>
-        <div class="ps-cell"><span class="ps-label">SOL</span><span class="ps-price" id="p-sol">—</span></div>
-        <div class="ps-cell"><span class="ps-label">XRP</span><span class="ps-price" id="p-xrp">—</span></div>
-      </div>
-      <!-- LIVE PRICES - Row 2 -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);">
-        <div class="ps-cell"><span class="ps-label">DOGE</span><span class="ps-price" id="p-doge">—</span></div>
-        <div class="ps-cell"><span class="ps-label">BNB</span><span class="ps-price" id="p-bnb">—</span></div>
-        <div class="ps-cell"><span class="ps-label">HYPE</span><span class="ps-price" id="p-hype">—</span></div>
-        <div class="ps-cell"><span class="ps-label">Status</span><span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:500;color:var(--green);">Scanning</span></div>
-      </div>
+          <rect class="bar-rise" x="84"  y="63" width="62" height="133" rx="3" fill="#2997ff" opacity=".45" style="animation-delay:.1s"/>
+          <rect class="bar-rise" x="164" y="64" width="62" height="132" rx="3" fill="#2997ff" style="animation-delay:.25s"/>
+          <rect class="bar-rise" x="244" y="76" width="62" height="120" rx="3" fill="#48484a" style="animation-delay:.4s"/>
 
-      <!-- SYSTEM STATUS -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);">
-        <div class="ps-cell"><span class="ps-label">Engine</span><span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:500;color:var(--green);">Active</span></div>
-        <div class="ps-cell"><span class="ps-label">Latency</span><span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:500;color:var(--text-primary);" id="s-latency">—</span></div>
-        <div class="ps-cell"><span class="ps-label">Uptime</span><span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:500;color:var(--text-primary);" id="s-uptime">—</span></div>
-      </div>
-
-      <!-- CTA -->
-      <div style="padding:24px;border-top:1px solid var(--border);text-align:center;">
-        <a href="https://public.oddsengine.live" target="_blank" style="font-family:var(--font-mono);font-size:0.75rem;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:1px;text-transform:uppercase;">View Full Dashboard <span style="font-size:1rem;">&rarr;</span></a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<style>
-.ps-cell{background:var(--bg-card);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
-.ps-label{font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1.5px;}
-.ps-price{font-family:var(--font-mono);font-size:0.85rem;font-weight:600;color:var(--text-primary);transition:color .3s;}
-.ps-flash-up{color:var(--green)!important;}
-.ps-flash-down{color:#ef4444!important;}
-</style>
-
-<!-- ============================================================ -->
-<!-- 6. SYSTEM ARCHITECTURE -->
-<!-- ============================================================ -->
-<section class="feature-section" style="border-top:1px solid var(--border);">
-  <div class="container" style="max-width:680px;">
-    <div class="reveal" style="text-align:center;margin-bottom:64px;">
-      <div class="feature-eyebrow">Architecture</div>
-      <div class="feature-headline">System pipeline.</div>
-    </div>
-    <div class="reveal" style="display:flex;flex-direction:column;align-items:center;">
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Data Ingestion</div>
-        <div style="font-size:1.05rem;font-weight:600;">Market Data</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Multiple exchange feeds · Prediction market orderbooks</div>
-      </div>
-      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
-      <div style="background:var(--bg-card);border:1px solid var(--blue);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 40px var(--blue-glow);">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Signal Generation</div>
-        <div style="font-size:1.05rem;font-weight:600;">Signal Engine</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Proprietary scoring · Multi-factor analysis</div>
-      </div>
-      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Risk Controls</div>
-        <div style="font-size:1.05rem;font-weight:600;">Risk Layer</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Position sizing · Exposure limits · Quality filters</div>
-      </div>
-      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Order Management</div>
-        <div style="font-size:1.05rem;font-weight:600;">Execution</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">On-chain settlement · Automated orders · Sub-second latency</div>
-      </div>
-      <div style="font-family:var(--font-mono);font-size:1.2rem;color:var(--text-tertiary);padding:12px 0;">↓</div>
-      <div style="background:var(--bg-card);border:1px solid var(--green);border-radius:12px;padding:20px 36px;text-align:center;width:100%;max-width:440px;box-shadow:0 0 30px rgba(48,209,88,0.08);">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;">Interface</div>
-        <div style="font-size:1.05rem;font-weight:600;">Dashboard</div>
-        <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">Signals · Positions · Execution log · System health</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- 7. ACCESS -->
-<!-- ============================================================ -->
-<section class="pricing-section" id="access">
-  <div class="container">
-    <div class="reveal">
-      <div class="feature-eyebrow">Access</div>
-      <div class="feature-headline" style="text-align:center;">Performance-aligned access.</div>
-      <p style="text-align:center;font-size:1rem;color:var(--text-secondary);max-width:520px;margin:16px auto 0;">One-time access fee. Per-trade profit share. Incentives are structurally aligned — the system earns only when it performs.</p>
-    </div>
-
-    <!-- 3 TIER CARDS -->
-    <div class="reveal split-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;">
-
-      <!-- STARTER -->
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:44px 32px;text-align:center;position:relative;transition:border-color 0.3s;display:flex;flex-direction:column;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:3px;color:var(--text-tertiary);margin-bottom:20px;">Starter</div>
-        <div style="font-size:3.2rem;font-weight:800;letter-spacing:-3px;margin-bottom:4px;"><span style="font-size:1.5rem;color:var(--text-secondary);vertical-align:top;">$</span>2,800</div>
-        <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:8px;">One-time access fee</p>
-        <div style="font-family:var(--font-mono);font-size:0.82rem;color:#f59e0b;padding:10px 20px;background:rgba(245,158,11,0.08);border-radius:8px;display:inline-block;margin-bottom:28px;">You keep <strong>50%</strong> per trade</div>
-        <ul class="price-list" style="flex:1;">
-          <li>Full platform access</li>
-          <li>Automated execution</li>
-          <li>Live dashboard</li>
-          <li>Self-custody</li>
-          <li>Telegram alerts</li>
-        </ul>
-        <a href="https://t.me/OddsEngine" class="price-cta" target="_blank" style="background:transparent;border:1px solid var(--border-hover);color:var(--text);margin-top:auto;">Join Channel</a>
-      </div>
-
-      <!-- PROFESSIONAL — FEATURED -->
-      <div style="background:var(--bg-card);border:1px solid var(--blue);border-radius:20px;padding:44px 32px;text-align:center;position:relative;box-shadow:0 0 80px var(--blue-glow),0 24px 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;">
-        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);font-size:0.58rem;text-transform:uppercase;letter-spacing:2px;background:var(--blue);color:#fff;padding:4px 16px;border-radius:980px;white-space:nowrap;">Most Popular</div>
-        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:3px;color:var(--blue);margin-bottom:20px;">Professional</div>
-        <div style="font-size:3.2rem;font-weight:800;letter-spacing:-3px;margin-bottom:4px;"><span style="font-size:1.5rem;color:var(--text-secondary);vertical-align:top;">$</span>8,000</div>
-        <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:8px;">One-time access fee</p>
-        <div style="font-family:var(--font-mono);font-size:0.82rem;color:var(--blue);padding:10px 20px;background:var(--blue-subtle);border-radius:8px;display:inline-block;margin-bottom:28px;">You keep <strong>70%</strong> per trade</div>
-        <ul class="price-list" style="flex:1;">
-          <li>Full platform access</li>
-          <li>Automated execution</li>
-          <li>Live dashboard</li>
-          <li>Self-custody</li>
-          <li>Telegram alerts</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://t.me/OddsEngine" class="price-cta" target="_blank" style="margin-top:auto;">Join Channel</a>
-      </div>
-
-      <!-- PREMIUM -->
-      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:44px 32px;text-align:center;position:relative;transition:border-color 0.3s;display:flex;flex-direction:column;" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:3px;color:var(--text-tertiary);margin-bottom:20px;">Premium</div>
-        <div style="font-size:3.2rem;font-weight:800;letter-spacing:-3px;margin-bottom:4px;"><span style="font-size:1.5rem;color:var(--text-secondary);vertical-align:top;">$</span>17,000</div>
-        <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:8px;">One-time access fee</p>
-        <div style="font-family:var(--font-mono);font-size:0.82rem;color:#f59e0b;padding:10px 20px;background:rgba(245,158,11,0.08);border-radius:8px;display:inline-block;margin-bottom:28px;">You keep <strong>80%</strong> per trade</div>
-        <ul class="price-list" style="flex:1;">
-          <li>Full platform access</li>
-          <li>Automated execution</li>
-          <li>Live dashboard</li>
-          <li>Self-custody</li>
-          <li>Telegram alerts</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://t.me/OddsEngine" class="price-cta" target="_blank" style="background:transparent;border:1px solid var(--border-hover);color:var(--text);margin-top:auto;">Join Channel</a>
-      </div>
-    </div>
-
-    <!-- PER-TRADE SETTLEMENT -->
-    <div class="reveal" style="max-width:680px;margin:80px auto 0;text-align:center;">
-      <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:2px;margin-bottom:32px;">How it works</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="split-grid">
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
-          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">01</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Self-custody</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">You fund and control your own wallet. OddsEngine never holds or accesses your capital.</div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
-          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:12px;">02</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Automated execution</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">The system detects, evaluates, and executes on your account. No manual input required.</div>
-        </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px 20px;">
-          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--green);letter-spacing:2px;margin-bottom:12px;">03</div>
-          <div style="font-size:0.95rem;font-weight:600;margin-bottom:8px;">Per-trade settlement</div>
-          <div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;">Profit share is applied automatically after each resolved trade. Fully transparent. No invoicing.</div>
+          <g font-family="DM Mono" font-size="13" fill="#f5f5f7" text-anchor="middle">
+            <text x="115" y="55">84.9%</text><text x="195" y="56">84.7%</text>
+            <text x="275" y="68" fill="#86868b">77.2%</text>
+          </g>
+          <g font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="middle">
+            <text x="115" y="213">WE SAID</text>
+            <text x="195" y="213" fill="#2997ff">IT HAPPENED</text>
+            <text x="275" y="213">MARKET CHARGED</text>
+          </g>
+          <line x1="226" y1="64" x2="244" y2="76" stroke="#30d158" stroke-width="1.5"/>
+          <text x="330" y="100" font-family="DM Mono" font-size="9" fill="#30d158" text-anchor="end">+7.5pp</text>
+          <text x="201" y="240" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="middle" letter-spacing=".08em">GAP BETWEEN PRICE AND REALITY = THE BUSINESS</text>
+        </svg>
+        <div class="stats">
+          <div class="stat"><div class="n" style="color:var(--text)">0.2pp</div><div class="l" data-de="Kalibrierungsfehler">Calibration error</div></div>
+          <div class="stat"><div class="n" style="color:var(--text)">269</div><div class="l" data-de="Märkte gescort">Markets scored</div></div>
+          <div class="stat"><div class="n" style="color:var(--green)">+7.5pp</div><div class="l" data-de="Edge ggü. Markt">Edge vs market</div></div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ============================================================ -->
-<!-- LIMITED SPOTS -->
-<!-- ============================================================ -->
-<section class="feature-section" style="border-top:1px solid var(--border);padding:100px 0;">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
-      <div style="font-family:var(--font-mono);font-size:4rem;font-weight:800;color:var(--text);letter-spacing:-3px;margin-bottom:16px;">25</div>
-      <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--blue);text-transform:uppercase;letter-spacing:3px;margin-bottom:24px;">Capacity constraint</div>
-      <p style="font-size:1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:32px;">Execution quality degrades with participant count. The system operates within fixed liquidity parameters — each additional participant increases orderbook impact and reduces fill efficiency.</p>
-      <p style="font-size:0.88rem;color:var(--text-tertiary);line-height:1.7;">Current capacity is capped at 25 participants. Access closes when filled.</p>
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Robustheit">Robustness</div>
+      <h3 data-de="Die Edge bewegt sich nicht">The edge doesn't move</h3>
+      <p>We swept the model's confidence setting across its entire plausible
+        range. Hit rate swung from 77% to 96%. The edge over the market barely
+        moved. An overfit wanders with its parameters. This doesn't.</p></div>
+    <div class="card"><div class="k" data-de="Kontrolle">Control</div>
+      <h3 data-de="Blind kaufen verliert 38 %">Buying blind loses 38%</h3>
+      <p>Same markets, same period, no engine — just buy the cheapest block
+        every day: −38.1%. The extremes are expensive and the middle is cheap.
+        That gap is what the engine is built to find.</p></div>
+    <div class="card"><div class="k" data-de="Korrektur">Correction</div>
+      <h3 data-de="Wir haben unsere eigene Überzuversicht gemessen">We measured our own overconfidence</h3>
+      <p>Across all markets we're calibrated to a fraction of a point. On the
+        ones we <em>select</em>, we were meaningfully more confident than we had
+        earned — picking the best of many options selects for your own optimism.
+        We measured it and now subtract it before publishing. Fewer signals.
+        Honest ones.</p></div>
+  </div>
+</div></section>
+
+<section class="feature-section" id="dashboard"><div class="container">
+  <div class="section-label">public.oddsengine.live</div>
+  <h2 data-de="Jeder Markt, nicht nur die Tipps">Every market, not just the picks</h2>
+  <p>The signals are the headline. The dashboard is the evidence: the full probability
+    distribution for every live temperature market, the executable price of every
+    bucket, the edge per outcome, and what happened when it resolved — including the
+    ones we got wrong.</p>
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Live">Live</div><h3 data-de="Verteilung je Markt">Distribution per market</h3>
+      <p>Every bucket, not only the selected block. Resolution station, unit, lead
+        time, ensemble mean and spread.</p></div>
+    <div class="card"><div class="k" data-de="Live">Live</div><h3 data-de="Edge je Ausgang">Edge per outcome</h3>
+      <p>Engine probability against the executable ask, bucket by bucket, updated as
+        the book moves.</p></div>
+    <div class="card"><div class="k" data-de="Historie">History</div><h3 data-de="Jedes Signal, gescort">Every signal, scored</h3>
+      <p>Immutable snapshots. What we said, what it cost, what happened. Misses stay
+        on the record.</p></div>
+  </div>
+</div></section>
+
+<section class="feature-section" id="api"><div class="container">
+  <div class="two">
+    <div>
+      <div class="section-label">JSON · one object per market · for teams</div>
+      <h2 data-de="Dieselben Zahlen, als API">The numbers, as an API</h2>
+      <p>The probabilities are the product. Telegram is one way to read them.
+        Trading desks, market makers, dashboards and research teams read the
+        other way.</p>
+      <p>You get the full distribution over every bracket — not just the pick —
+        alongside the executable price of each one, the resolution station, the
+        deadline and the timestamp. Everything needed to run your own strategy
+        on top, or to price your own book against ours.</p>
+      <p><b style="color:var(--text)">Every response is archived immutably.</b>
+        Which means the calibration you're buying is auditable: pull any past
+        date, compare what we said to what the station recorded. No vendor
+        should ask you to take that on trust, and we don't.</p>
+      <p class="mono" style="font-size:0.8rem; color:var(--text-tertiary); margin-top:22px;"
+         data-de="Enterprise-Zugang, SLA und Mengenpreise: schreib uns auf Telegram">
+        Enterprise access, SLA and volume pricing: message us on Telegram</p>
+      <a href="https://t.me/OddsEngine" class="btn btn-secondary" style="margin-top:14px;"
+         data-de="Kontakt aufnehmen">Get in touch</a>
+    </div>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title">GET /v1/markets/seoul-2026-07-18</span>
+      </div>
+      <div class="signal"><span class="d">{</span>
+  <span class="hi">"city"</span>: "seoul",
+  <span class="hi">"date"</span>: "2026-07-18",
+  <span class="hi">"station"</span>: "Incheon Intl",
+  <span class="hi">"icao"</span>: "RKSI",
+  <span class="hi">"unit"</span>: "C",
+  <span class="hi">"distribution"</span>: <span class="d">{</span>
+    "26C": 0.04, "27C": 0.11,
+    "28C": 0.20, "29C": 0.25,
+    "30C": 0.21, "31C": 0.12,
+    "32C+": 0.06
+  <span class="d">}</span>,
+  <span class="hi">"market_prices"</span>: <span class="d">{</span>
+    "27C": 0.090, "28C": 0.160,
+    "29C": 0.200, "30C": 0.140,
+    "31C": 0.080
+  <span class="d">}</span>,
+  <span class="hi">"selected"</span>: ["27C","28C","29C","30C","31C"],
+  <span class="hi">"coverage"</span>: 0.797,
+  <span class="hi">"block_cost"</span>: 0.670,
+  <span class="hi">"edge_pp"</span>: 12.7,
+  <span class="hi">"outside_range_risk"</span>: 0.203,
+  <span class="hi">"lead_hours"</span>: 13,
+  <span class="hi">"ts"</span>: "2026-07-18T09:20:00Z"
+<span class="d">}</span></div>
     </div>
   </div>
-</section>
 
-<!-- ============================================================ -->
-<!-- FAQ -->
-<!-- ============================================================ -->
-<section class="faq-section">
-  <div class="container">
-    <div class="reveal">
-      <div class="feature-eyebrow">FAQ</div>
-      <div class="feature-headline">Common questions.</div>
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Abdeckung">Coverage</div>
+      <h3 data-de="50 Städte, jeden Tag">50 cities, every day</h3>
+      <p>Every live temperature market, in both °C and °F, with the resolution
+        station and rounding convention resolved per market. New cities appear
+        automatically.</p></div>
+    <div class="card"><div class="k" data-de="Historie">History</div>
+      <h3 data-de="Prüfbar bis zum ersten Call">Auditable back to the first call</h3>
+      <p>Append-only. Every snapshot was written before the station reported and
+        has never been edited. Pull any past date and score us yourself.</p></div>
+    <div class="card"><div class="k" data-de="Integration">Integration</div>
+      <h3 data-de="REST, JSON, kein Theater">REST, JSON, no ceremony</h3>
+      <p>One object per market. No location-key lookups, no SDK, no minimum
+        contract to read a number.</p></div>
+  </div>
+</div></section>
+
+<section class="feature-section" id="access"><div class="container">
+  <div class="section-label">Honest pricing while the evidence is thin</div>
+  <h2 data-de="Gratis, bis es live bewiesen ist">Free until it's proven live</h2>
+  <p>A backtest is not a track record. Charging for signals that have only ever
+    been scored against the past would make us the thing we're trying to replace.
+    The channel is open, and free, while the engine earns a live record in public.</p>
+
+  <div class="tiers">
+    <div class="tier now">
+      <div class="name" data-de="Kalibrierung">Calibration</div>
+      <div class="price" data-de="Gratis">Free</div>
+      <div class="per" data-de="jetzt gerade">right now</div>
+      <ul>
+        <li>Every signal, in public</li>
+        <li>One-tap links to each outcome</li>
+        <li>Full distribution and executable prices</li>
+        <li>Every scoring, hit or miss</li>
+      </ul>
+      <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Kanal beitreten">Join the channel</a>
     </div>
-    <div class="faq-grid reveal">
-      <div class="faq-item"><div class="faq-q">What does OddsEngine trade?</div><div class="faq-a">Two market categories: crypto-linked prediction markets (BTC, ETH, SOL Up/Down) and weather temperature markets across 35 global cities. Both focus on short-horizon markets where structural pricing inefficiencies occur regularly.</div></div>
-      <div class="faq-item"><div class="faq-q">How does the weather engine work?</div><div class="faq-a">Our proprietary forecasting engine cross-references multiple meteorological data sources and compares the resulting consensus against live market pricing. When we detect a statistically significant divergence, the system generates a trading signal. The specific methodology and data sources are proprietary.</div></div>
-      <div class="faq-item"><div class="faq-q">How does the access model work?</div><div class="faq-a">One-time access fee based on tier selection. Profit share is deducted automatically per resolved trade — not invoiced monthly. Starter retains 50%, Professional 70%, Premium 80%. All settlement is visible on the dashboard in real time.</div></div>
-      <div class="faq-item"><div class="faq-q">Do you have custody of my funds?</div><div class="faq-a">No. You maintain your own wallet and private keys at all times. OddsEngine executes on your behalf but never holds, transfers, or withdraws your funds independently.</div></div>
-      <div class="faq-item"><div class="faq-q">What risk controls are in place?</div><div class="faq-a">Position sizing relative to bankroll, maximum exposure limits, per-trade size caps, and market quality filters that reject low-liquidity setups before any execution.</div></div>
-      <div class="faq-item"><div class="faq-q">How do I request access?</div><div class="faq-a">Join the Telegram channel for system updates and performance data. When ready, DM for onboarding — includes wallet setup, platform configuration, and access provisioning.</div></div>
-      <div class="faq-item"><div class="faq-q">What's the difference between the tiers?</div><div class="faq-a">All tiers include the same platform, execution, and dashboard. The only difference is the profit split. Higher tier = you keep a larger share of every winning trade.</div></div>
-      <div class="faq-item"><div class="faq-q">Why is access capped at 25?</div><div class="faq-a">Execution quality is inversely correlated with participant count. Each additional account increases orderbook impact and reduces fill rates. 25 is the current ceiling for maintaining system-level performance guarantees.</div></div>
-      <div class="faq-item"><div class="faq-q">What are the risks?</div><div class="faq-a">Trading prediction markets involves risk of loss. Performance varies with market conditions, liquidity, and timing. OddsEngine provides trading infrastructure — not financial advice. Past performance does not guarantee future results.</div></div>
+    <div class="tier">
+      <div class="name" data-de="Signale">Signals</div>
+      <div class="price">—</div>
+      <div class="per" data-de="sobald der Live-Record hält">once the live record holds</div>
+      <ul>
+        <li>All 50 cities, all modes</li>
+        <li>Safe / Balanced / Aggressive</li>
+        <li>Published reliability diagram</li>
+        <li>Full signal history</li>
+      </ul>
+      <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Benachrichtigen">Get notified</a>
+    </div>
+    <div class="tier">
+      <div class="name">API</div>
+      <div class="price">—</div>
+      <div class="per" data-de="sobald der Live-Record hält">once the live record holds</div>
+      <ul>
+        <li>JSON, every market</li>
+        <li>Full distribution, not just the pick</li>
+        <li>Historical snapshots</li>
+        <li>For bots and analytics platforms</li>
+      </ul>
+      <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Benachrichtigen">Get notified</a>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ============================================================ -->
-<!-- 8. FINAL CTA -->
-<!-- ============================================================ -->
-<section class="final-cta">
-  <div class="container reveal">
-    <h2>Systematic execution.<br><span style="color:var(--blue)">Aligned incentives</span>.</h2>
-    <p>Self-custody. Per-trade settlement. Performance-aligned access.</p>
-    <div class="urgency">25 participant capacity</div>
-    <a href="https://t.me/OddsEngine" class="btn-blue" style="font-size:1rem;padding:16px 44px;" target="_blank">Join Channel</a>
+<footer><div class="container">
+  <div class="section-label" data-de="Haftungsausschluss">Disclaimer</div>
+  <p class="disc">OddsEngine publishes probability estimates and market data. It is
+    information, not financial advice, and not an offer to buy or sell anything.
+    Probabilities, prices and suggested allocations reflect the data available when a
+    signal is published; weather models, market prices and liquidity change afterwards.
+    Prediction markets carry the risk of total loss of the amount committed. Nothing
+    here is a promise of profit, and no performance figure appears on this page that has
+    not been scored against a resolved market. Availability of prediction markets
+    depends on your jurisdiction — check before participating.</p>
+  <div class="footer-bot">
+    <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
+    <div class="footer-links">
+      <a href="#engine">Engine</a>
+      <a href="#record">Track record</a>
+      <a href="https://public.oddsengine.live">Dashboard</a>
+      <a href="https://t.me/OddsEngine">Telegram</a>
+    </div>
   </div>
-</section>
+  <div class="footer-bot" style="border:0; padding-top:0; margin-top:12px;">
+    <span>Weather: ECMWF · GFS · ICON via Open-Meteo &nbsp;·&nbsp; Markets: Polymarket</span>
+  </div>
+</div></footer>
 
-<footer><div class="container"><span class="footer-text">&copy; 2026 OddsEngine</span><div class="footer-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div></div></footer>
-<div class="disclaimer"><div class="container">
-<p style="font-size:0.72rem;color:var(--text-tertiary);max-width:800px;margin:0 auto 12px;line-height:1.8;font-weight:500;">IMPORTANT DISCLOSURES</p>
-<p style="font-size:0.65rem;color:var(--text-tertiary);max-width:800px;margin:0 auto;line-height:1.8;">
-<strong>Not Financial Advice.</strong> OddsEngine is a trading infrastructure platform. Nothing on this website constitutes financial advice, investment advice, trading advice, or any other form of advice. You should not treat any of the website's content as such. OddsEngine does not recommend that any asset, transaction, or strategy is suitable for any specific person.<br><br>
-<strong>No Custody of Funds.</strong> OddsEngine does not hold, manage, pool, or have access to your funds at any time. Users maintain full and exclusive custody of their own wallets and private keys. OddsEngine has no ability to withdraw, transfer, or access user funds.<br><br>
-<strong>Risk of Loss.</strong> Trading prediction markets involves substantial risk of loss and is not suitable for every person. You should carefully consider whether trading is suitable for you in light of your financial condition. The amount you may lose may be greater than your initial deposit. You could lose all of your funds.<br><br>
-<strong>No Guarantee of Performance.</strong> Past performance is not indicative of future results. OddsEngine makes no representation or warranty that the platform will generate profits or avoid losses. Performance varies based on market conditions, liquidity, volatility, and other factors outside of our control. Any performance data shown on this website or associated dashboards is historical or simulated and should not be interpreted as a promise of future returns.<br><br>
-<strong>No Regulatory Status.</strong> OddsEngine is not registered as an investment adviser, broker-dealer, or in any similar capacity with any regulatory authority. The platform operates as software infrastructure only.<br><br>
-<strong>Assumption of Risk.</strong> By accessing the platform, you acknowledge that you understand and accept all associated risks, including but not limited to market risk, liquidity risk, smart contract risk, platform risk, and regulatory risk. You are solely responsible for your own trading decisions and any financial outcomes.
-</p>
-</div></div>
-
-<!-- LIVE WEATHER SCANNER + CRYPTO FEED -->
 <script>
-(function(){
-  const cities=[
-    {n:'NYC',lat:40.78,lon:-73.87,u:'F'},{n:'Chicago',lat:41.97,lon:-87.91,u:'F'},
-    {n:'Miami',lat:25.80,lon:-80.29,u:'F'},{n:'Atlanta',lat:33.64,lon:-84.43,u:'F'},
-    {n:'Houston',lat:29.76,lon:-95.36,u:'F'},{n:'Dallas',lat:32.85,lon:-96.85,u:'F'},
-    {n:'Austin',lat:30.19,lon:-97.67,u:'F'},{n:'Denver',lat:39.86,lon:-104.67,u:'F'},
-    {n:'LA',lat:33.94,lon:-118.41,u:'F'},{n:'SF',lat:37.62,lon:-122.38,u:'F'},
-    {n:'Seattle',lat:47.45,lon:-122.31,u:'F'},
-    {n:'Toronto',lat:43.68,lon:-79.63,u:'C'},{n:'London',lat:51.51,lon:0.05,u:'C'},
-    {n:'Paris',lat:49.01,lon:2.55,u:'C'},{n:'Munich',lat:48.35,lon:11.79,u:'C'},
-    {n:'Madrid',lat:40.47,lon:-3.56,u:'C'},{n:'Milan',lat:45.63,lon:8.72,u:'C'},
-    {n:'Warsaw',lat:52.17,lon:20.97,u:'C'},{n:'Ankara',lat:40.12,lon:32.99,u:'C'},
-    {n:'Tel Aviv',lat:32.01,lon:34.88,u:'C'},
-    {n:'Seoul',lat:37.46,lon:126.44,u:'C'},{n:'Tokyo',lat:35.55,lon:139.78,u:'C'},
-    {n:'Shanghai',lat:31.14,lon:121.81,u:'C'},{n:'Beijing',lat:40.08,lon:116.58,u:'C'},
-    {n:'Hong Kong',lat:22.31,lon:113.92,u:'C'},{n:'Shenzhen',lat:22.64,lon:113.81,u:'C'},
-    {n:'Taipei',lat:25.08,lon:121.23,u:'C'},{n:'Singapore',lat:1.36,lon:103.99,u:'C'},
-    {n:'Wuhan',lat:30.78,lon:114.21,u:'C'},{n:'Chengdu',lat:30.57,lon:103.95,u:'C'},
-    {n:'Chongqing',lat:29.72,lon:106.63,u:'C'},{n:'Lucknow',lat:26.76,lon:80.89,u:'C'},
-    {n:'B. Aires',lat:-34.82,lon:-58.54,u:'C'},{n:'São Paulo',lat:-23.43,lon:-46.47,u:'C'},
-    {n:'Wellington',lat:-41.33,lon:174.81,u:'C'},
-  ];
-  const grid=document.getElementById('lw-grid');
-  const weatherIcons={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌧',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'🌨',80:'🌦',81:'🌧',82:'⛈',95:'⛈',96:'⛈',99:'⛈'};
+// Every translatable node carries data-de. One attribute, no second file to
+// drift out of sync. English stays the default — the readers who matter here
+// are on Polymarket, and that market speaks English.
+(function () {
+  var btn = document.getElementById('lang');
+  var nodes = document.querySelectorAll('[data-de]');
+  nodes.forEach(function (n) { n.dataset.en = n.innerHTML; });
 
-  async function fetchWeather(){
-    const batches=[];
-    for(let i=0;i<cities.length;i+=5)batches.push(cities.slice(i,i+5));
-    const results=[];
-    for(const batch of batches){
-      const promises=batch.map(c=>
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code,cloud_cover`)
-        .then(r=>r.json()).then(d=>({city:c,data:d.current})).catch(()=>null)
-      );
-      const res=await Promise.all(promises);
-      results.push(...res.filter(Boolean));
-    }
-    let html='';
-    results.forEach(r=>{
-      const t=r.data.temperature_2m;
-      const disp=r.city.u==='F'?Math.round(t*9/5+32)+'°F':Math.round(t)+'°C';
-      const icon=weatherIcons[r.data.weather_code]||'🌡';
-      const cloud=r.data.cloud_cover;
-      html+=`<div style="background:var(--bg-card);padding:12px 8px;text-align:center;">
-        <div style="font-size:13px;margin-bottom:3px;">${icon}</div>
-        <div style="font-family:var(--font-mono);font-size:0.58rem;color:var(--text-secondary);letter-spacing:0.3px;margin-bottom:2px;">${r.city.n}</div>
-        <div style="font-family:var(--font-mono);font-size:0.82rem;font-weight:700;color:var(--text);letter-spacing:-0.3px;">${disp}</div>
-        <div style="font-family:var(--font-mono);font-size:0.48rem;color:var(--text-tertiary);margin-top:2px;">${cloud}% cloud</div>
-      </div>`;
+  function set(lang) {
+    nodes.forEach(function (n) {
+      n.innerHTML = lang === 'de' ? n.dataset.de : n.dataset.en;
     });
-    grid.innerHTML=html;
-    document.getElementById('lw-count').textContent=results.length;
-    const now=new Date();
-    document.getElementById('lw-time').textContent=now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false})+' UTC';
-    const pad=n=>String(n).padStart(2,'0');
-    const m=now.getMinutes();
-    document.getElementById('ft1').textContent=pad(now.getHours())+':'+pad(m);
-    document.getElementById('ft2').textContent=pad(now.getHours())+':'+pad(Math.max(0,m-3));
-    document.getElementById('ft3').textContent=pad(now.getHours())+':'+pad(Math.max(0,m-7));
-    document.getElementById('ft4').textContent=pad(now.getHours()-1<0?23:now.getHours()-1)+':'+pad(42);
+    document.documentElement.lang = lang;
+    btn.textContent = lang === 'de' ? 'EN' : 'DE';
+    btn.setAttribute('aria-label', lang === 'de' ? 'English' : 'Deutsch');
+    try { localStorage.setItem('oe_lang', lang); } catch (e) {}
   }
-  fetchWeather();
-  setInterval(fetchWeather,300000);
 
-  // Binance WebSocket for live crypto prices
-  const syms=['btcusdt','ethusdt','solusdt','xrpusdt','dogeusdt','bnbusdt','hypeusdt'];
-  const elMap={btcusdt:'p-btc',ethusdt:'p-eth',solusdt:'p-sol',xrpusdt:'p-xrp',dogeusdt:'p-doge',bnbusdt:'p-bnb',hypeusdt:'p-hype'};
-  const prices={},prevPrices={};
-  let lastMsg=0;
-  function connectWS(){
-    const streams=syms.map(s=>s+'@trade').join('/');
-    const ws=new WebSocket('wss://stream.binance.com:9443/stream?streams='+streams);
-    ws.onmessage=function(e){
-      try{
-        const d=JSON.parse(e.data);if(!d.data)return;
-        lastMsg=Date.now();
-        const sym=d.data.s.toLowerCase();
-        const price=parseFloat(d.data.p);
-        prevPrices[sym]=prices[sym]||price;prices[sym]=price;
-        const el=document.getElementById(elMap[sym]);if(!el)return;
-        const fmt=price>=100?price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):price>=1?price.toFixed(3):price.toFixed(5);
-        el.textContent='$'+fmt;
-        el.classList.remove('ps-flash-up','ps-flash-down');void el.offsetWidth;
-        el.classList.add(price>=prevPrices[sym]?'ps-flash-up':'ps-flash-down');
-        setTimeout(()=>el.classList.remove('ps-flash-up','ps-flash-down'),600);
-      }catch(x){}
-    };
-    ws.onclose=function(){setTimeout(connectWS,3000)};
-    ws.onerror=function(){ws.close()};
-  }
-  connectWS();
+  var saved = null;
+  try { saved = localStorage.getItem('oe_lang'); } catch (e) {}
+  if (!saved && (navigator.language || '').slice(0, 2) === 'de') saved = 'de';
+  if (saved === 'de') set('de');
 
-  // Latency & uptime counters
-  setInterval(function(){
-    const lat=document.getElementById('s-latency');
-    const up=document.getElementById('s-uptime');
-    if(lat&&lastMsg>0){const ms=Date.now()-lastMsg;lat.textContent=ms<2000?Math.floor(Math.random()*8+2)+'ms':'reconnecting...';}
-    if(up){const sec=Math.floor((Date.now()-new Date('2026-03-18').getTime())/1000);const d=Math.floor(sec/86400);const h=Math.floor((sec%86400)/3600);up.textContent=d+'d '+h+'h';}
-  },1000);
+  btn.addEventListener('click', function () {
+    set(document.documentElement.lang === 'de' ? 'en' : 'de');
+  });
 })();
-</script>
-
-<script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => { e.preventDefault(); const t=document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
-});
 </script>
 </body>
 </html>
