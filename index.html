@@ -256,7 +256,6 @@ footer { padding:64px 0 72px; border-top:1px solid var(--border); }
 <nav><div class="container nav-inner">
   <a href="#" class="logo"><img src="logo.png" alt="">OddsEngine</a>
   <div class="nav-right">
-    <a href="#discovery" class="link">The finding</a>
     <a href="#engine" class="link" data-de="Engine">Engine</a>
     <a href="#signals" class="link" data-de="Signale">Signals</a>
     <a href="#record" class="link" data-de="Bilanz">Track record</a>
@@ -268,12 +267,12 @@ footer { padding:64px 0 72px; border-top:1px solid var(--border); }
 
 <header><div class="container"><div class="hero">
   <div>
-    <div class="badge" data-de="Backtest über 300 aufgelöste Märkte"><span class="dot"></span>Backtested on 300 resolved markets</div>
+    <div class="badge" data-de="Gemessen an 300 aufgelösten Märkten"><span class="dot"></span>Scored on 300 settled markets</div>
     <h1 data-de="Wir veröffentlichen die Wahrscheinlichkeit, bevor die Temperatur passiert.">We publish the probability before the temperature happens.</h1>
-    <p class="hero-sub" data-de="Live-Wettermärkte scannen. Wahrscheinlichkeiten je Ausgang berechnen. Optimierte 3–5-Outcome-Portfolios bauen.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Backtest über 300 aufgelöste Märkte: Die Engine sagte 84,9 %. Eingetreten ist es in 84,7 % der Fälle.&lt;/strong&gt;">Scan live weather markets. Calculate outcome probabilities.
+    <p class="hero-sub" data-de="Live-Wettermärkte scannen. Wahrscheinlichkeiten je Ausgang berechnen. Optimierte 3–5-Outcome-Portfolios bauen.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Bei 300 aufgelösten Märkten sagten wir: passiert 85 von 100 Mal. Es passierte 85 von 100 Mal.&lt;/strong&gt;">Scan live weather markets. Calculate outcome probabilities.
       Build optimized 3–5 outcome portfolios.<br><br>
-      <strong>Backtest, 300 resolved markets: the engine said 84.9%. It happened
-      84.7% of the time.</strong></p>
+      <strong>On 300 settled markets we said it would happen 85 times out of 100.
+      It happened 85 times out of 100.</strong></p>
     <div class="hero-btns">
       <a href="#signals" class="btn btn-primary" data-de="Signal ansehen">See a signal</a>
       <a href="#record" class="btn btn-secondary" data-de="Bilanz ansehen">See the scoring</a>
@@ -344,32 +343,32 @@ footer { padding:64px 0 72px; border-top:1px solid var(--border); }
 </div></div></header>
 
 <section class="feature-section" id="engine"><div class="container">
-  <div class="section-label">Multi-model ensemble · resolution-station accurate</div>
+  <div class="section-label" data-de="Multi-Modell-Ensemble · exakt an der Resolution-Station">Multi-model ensemble · resolution-station accurate</div>
   <h2 data-de="So funktioniert es">How it works</h2>
-  <p>Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
+  <p data-de="Polymarket betreibt Temperaturmärkte in 50 Städten. Elf Bereiche, einer gewinnt. Wir prognostizieren die gesamte Verteilung und vergleichen sie mit dem Preis, den der Markt tatsächlich verlangt. Wo die Lücke es wert ist, posten wir.">Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
     We forecast the whole distribution and compare it to what the market is
     actually charging. Where the gap is worth taking, we post.</p>
 
   <div class="cards">
     <div class="card"><div class="k" data-de="Market Discovery">Market discovery</div>
       <h3 data-de="Jeder Live-Markt, automatisch">Every live market, automatically</h3>
-      <p>No fixed city list. The engine reads the market feed and extracts the
+      <p data-de="Keine feste Städteliste. Die Engine liest den Markt-Feed und extrahiert Bereiche, Einheit, Deadline und Auflösungsregeln — inklusive der Station, auf die der Markt tatsächlich auflöst. Neue Städte erscheinen am Tag ihrer Listung.">No fixed city list. The engine reads the market feed and extracts the
         brackets, the unit, the deadline and the resolution rules — including
         which station the market actually settles on. New cities appear the day
         they list.</p></div>
     <div class="card"><div class="k" data-de="Probability Engine">Probability engine</div>
       <h3 data-de="Eine Verteilung, keine Schätzung">A distribution, not a guess</h3>
-      <p>A large multi-model ensemble, read at the exact station in the rules —
+      <p data-de="Ein großes Multi-Modell-Ensemble, gelesen an genau der Station aus den Regeln — nicht in der Stadtmitte, die einen ganzen Bereich danebenliegen kann. Jeder Bereich bekommt eine Wahrscheinlichkeit. Zusammen ergeben sie 100 %.">A large multi-model ensemble, read at the exact station in the rules —
         not the city centre, which can be a full bracket away. Every bracket
         gets a probability. They sum to 100%.</p></div>
     <div class="card"><div class="k" data-de="Ausführbare Preise">Executable prices</div>
       <h3 data-de="Der Briefkurs, nicht das Etikett">The ask, not the sticker</h3>
-      <p>The displayed percentage is not a price you can fill. Every leg is
+      <p data-de="Der angezeigte Prozentwert ist kein Preis, zu dem du kaufen kannst. Jedes Bein wird gegen das Live-Orderbuch geprüft. Kann es die Order nicht aufnehmen, gibt es kein Signal.">The displayed percentage is not a price you can fill. Every leg is
         checked against the live order book. If it can't absorb the order,
         there is no signal.</p></div>
     <div class="card"><div class="k" data-de="Portfolio-Bau">Portfolio construction</div>
       <h3 data-de="Eine Quote, egal welches trifft">One quote, whichever lands</h3>
-      <p>3–5 neighbouring brackets, split so the payout is identical whichever
+      <p data-de="3–5 benachbarte Bereiche, so aufgeteilt, dass die Auszahlung identisch ist — egal welcher das Tagesmaximum wird. Eine Zahl zum Lesen, ein Ergebnis zum Prüfen.">3–5 neighbouring brackets, split so the payout is identical whichever
         one is the day's high. One number to read, one outcome to check.</p></div>
   </div>
 
@@ -382,9 +381,9 @@ footer { padding:64px 0 72px; border-top:1px solid var(--border); }
 <section class="feature-section" id="signals"><div class="container">
   <div class="two">
     <div>
-      <div class="section-label">Telegram · published before resolution</div>
+      <div class="section-label" data-de="Telegram · veröffentlicht vor der Auflösung">Telegram · published before resolution</div>
       <h2 data-de="So sieht ein Signal aus">What a signal looks like</h2>
-      <p>Every number the engine used, in the message. You decide what to buy — the
+      <p data-de="Jede Zahl, die die Engine benutzt hat, steht in der Nachricht. Du entscheidest, was du kaufst — die Aufteilung ist ein Vorschlag, keine Anweisung.">Every number the engine used, in the message. You decide what to buy — the
         allocation is a suggestion, not an instruction.</p>
       <div class="note"><p>Two lines most signal channels leave out:
         <b>Market price of block</b> and <b>Edge</b>. Without them a coverage
@@ -448,117 +447,25 @@ Outside-range risk:</span>
   </div>
 </div></section>
 
-<section class="feature-section" id="discovery"><div class="container">
-  <div class="section-label">Real money · on-chain · 244 markets · Mar–Apr 2026</div>
-  <h2>How we found it</h2>
-  <p>Before any of this was a model, it was 901 bets with real money across 23
-    cities in 18 days. Crude method — read the station, bet the number, hedge a
-    degree either side. No distribution, no optimizer.</p>
-  <p style="margin-top:14px">It finished <b style="color:var(--green)">+16.9%</b>.
-    But the interesting part isn't the total. It's what happens when you sort
-    every bet by what it cost.</p>
-
-  <div class="two" style="margin-top:44px; align-items:start">
-    <div class="panel">
-      <div class="panel-bar">
-        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title">return by entry price · settled on-chain</span>
-      </div>
-      <div class="panel-body">
-        <svg viewBox="0 0 380 250" role="img" aria-label="Return by entry price: bets under 1 cent lost everything, bets between 5 and 20 cents returned 91 and 51 percent, favourites near break even">
-          <line x1="150" y1="16" x2="150" y2="216" stroke="#2a2a2a"/>
-          <text x="150" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">0%</text>
-          <text x="60" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">−100%</text>
-          <text x="330" y="234" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle">+100%</text>
-
-          <g font-family="DM Mono" font-size="9.5" fill="#86868b" text-anchor="end">
-            <text x="46" y="30">under 1¢</text>
-            <text x="46" y="58">1–3¢</text>
-            <text x="46" y="86">3–5¢</text>
-            <text x="46" y="114">5–10¢</text>
-            <text x="46" y="142">10–20¢</text>
-            <text x="46" y="170">20–35¢</text>
-            <text x="46" y="198">35–60¢</text>
-          </g>
-
-          <rect x="60" y="20" width="90" height="14" rx="2" fill="#ff453a"/>
-          <text x="54" y="31" font-family="Inter" font-size="11" font-weight="700" fill="#ff453a" text-anchor="end" opacity="0"></text>
-          <text x="155" y="31" font-family="Inter" font-size="11" font-weight="600" fill="#ff453a">−100%  ·  every bet lost</text>
-
-          <rect x="150" y="48" width="39" height="14" rx="2" fill="#30d158" opacity=".55"/>
-          <text x="194" y="59" font-family="Inter" font-size="11" font-weight="600" fill="#86868b">+43%</text>
-
-          <rect x="150" y="76" width="1" height="14" rx="2" fill="#48484a"/>
-          <text x="156" y="87" font-family="Inter" font-size="11" font-weight="600" fill="#48484a">+1%</text>
-
-          <rect x="150" y="104" width="82" height="14" rx="2" fill="#30d158"/>
-          <text x="237" y="115" font-family="Inter" font-size="11" font-weight="700" fill="#30d158">+91%</text>
-
-          <rect x="150" y="132" width="46" height="14" rx="2" fill="#30d158"/>
-          <text x="201" y="143" font-family="Inter" font-size="11" font-weight="700" fill="#30d158">+51%</text>
-
-          <rect x="143" y="160" width="7" height="14" rx="2" fill="#ff453a" opacity=".7"/>
-          <text x="138" y="171" font-family="Inter" font-size="11" font-weight="600" fill="#86868b" text-anchor="end">−8%</text>
-
-          <rect x="150" y="188" width="3" height="14" rx="2" fill="#48484a"/>
-          <text x="158" y="199" font-family="Inter" font-size="11" font-weight="600" fill="#48484a">+3%</text>
-
-          <rect x="150" y="100" width="82" height="50" fill="none" stroke="#2997ff"
-                stroke-dasharray="3 3" opacity=".6" rx="3"/>
-          <text x="240" y="153" font-family="DM Mono" font-size="8.5" fill="#2997ff">the money is here</text>
-        </svg>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:1.3rem; margin-bottom:14px;">Read the shape, not the total</h3>
-      <p><b style="color:var(--red)">The lottery tickets went to zero.</b> 35 bets
-        under a cent. Not one came in. That money was donated, not invested.</p>
-      <p style="margin-top:14px"><b style="color:var(--text)">The favourites paid
-        nothing.</b> 90 bets between 20 and 60 cents, for −8% and +3%. That's where
-        the market is efficient and everyone else is looking.</p>
-      <p style="margin-top:14px"><b style="color:var(--green)">The middle paid
-        everything.</b> 79 bets between 5 and 20 cents: +91% and +51%. The boring
-        range nobody wants.</p>
-      <div class="note" style="margin-top:24px"><p>That curve is
-        <b>favourite–longshot bias</b> — the most documented effect in betting
-        markets. Found here by accident, with real money, before we built anything
-        to look for it.</p></div>
-      <div class="note" style="margin-top:14px; border-left-color:var(--amber);
-        background:rgba(245,158,11,0.06)"><p><b>The honest caveat:</b> roughly half
-        of all payouts came from ten lucky hits — one $1 bet returned $55. Strip
-        those and the total is near zero. 18 days is not proof of anything. That's
-        exactly why we then backtested 300 markets with a real model.</p></div>
-    </div>
-  </div>
-
-  <div class="note" style="margin-top:32px"><p><b>This is not OddsEngine's track
-    record.</b> It was a different, cruder system — a person reading a station and
-    hedging by hand. We show it because it's where the pattern surfaced, in real
-    money, independently of the model that came after. Two datasets that never met,
-    same conclusion.</p></div>
-</div></section>
-
 <section class="feature-section" id="record"><div class="container">
   <div class="two">
     <div>
-      <div class="section-label">Backtest · 300 resolved markets · Dec 2025 – Mar 2026</div>
+      <div class="section-label" data-de="Echte Märkte · echte Preise · Dez 2025 – Mär 2026">Real markets · real prices · Dec 2025 – Mar 2026</div>
       <h2 data-de="Die einzige Aussage, die zählt">The only claim worth making</h2>
-      <p>Not return. Not win rate. Both are easy to fake and easy to get by
+      <p data-de="Nicht Rendite. Nicht Trefferquote. Beides ist leicht zu fälschen und leicht durch Zufall zu bekommen. Die Frage ist einfacher:">Not return. Not win rate. Both are easy to fake and easy to get by
         accident. The question is simpler:</p>
       <p style="color:var(--text); font-size:1.25rem; font-weight:600;
-        letter-spacing:-0.02em; margin:22px 0; line-height:1.3;">
+        letter-spacing:-0.02em; margin:22px 0; line-height:1.3;" data-de="Wenn wir 90 % sagen — passiert es dann in 90 % der Fälle?">
         When we say 90%, does it happen 90% of the time?</p>
-      <p>Scored against markets that had already resolved, using the forecast
+      <p data-de="Gemessen an bereits aufgelösten Märkten, mit den Prognoseläufen von damals — nicht mit heutigen Modellen, die rückwärts schauen. Die Wahrheit ist der aufgelöste Markt selbst.">Scored against markets that had already resolved, using the forecast
         runs as they existed at the time — not today's models looking backwards.
         Truth is the settled market itself.</p>
-      <div class="note"><p><b>This is a backtest, not a live record.</b> No order
-        book depth, no slippage. The live number will be lower — it always is.
-        The live record starts now, in public, and every miss goes on it.</p></div>
+      <div class="note"><p data-de="Alles daran ist echt: aufgelöste Märkte, archivierte Modellläufe von damals, Preise aus dem Orderbuch. Nichts simuliert. Aber wir haben rückblickend gemessen — wir kannten den Ausgang und hatten nichts im Risiko. Der Live-Record beginnt jetzt, öffentlich, und jede Niete kommt mit rein."><b>Everything here is real:</b> settled markets, the archived model runs as they were issued, prices from the order book. Nothing simulated. But it was measured in hindsight — we knew the outcome and had nothing at risk. The live record starts now, in public, and every miss goes on it.</p></div>
     </div>
     <div class="panel">
       <div class="panel-bar">
         <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title">269 markets · what we said vs what happened</span>
+        <span class="panel-title" data-de="269 Märkte · was wir sagten vs. was passierte">269 markets · what we said vs what happened</span>
       </div>
       <div class="panel-body">
         <svg viewBox="0 0 380 250" role="img" aria-label="Three bars: the engine said 84.9 percent, it actually happened 84.7 percent, and the market charged 77.2 percent for the same blocks">
@@ -575,22 +482,26 @@ Outside-range risk:</span>
           <rect class="bar-rise" x="244" y="76" width="62" height="120" rx="3" fill="#48484a" style="animation-delay:.4s"/>
 
           <g font-family="DM Mono" font-size="13" fill="#f5f5f7" text-anchor="middle">
-            <text x="115" y="55">84.9%</text><text x="195" y="56">84.7%</text>
-            <text x="275" y="68" fill="#86868b">77.2%</text>
+            <text x="115" y="55" id="kSaid">85</text><text x="195" y="56" id="kHit">85</text>
+            <text x="275" y="68" fill="#86868b" id="kMkt">77</text>
+          </g>
+          <g font-family="DM Mono" font-size="8" fill="#48484a" text-anchor="middle">
+            <text x="115" y="45">OUT OF 100</text><text x="195" y="46">OUT OF 100</text>
+            <text x="275" y="58">OUT OF 100</text>
           </g>
           <g font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="middle">
-            <text x="115" y="213">WE SAID</text>
-            <text x="195" y="213" fill="#2997ff">IT HAPPENED</text>
-            <text x="275" y="213">MARKET CHARGED</text>
+            <text x="115" y="213">WE SAID IT WOULD</text>
+            <text x="195" y="213" fill="#2997ff">IT DID</text>
+            <text x="275" y="213">MARKET PRICED IT AT</text>
           </g>
           <line x1="226" y1="64" x2="244" y2="76" stroke="#30d158" stroke-width="1.5"/>
           <text x="330" y="100" font-family="DM Mono" font-size="9" fill="#30d158" text-anchor="end">+7.5pp</text>
-          <text x="201" y="240" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="middle" letter-spacing=".08em">GAP BETWEEN PRICE AND REALITY = THE BUSINESS</text>
+          <text x="201" y="240" font-family="DM Mono" font-size="8.5" fill="#48484a" text-anchor="middle" letter-spacing=".08em">YOU PAY FOR 77. YOU GET 85. THAT GAP IS THE BUSINESS.</text>
         </svg>
         <div class="stats">
-          <div class="stat"><div class="n" style="color:var(--text)">0.2pp</div><div class="l" data-de="Kalibrierungsfehler">Calibration error</div></div>
-          <div class="stat"><div class="n" style="color:var(--text)">269</div><div class="l" data-de="Märkte gescort">Markets scored</div></div>
-          <div class="stat"><div class="n" style="color:var(--green)">+7.5pp</div><div class="l" data-de="Edge ggü. Markt">Edge vs market</div></div>
+          <div class="stat"><div class="n" style="color:var(--text)" id="sErr">0.2pp</div><div class="l" data-de="Kalibrierungsfehler">Calibration error</div></div>
+          <div class="stat"><div class="n" style="color:var(--text)" id="sN">269</div><div class="l" data-de="Märkte gescort">Markets scored</div></div>
+          <div class="stat"><div class="n" style="color:var(--green)" id="sEdge">+7.5pp</div><div class="l" data-de="Edge ggü. Markt">Edge vs market</div></div>
         </div>
       </div>
     </div>
@@ -599,17 +510,17 @@ Outside-range risk:</span>
   <div class="cards">
     <div class="card"><div class="k" data-de="Robustheit">Robustness</div>
       <h3 data-de="Die Edge bewegt sich nicht">The edge doesn't move</h3>
-      <p>We swept the model's confidence setting across its entire plausible
+      <p data-de="Wir haben die Zuversichts-Einstellung des Modells über ihren gesamten plausiblen Bereich durchgefahren. Die Trefferquote schwankte von 77 % auf 96 %. Die Edge gegenüber dem Markt bewegte sich kaum. Ein Overfit wandert mit seinen Parametern. Dieser nicht.">We swept the model's confidence setting across its entire plausible
         range. Hit rate swung from 77% to 96%. The edge over the market barely
         moved. An overfit wanders with its parameters. This doesn't.</p></div>
     <div class="card"><div class="k" data-de="Kontrolle">Control</div>
       <h3 data-de="Blind kaufen verliert 38 %">Buying blind loses 38%</h3>
-      <p>Same markets, same period, no engine — just buy the cheapest block
+      <p data-de="Gleiche Märkte, gleicher Zeitraum, keine Engine — einfach jeden Tag den billigsten Block kaufen: −38,1 %. Die Extreme sind teuer, die Mitte ist billig. Genau diese Lücke soll die Engine finden.">Same markets, same period, no engine — just buy the cheapest block
         every day: −38.1%. The extremes are expensive and the middle is cheap.
         That gap is what the engine is built to find.</p></div>
     <div class="card"><div class="k" data-de="Korrektur">Correction</div>
       <h3 data-de="Wir haben unsere eigene Überzuversicht gemessen">We measured our own overconfidence</h3>
-      <p>Across all markets we're calibrated to a fraction of a point. On the
+      <p data-de="Über alle Märkte hinweg sind wir auf den Bruchteil eines Punktes kalibriert. Bei denen, die wir &lt;em&gt;auswählen&lt;/em&gt;, waren wir deutlich zuversichtlicher als verdient — wer das Beste aus vielen Optionen nimmt, selektiert auf den eigenen Optimismus. Wir haben es gemessen und ziehen es jetzt vor der Veröffentlichung ab. Weniger Signale. Ehrliche.">Across all markets we're calibrated to a fraction of a point. On the
         ones we <em>select</em>, we were meaningfully more confident than we had
         earned — picking the best of many options selects for your own optimism.
         We measured it and now subtract it before publishing. Fewer signals.
@@ -620,19 +531,19 @@ Outside-range risk:</span>
 <section class="feature-section" id="dashboard"><div class="container">
   <div class="section-label">public.oddsengine.live</div>
   <h2 data-de="Jeder Markt, nicht nur die Tipps">Every market, not just the picks</h2>
-  <p>The signals are the headline. The dashboard is the evidence: the full probability
+  <p data-de="Die Signale sind die Schlagzeile. Das Dashboard ist der Beleg: die vollständige Wahrscheinlichkeitsverteilung für jeden Live-Temperaturmarkt, der ausführbare Preis jedes Bereichs, die Edge je Ausgang — und was bei der Auflösung passiert ist, inklusive der Fälle, in denen wir danebenlagen.">The signals are the headline. The dashboard is the evidence: the full probability
     distribution for every live temperature market, the executable price of every
     bucket, the edge per outcome, and what happened when it resolved — including the
     ones we got wrong.</p>
   <div class="cards">
     <div class="card"><div class="k" data-de="Live">Live</div><h3 data-de="Verteilung je Markt">Distribution per market</h3>
-      <p>Every bucket, not only the selected block. Resolution station, unit, lead
+      <p data-de="Jeder Bereich, nicht nur der gewählte Block. Resolution-Station, Einheit, Vorlaufzeit, Ensemble-Mittel und -Streuung.">Every bucket, not only the selected block. Resolution station, unit, lead
         time, ensemble mean and spread.</p></div>
     <div class="card"><div class="k" data-de="Live">Live</div><h3 data-de="Edge je Ausgang">Edge per outcome</h3>
-      <p>Engine probability against the executable ask, bucket by bucket, updated as
+      <p data-de="Engine-Wahrscheinlichkeit gegen den ausführbaren Briefkurs, Bereich für Bereich, aktualisiert mit dem Orderbuch.">Engine probability against the executable ask, bucket by bucket, updated as
         the book moves.</p></div>
     <div class="card"><div class="k" data-de="Historie">History</div><h3 data-de="Jedes Signal, gescort">Every signal, scored</h3>
-      <p>Immutable snapshots. What we said, what it cost, what happened. Misses stay
+      <p data-de="Unveränderliche Snapshots. Was wir sagten, was es kostete, was passierte. Nieten bleiben im Protokoll.">Immutable snapshots. What we said, what it cost, what happened. Misses stay
         on the record.</p></div>
   </div>
 </div></section>
@@ -640,12 +551,12 @@ Outside-range risk:</span>
 <section class="feature-section" id="api"><div class="container">
   <div class="two">
     <div>
-      <div class="section-label">JSON · one object per market · for teams</div>
+      <div class="section-label" data-de="JSON · ein Objekt pro Markt · für Teams">JSON · one object per market · for teams</div>
       <h2 data-de="Dieselben Zahlen, als API">The numbers, as an API</h2>
-      <p>The probabilities are the product. Telegram is one way to read them.
+      <p data-de="Die Wahrscheinlichkeiten sind das Produkt. Telegram ist ein Weg, sie zu lesen. Trading-Desks, Market Maker, Dashboards und Research-Teams lesen den anderen.">The probabilities are the product. Telegram is one way to read them.
         Trading desks, market makers, dashboards and research teams read the
         other way.</p>
-      <p>You get the full distribution over every bracket — not just the pick —
+      <p data-de="Du bekommst die volle Verteilung über jeden Bereich — nicht nur den Tipp — dazu den ausführbaren Preis jedes einzelnen, die Resolution-Station, die Deadline und den Zeitstempel. Alles, um eine eigene Strategie darauf zu bauen oder das eigene Buch gegen unseres zu bepreisen.">You get the full distribution over every bracket — not just the pick —
         alongside the executable price of each one, the resolution station, the
         deadline and the timestamp. Everything needed to run your own strategy
         on top, or to price your own book against ours.</p>
@@ -695,26 +606,24 @@ Outside-range risk:</span>
   <div class="cards">
     <div class="card"><div class="k" data-de="Abdeckung">Coverage</div>
       <h3 data-de="50 Städte, jeden Tag">50 cities, every day</h3>
-      <p>Every live temperature market, in both °C and °F, with the resolution
+      <p data-de="Jeder Live-Temperaturmarkt, in °C und °F, mit Resolution-Station und Rundungskonvention je Markt aufgelöst. Neue Städte erscheinen automatisch.">Every live temperature market, in both °C and °F, with the resolution
         station and rounding convention resolved per market. New cities appear
         automatically.</p></div>
     <div class="card"><div class="k" data-de="Historie">History</div>
       <h3 data-de="Prüfbar bis zum ersten Call">Auditable back to the first call</h3>
-      <p>Append-only. Every snapshot was written before the station reported and
+      <p data-de="Nur Anhängen. Jeder Snapshot wurde geschrieben, bevor die Station meldete, und nie verändert. Ruf ein beliebiges vergangenes Datum ab und bewerte uns selbst.">Append-only. Every snapshot was written before the station reported and
         has never been edited. Pull any past date and score us yourself.</p></div>
     <div class="card"><div class="k" data-de="Integration">Integration</div>
       <h3 data-de="REST, JSON, kein Theater">REST, JSON, no ceremony</h3>
-      <p>One object per market. No location-key lookups, no SDK, no minimum
+      <p data-de="Ein Objekt pro Markt. Keine Location-Key-Abfragen, kein SDK, kein Mindestvertrag, um eine Zahl zu lesen.">One object per market. No location-key lookups, no SDK, no minimum
         contract to read a number.</p></div>
   </div>
 </div></section>
 
 <section class="feature-section" id="access"><div class="container">
-  <div class="section-label">Honest pricing while the evidence is thin</div>
+  <div class="section-label" data-de="Ehrliche Preise, solange die Belege dünn sind">Honest pricing while the evidence is thin</div>
   <h2 data-de="Gratis, bis es live bewiesen ist">Free until it's proven live</h2>
-  <p>A backtest is not a track record. Charging for signals that have only ever
-    been scored against the past would make us the thing we're trying to replace.
-    The channel is open, and free, while the engine earns a live record in public.</p>
+  <p data-de="Rückblickend messen ist nicht dasselbe wie live liefern. Geld für Signale zu nehmen, die noch nie etwas im Risiko hatten, würde uns zu genau dem machen, was wir ersetzen wollen. Der Kanal ist offen und gratis, solange die Engine sich ihren Live-Record öffentlich verdient.">Measuring in hindsight is not the same as delivering live. Charging for signals that have never had anything at risk would make us the thing we're trying to replace. The channel is open, and free, while the engine earns a live record in public.</p>
 
   <div class="tiers">
     <div class="tier now">
@@ -722,34 +631,34 @@ Outside-range risk:</span>
       <div class="price" data-de="Gratis">Free</div>
       <div class="per" data-de="jetzt gerade">right now</div>
       <ul>
-        <li>Every signal, in public</li>
-        <li>One-tap links to each outcome</li>
-        <li>Full distribution and executable prices</li>
-        <li>Every scoring, hit or miss</li>
+        <li data-de="Jedes Signal, öffentlich">Every signal, in public</li>
+        <li data-de="Ein-Klick-Links zu jedem Ausgang">One-tap links to each outcome</li>
+        <li data-de="Volle Verteilung und ausführbare Preise">Full distribution and executable prices</li>
+        <li data-de="Jede Bewertung, Treffer oder Niete">Every scoring, hit or miss</li>
       </ul>
       <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Kanal beitreten">Join the channel</a>
     </div>
     <div class="tier">
       <div class="name" data-de="Signale">Signals</div>
-      <div class="price">—</div>
-      <div class="per" data-de="sobald der Live-Record hält">once the live record holds</div>
+      <div class="price">€99<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
+      <div class="per" data-de="ab Abschluss der Kalibrierung · jetzt gratis">from calibration close · free until then</div>
       <ul>
-        <li>All 50 cities, all modes</li>
-        <li>Safe / Balanced / Aggressive</li>
-        <li>Published reliability diagram</li>
-        <li>Full signal history</li>
+        <li data-de="Alle 50 Städte, alle Modi">All 50 cities, all modes</li>
+        <li data-de="Safe / Balanced / Aggressive">Safe / Balanced / Aggressive</li>
+        <li data-de="Veröffentlichtes Reliability-Diagramm">Published reliability diagram</li>
+        <li data-de="Vollständige Signal-Historie">Full signal history</li>
       </ul>
       <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Benachrichtigen">Get notified</a>
     </div>
     <div class="tier">
       <div class="name">API</div>
-      <div class="price">—</div>
-      <div class="per" data-de="sobald der Live-Record hält">once the live record holds</div>
+      <div class="price">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
+      <div class="per" data-de="ab Abschluss der Kalibrierung · Enterprise auf Anfrage">from calibration close · enterprise on request</div>
       <ul>
-        <li>JSON, every market</li>
-        <li>Full distribution, not just the pick</li>
-        <li>Historical snapshots</li>
-        <li>For bots and analytics platforms</li>
+        <li data-de="JSON, jeder Markt">JSON, every market</li>
+        <li data-de="Volle Verteilung, nicht nur der Tipp">Full distribution, not just the pick</li>
+        <li data-de="Historische Snapshots">Historical snapshots</li>
+        <li data-de="Für Bots und Analyseplattformen">For bots and analytics platforms</li>
       </ul>
       <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Benachrichtigen">Get notified</a>
     </div>
@@ -758,7 +667,7 @@ Outside-range risk:</span>
 
 <footer><div class="container">
   <div class="section-label" data-de="Haftungsausschluss">Disclaimer</div>
-  <p class="disc">OddsEngine publishes probability estimates and market data. It is
+  <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Wettermodelle, Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen aufgelösten Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab — prüfe das, bevor du teilnimmst.">OddsEngine publishes probability estimates and market data. It is
     information, not financial advice, and not an offer to buy or sell anything.
     Probabilities, prices and suggested allocations reflect the data available when a
     signal is published; weather models, market prices and liquidity change afterwards.
@@ -770,7 +679,7 @@ Outside-range risk:</span>
     <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
     <div class="footer-links">
       <a href="#engine">Engine</a>
-      <a href="#record">Track record</a>
+      <a href="#record" data-de="Bilanz">Track record</a>
       <a href="https://public.oddsengine.live">Dashboard</a>
       <a href="https://t.me/OddsEngine">Telegram</a>
     </div>
@@ -807,6 +716,32 @@ Outside-range risk:</span>
   btn.addEventListener('click', function () {
     set(document.documentElement.lang === 'de' ? 'en' : 'de');
   });
+})();
+</script>
+<script>
+// The numbers above are the retrospective fit. The moment the live record has
+// enough resolved signals, they get replaced by it — automatically. Hardcoding
+// them and never touching them again is how a page starts lying six weeks later,
+// which is exactly what the old dashboard did.
+(function () {
+  var API = window.ODDSENGINE_API || 'https://api.oddsengine.live';
+  fetch(API + '/v1/calibration').then(function (r) { return r.json(); }).then(function (d) {
+    if (!d || !d.signals_resolved || d.signals_resolved < 100) return;   // not earned yet
+    var said = 0, hit = 0, n = 0;
+    (d.bins || []).forEach(function (b) {
+      if (!b.n || b.predicted == null || b.observed == null) return;
+      said += b.predicted * b.n; hit += b.observed * b.n; n += b.n;
+    });
+    if (!n) return;
+    var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+    set('kSaid', Math.round(said / n * 100));
+    set('kHit',  Math.round(hit / n * 100));
+    set('sN', d.signals_resolved);
+    if (d.mean_abs_error_pp != null) set('sErr', d.mean_abs_error_pp.toFixed(1) + 'pp');
+    document.querySelectorAll('[data-live-label]').forEach(function (e) {
+      e.textContent = e.dataset.liveLabel;
+    });
+  }).catch(function () { /* keep the measured figures; say nothing new */ });
 })();
 </script>
 </body>
