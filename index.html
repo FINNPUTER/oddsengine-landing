@@ -82,10 +82,24 @@ nav {
 .nav-right a.link:hover { color:var(--text); }
 @media (max-width:860px) { .nav-right a.link { display:none; } }
 
-.lang { background:none; border:1px solid var(--border-hover); color:var(--text-secondary);
-  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.06em; padding:6px 11px;
+.langbox { position:relative; }
+.lang { display:flex; align-items:center; gap:6px; background:none;
+  border:1px solid var(--border-hover); color:var(--text-secondary);
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.04em; padding:6px 10px;
   border-radius:980px; cursor:pointer; transition:all .2s; }
 .lang:hover { border-color:var(--text-secondary); color:var(--text); }
+.lang > span:first-child { font-size:0.95rem; line-height:1; }
+.langmenu { position:absolute; top:calc(100% + 8px); right:0; min-width:150px;
+  background:var(--bg-card); border:1px solid var(--border-hover); border-radius:12px;
+  padding:5px; display:none; flex-direction:column; z-index:60;
+  box-shadow:0 12px 34px rgba(0,0,0,.6); }
+.langmenu.open { display:flex; }
+.langmenu button { display:flex; align-items:center; gap:9px; background:none; border:0;
+  color:var(--text-secondary); font-family:var(--font-body); font-size:0.85rem;
+  padding:9px 11px; border-radius:8px; cursor:pointer; text-align:left; width:100%;
+  transition:all .15s; }
+.langmenu button:hover { background:var(--bg-card-hover); color:var(--text); }
+.langmenu button[aria-current="true"] { color:var(--blue); }
 .btn { display:inline-flex; align-items:center; gap:8px; font-size:0.85rem;
   font-weight:500; padding:10px 20px; border-radius:980px; text-decoration:none;
   transition:all .2s; border:1px solid transparent; white-space:nowrap; }
@@ -303,147 +317,161 @@ footer { padding:64px 0 72px; border-top:1px solid var(--border); }
   .footer-bot{flex-direction:column;align-items:flex-start;gap:12px}
   .footer-links{flex-wrap:wrap;gap:16px}
   nav{padding:11px 0}
-  .logo{font-size:.86rem}
+  .nav-inner{gap:8px}
+  .logo{font-size:.84rem}
   .logo img{width:22px;height:22px}
-  .nav-right{gap:10px}
-  .nav-right .btn{padding:8px 15px;font-size:.78rem}
-  .lang{padding:5px 9px;font-size:.66rem}
+  /* The links go, the language switch and the CTA stay. Dropping the switch
+     on mobile meant half the audience could not read the page. */
+  .nav-links{display:none}
+  .nav-right{gap:8px;flex-shrink:0}
+  .nav-right .btn{padding:8px 14px;font-size:.76rem}
+  .lang{padding:6px 9px;font-size:.66rem;flex-shrink:0}
+  .langmenu{min-width:138px}
 }
 @media (max-width:400px){
   h1{font-size:1.8rem}
   .stats{grid-template-columns:1fr}
   .signal{font-size:.62rem}
 }
-</style>
-</head>
+</style></head>
 <body>
-
 <nav><div class="container nav-inner">
  <a href="#" class="logo"><img src="logo.png" alt="">OddsEngine</a>
  <div class="nav-right">
- <a href="#engine" class="link" data-de="Engine">Engine</a>
- <a href="#signals" class="link" data-de="Signale">Signals</a>
- <a href="#record" class="link" data-de="Bilanz">Track record</a>
- <a href="#api" class="link" data-de="API">API</a>
- <button id="lang" class="lang" aria-label="Deutsch">DE</button>
- <a href="#access" class="btn btn-primary" data-de="Zugang">Get access</a>
+ <a href="#engine" class="link" data-de="Engine" data-tr="Motor">Engine</a>
+ <a href="#signals" class="link" data-de="Signale" data-tr="Sinyaller">Signals</a>
+ <a href="#record" class="link" data-de="Bilanz" data-tr="Sicil">Track record</a>
+ <a href="#api" class="link" data-de="API" data-tr="API">API</a>
+ <div class="langbox">
+ <button id="lang" class="lang" aria-haspopup="true" aria-expanded="false">
+  <span id="langFlag">&#127468;&#127463;</span><span id="langCode">EN</span>
+  <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+ </button>
+ <div class="langmenu" id="langMenu">
+  <button data-lang="en">&#127468;&#127463; English</button>
+  <button data-lang="de">&#127465;&#127466; Deutsch</button>
+  <button data-lang="tr">&#127481;&#127479; T&uuml;rk&ccedil;e</button>
  </div>
-</div></nav>
-
-<header><div class="container"><div class="hero">
- <div>
- <div class="badge" data-de="261 aufgelöste Märkte gescort"><span class="dot"></span><span id="badgeN">261</span> settled markets scored</div>
- <h1 data-de="Wir veröffentlichen die Zahl vor dem Tag. Und was danach passiert ist.">We publish the number before the day. And what happened after.</h1>
- <p class="hero-sub" data-de="Live-Wettermärkte scannen. Für jeden Temperaturbereich eine Wahrscheinlichkeit rechnen. Daraus die Bereiche wählen, die den Preis wert sind.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Bei 261 aufgelösten Märkten sagten wir: passiert 85 von 100 Mal. Es passierte 85 von 100 Mal.&lt;/strong&gt;">Scan live weather markets. Put a probability on every temperature bracket. Take the ones worth the price.<br><br>
- <strong>On 261 settled markets we said it would happen 85 times out of 100.
- It happened 85 times out of 100.</strong></p>
- <div class="hero-btns">
- <a href="#signals" class="btn btn-primary" data-de="Signal ansehen">See a signal</a>
- <a href="#record" class="btn btn-secondary" data-de="Bilanz ansehen">See the scoring</a>
+</div>
+ <a href="#access" class="btn btn-primary" data-de="Zugang" data-tr="Erişim">Get access</a>
  </div>
- </div>
-
- <div class="panel">
- <div class="panel-bar">
- <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
- <span class="panel-title" data-de="ein Tag, eine Stadt">one day, one city</span>
- </div>
- <div class="panel-body">
- <svg viewBox="0 0 460 268" role="img" aria-label="A probability for every temperature bracket, the brackets we take highlighted, next to what the market charges for them">
-        <rect x="196" y="26" width="174" height="176" rx="4" fill="#2997ff" opacity=".06"/>
-        <line x1="196" y1="26" x2="196" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-        <line x1="370" y1="26" x2="370" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-        <line x1="40" y1="202" x2="440" y2="202" stroke="#1a1a1a"/>
-
-        <g>
+</div></nav><header><div class="container">
+  <div class="hero-glow"></div>
+  <div class="badge" data-de="261 aufgelöste Märkte gescort" data-tr="261 kapanmış piyasa puanlandı"><span class="dot"></span><span id="badgeN">261</span> settled markets scored</div>
+  <div class="two hero-grid">
+    <div>
+      <h1 data-de="Wir veröffentlichen die Zahl vor dem Tag. Und was danach passiert ist." data-tr="Sayıyı günden önce yayınlıyoruz. Ve sonrasında ne olduğunu.">We publish the number before the day. And what happened after.</h1>
+      <p class="hero-sub" data-de="Live-Wettermärkte scannen. Für jeden Temperaturbereich eine Wahrscheinlichkeit rechnen. Die nehmen, die den Preis wert sind.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Bei 261 aufgelösten Märkten sagten wir: passiert 85 von 100 Mal. Es passierte 85 von 100 Mal.&lt;/strong&gt;" data-tr="Canlı hava piyasalarını tara. Her sıcaklık aralığına bir olasılık ver. Fiyatına değenleri al.&lt;br&gt;&lt;br&gt;&lt;strong&gt;261 kapanmış piyasada dedik ki: 100 kezin 85&#x27;inde olur. 100 kezin 85&#x27;inde oldu.&lt;/strong&gt;">Scan live weather markets. Put a probability on every temperature bracket. Take the ones worth the price.<br><br>
+        <strong>On 261 settled markets we said it would happen 85 times out of 100. It happened 85 times out of 100.</strong></p>
+      <div class="hero-btns">
+        <a href="#signals" class="btn btn-primary" data-de="Signal ansehen" data-tr="Bir sinyal gör">See a signal</a>
+        <a href="#record" class="btn btn-secondary" data-de="Bilanz ansehen" data-tr="Puanlamayı gör">See the scoring</a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title" data-de="ein Tag, eine Stadt" data-tr="bir gün, bir şehir">one day, one city</span>
+      </div>
+      <div class="panel-body">
+        <svg viewBox="0 0 460 268" role="img" aria-label="A probability for every temperature bracket, the ones we take highlighted, next to what the market charges for them">
+          <rect x="196" y="26" width="174" height="176" rx="4" fill="#2997ff" opacity=".06"/>
+          <line x1="196" y1="26" x2="196" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
+          <line x1="370" y1="26" x2="370" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
+          <line x1="40" y1="202" x2="440" y2="202" stroke="#1a1a1a"/>
           <rect class="bar-rise" x="86"  y="196" width="48" height="6"   rx="2" fill="#2a2a2c" style="animation-delay:.55s"/>
           <rect class="bar-rise" x="144" y="163" width="48" height="39"  rx="2" fill="#2a2a2c" style="animation-delay:.62s"/>
           <rect class="bar-rise" x="202" y="88"  width="48" height="114" rx="2" fill="#2997ff" style="animation-delay:.69s"/>
           <rect class="bar-rise" x="260" y="28"  width="48" height="174" rx="2" fill="#2997ff" style="animation-delay:.76s"/>
           <rect class="bar-rise" x="318" y="144" width="48" height="58"  rx="2" fill="#2997ff" style="animation-delay:.83s"/>
           <rect class="bar-rise" x="376" y="192" width="48" height="10"  rx="2" fill="#2a2a2c" style="animation-delay:.9s"/>
-        </g>
-        <g font-family="DM Mono" font-size="11" text-anchor="middle">
-          <text x="110" y="189" fill="#48484a">1</text>
-          <text x="168" y="156" fill="#48484a">7</text>
-          <text x="226" y="81"  fill="#f5f5f7">24</text>
-          <text x="284" y="21"  fill="#f5f5f7">37</text>
-          <text x="342" y="137" fill="#f5f5f7">25</text>
-          <text x="400" y="185" fill="#48484a">6</text>
-        </g>
-        <text x="40" y="21" font-family="DM Mono" font-size="8" fill="#48484a">OUT OF 100</text>
-
-        <g font-family="DM Mono" font-size="10.5" fill="#86868b" text-anchor="middle">
-          <text x="110" y="220">31°</text><text x="168" y="220">32°</text>
-          <text x="226" y="220">33°</text><text x="284" y="220">34°</text>
-          <text x="342" y="220">35°</text><text x="400" y="220">36°</text>
-        </g>
-        <g font-family="DM Mono" font-size="10" text-anchor="middle">
-          <text x="40" y="240" fill="#48484a" text-anchor="start">MARKET WANTS</text>
-          <text x="226" y="240" fill="#86868b">44¢</text>
-          <text x="284" y="240" fill="#86868b">34¢</text>
-          <text x="342" y="240" fill="#86868b">8¢</text>
-        </g>
-        <line x1="40" y1="250" x2="440" y2="250" stroke="#1a1a1a"/>
-        <g font-family="DM Mono" font-size="10">
-          <text x="40" y="264" fill="#86868b">WE TAKE 33° TO 35°  ·  86 OUT OF 100  ·  IT COSTS 86¢</text>
-        </g>
-      </svg>
- </div>
- </div>
-</div></div></header>
+          <g font-family="DM Mono" font-size="11" text-anchor="middle">
+            <text x="110" y="189" fill="#48484a">1</text>
+            <text x="168" y="156" fill="#48484a">7</text>
+            <text x="226" y="81"  fill="#f5f5f7">24</text>
+            <text x="284" y="21"  fill="#f5f5f7">37</text>
+            <text x="342" y="137" fill="#f5f5f7">25</text>
+            <text x="400" y="185" fill="#48484a">6</text>
+          </g>
+          <text x="40" y="21" font-family="DM Mono" font-size="8" fill="#48484a">OUT OF 100</text>
+          <g font-family="DM Mono" font-size="10.5" fill="#86868b" text-anchor="middle">
+            <text x="110" y="220">31°</text><text x="168" y="220">32°</text>
+            <text x="226" y="220">33°</text><text x="284" y="220">34°</text>
+            <text x="342" y="220">35°</text><text x="400" y="220">36°</text>
+          </g>
+          <g font-family="DM Mono" font-size="10" text-anchor="middle">
+            <text x="40" y="240" fill="#48484a" text-anchor="start">MARKET WANTS</text>
+            <text x="226" y="240" fill="#86868b">44¢</text>
+            <text x="284" y="240" fill="#86868b">34¢</text>
+            <text x="342" y="240" fill="#86868b">8¢</text>
+          </g>
+          <line x1="40" y1="250" x2="440" y2="250" stroke="#1a1a1a"/>
+          <text x="40" y="264" font-family="DM Mono" font-size="10" fill="#86868b">WE TAKE 33° TO 35°  ·  86 OUT OF 100  ·  IT COSTS 86¢</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div></header>
 
 <section class="feature-section" id="engine"><div class="container">
- <div class="section-label" data-de="Wie die Zahl entsteht">How the number is made</div>
- <h2 data-de="So funktioniert es">How it works</h2>
- <p data-de="Polymarket betreibt Temperaturmärkte in 50 Städten. Elf Bereiche, einer gewinnt. Wir prognostizieren die gesamte Verteilung und vergleichen sie mit dem Preis, den der Markt tatsächlich verlangt. Wo die Lücke es wert ist, posten wir.">Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
- We forecast the whole distribution and compare it to what the market is
- actually charging. Where the gap is worth taking, we post.</p>
+  <div class="section-label" data-de="Wie die Zahl entsteht" data-tr="Sayı nasıl oluşuyor">How the number is made</div>
+  <h2 data-de="So funktioniert es" data-tr="Nasıl çalışır">How it works</h2>
+  <p data-de="Polymarket betreibt Temperaturmärkte in 50 Städten. Elf Bereiche, einer gewinnt. Wir prognostizieren die gesamte Verteilung und vergleichen sie mit dem Preis, den der Markt tatsächlich verlangt. Wo die Lücke es wert ist, posten wir." data-tr="Polymarket 50 şehirde sıcaklık piyasaları işletiyor. On bir aralık, biri kazanıyor. Biz tüm dağılımı tahmin ediyor ve piyasanın gerçekte istediği fiyatla karşılaştırıyoruz. Aradaki fark değerse, paylaşıyoruz.">Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
+    We forecast the whole distribution and compare it to what the market is actually
+    charging. Where the gap is worth taking, we post.</p>
 
- <div class="cards">
- <div class="card"><div class="k" data-de="Market Discovery">Market discovery</div>
- <h3 data-de="Jeder Live-Markt, automatisch">Every live market, automatically</h3>
- <p data-de="Keine feste Städteliste. Die Engine liest den Markt-Feed und extrahiert Bereiche, Einheit, Deadline und Auflösungsregeln, inklusive der Station, auf die der Markt tatsächlich auflöst. Neue Städte erscheinen am Tag ihrer Listung.">No fixed city list. The engine reads the market feed and extracts the
- brackets, the unit, the deadline and the resolution rules, including
- which station the market actually settles on. New cities appear the day
- they list.</p></div>
- <div class="card"><div class="k" data-de="Probability Engine">Probability engine</div>
- <h3 data-de="Eine Wahrscheinlichkeit je Bereich">A probability for every bracket</h3>
- <p data-de="Wir prognostizieren das Tagesmaximum an genau der Station, auf die der Markt auflöst, nicht in der Stadtmitte, die einen ganzen Bereich danebenliegen kann. Jeder Bereich bekommt eine Wahrscheinlichkeit. Zusammen ergeben sie 100 %.">We forecast the day's high at the exact point the market settles on, not the city centre, which can be a full bracket away. Every bracket gets a probability. They sum to 100%.</p></div>
- <div class="card"><div class="k" data-de="Der echte Preis">The real price</div>
- <h3 data-de="Der Preis, den du wirklich zahlst">The price you actually pay</h3>
-      <p data-de="Der angezeigte Prozentwert ist kein Preis, zu dem du kaufen kannst. Wir prüfen, was wirklich zu haben ist und in welcher Menge. Reicht es nicht, gibt es kein Signal.">The displayed percentage is not a price you can fill. We check what is really available, and in what size. If there is not enough, there is no signal.</p></div>
- <div class="card"><div class="k" data-de="Wie wir setzen">How we place it</div>
- <h3 data-de="Eine Quote, egal welches trifft">One quote, whichever lands</h3>
-      <p data-de="Mehrere benachbarte Bereiche, so aufgeteilt, dass die Auszahlung identisch ist, egal welcher das Tagesmaximum wird. Eine Zahl zum Lesen, ein Ergebnis zum Prüfen.">A few neighbouring brackets, split so the payout is identical whichever one is the day's high. One number to read, one outcome to check.</p></div>
- </div>
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Market Discovery" data-tr="Piyasa taraması">Market discovery</div>
+      <h3 data-de="Jeder Live-Markt, automatisch" data-tr="Her canlı piyasa, otomatik">Every live market, automatically</h3>
+      <p data-de="Keine feste Städteliste. Die Engine liest den Markt-Feed und extrahiert Bereiche, Einheit, Deadline und Auflösungsregeln, inklusive der Station, auf die der Markt tatsächlich auflöst. Neue Städte erscheinen am Tag ihrer Listung." data-tr="Sabit bir şehir listesi yok. Motor piyasa akışını okuyup aralıkları, birimi, son tarihi ve kapanış kurallarını çıkarıyor, piyasanın gerçekte hangi istasyona göre kapandığı dahil. Yeni şehirler listelendikleri gün beliriyor.">No fixed city list. The engine reads the market feed and extracts the brackets,
+        the unit, the deadline and the resolution rules, including which station the
+        market actually settles on. New cities appear the day they list.</p></div>
+    <div class="card"><div class="k" data-de="Probability Engine" data-tr="Olasılık motoru">Probability engine</div>
+      <h3 data-de="Eine Wahrscheinlichkeit je Bereich" data-tr="Her aralık için bir olasılık">A probability for every bracket</h3>
+      <p data-de="Wir prognostizieren das Tagesmaximum an genau der Station, auf die der Markt auflöst, nicht in der Stadtmitte, die einen ganzen Bereich danebenliegen kann. Jeder Bereich bekommt eine Wahrscheinlichkeit. Zusammen ergeben sie 100 %." data-tr="Günün en yüksek sıcaklığını, piyasanın kapandığı tam noktada tahmin ediyoruz; şehir merkezinde değil, çünkü orası tam bir aralık kayabilir. Her aralık bir olasılık alıyor. Toplamları 100 ediyor.">We forecast the day's high at the exact point the market settles on, not the
+        city centre, which can be a full bracket away. Every bracket gets a probability.
+        They sum to 100%.</p></div>
+    <div class="card"><div class="k" data-de="Der echte Preis" data-tr="Gerçek fiyat">The real price</div>
+      <h3 data-de="Der Preis, den du wirklich zahlst" data-tr="Gerçekten ödediğin fiyat">The price you actually pay</h3>
+      <p data-de="Der angezeigte Prozentwert ist kein Preis, zu dem du kaufen kannst. Wir prüfen, was wirklich zu haben ist und in welcher Menge. Reicht es nicht, gibt es kein Signal." data-tr="Ekranda görünen yüzde, alabileceğin bir fiyat değil. Gerçekte neyin, ne miktarda mevcut olduğunu kontrol ediyoruz. Yetmiyorsa sinyal yok.">The displayed percentage is not a price you can fill. We check what is really
+        available, and in what size. If there is not enough, there is no signal.</p></div>
+    <div class="card"><div class="k" data-de="Wie wir setzen" data-tr="Nasıl oynuyoruz">How we place it</div>
+      <h3 data-de="Eine Quote, egal welches trifft" data-tr="Tek oran, hangisi tutarsa tutsun">One quote, whichever lands</h3>
+      <p data-de="Mehrere benachbarte Bereiche, so aufgeteilt, dass die Auszahlung identisch ist, egal welcher das Tagesmaximum wird. Eine Zahl zum Lesen, ein Ergebnis zum Prüfen." data-tr="Birbirine komşu birkaç aralık, ödeme hangisi günün en yükseği olursa olsun aynı kalacak şekilde bölünür. Okunacak tek bir sayı, kontrol edilecek tek bir sonuç.">A few neighbouring brackets, split so the payout is identical whichever one is
+        the day's high. One number to read, one outcome to check.</p></div>
+  </div>
 
- <div class="note"><p data-de="Die meisten Märkte ergeben nichts. Die Engine schweigt, wenn der Vorsprung dünn ist, der Markt zu klein, die Spanne zu weit oder die Modelle sich uneinig sind. Ein Kanal, der zwanzig Signale am Tag postet, postet fünfzehn schlechte."><b>Most markets produce nothing.</b> The engine stays silent when the edge is thin, the market is too small, the spread is too wide, or the models disagree. A channel posting twenty signals a day is posting fifteen bad ones.</p></div>
+  <div class="note"><p data-de="Die meisten Märkte ergeben nichts. Die Engine schweigt, wenn der Vorsprung dünn ist, der Markt zu klein, die Spanne zu weit oder die Modelle sich uneinig sind. Ein Kanal, der zwanzig Signale am Tag postet, postet fünfzehn schlechte." data-tr="Piyasaların çoğundan hiçbir şey çıkmaz. Avantaj inceyse, piyasa küçükse, makas genişse ya da modeller anlaşamıyorsa motor susar. Günde yirmi sinyal atan bir kanal, on beşini kötü atıyordur."><b>Most markets produce nothing.</b>
+    The engine stays silent when the edge is thin, the market is too small, the spread
+    is too wide, or the models disagree. A channel posting twenty signals a day is
+    posting fifteen bad ones.</p></div>
 </div></section>
 
 <section class="feature-section" id="signals"><div class="container">
- <div class="two">
- <div>
- <div class="section-label" data-de="Telegram · veröffentlicht vor der Auflösung">Telegram · published before resolution</div>
- <h2 data-de="So sieht ein Signal aus">What a signal looks like</h2>
- <p data-de="Jede Zahl, die die Engine benutzt hat, steht in der Nachricht. Du entscheidest, was du kaufst, die Aufteilung ist ein Vorschlag, keine Anweisung.">Every number the engine used, in the message. You decide what to buy, the
- allocation is a suggestion, not an instruction.</p>
- <div class="note"><p data-de="Zwei Zeilen, die andere Signalkanäle weglassen: was der ganze Block im Markt kostet, und der Vorsprung. Ohne sie ist eine Wahrscheinlichkeit eine Behauptung. Mit ihnen siehst du genau, warum das Signal existiert, und kannst es selbst nachrechnen, bevor du klickst. Jedes Bein ist ein Ein-Klick-Link direkt in den Markt. Du kaufst mit deiner eigenen Wallet, wir halten nie einen Schlüssel.">Two lines most signal channels leave out: <b>what the whole block costs in the market</b>, and <b>the edge</b>. Without them a probability is a claim. With them you can see exactly why the signal exists, and check it yourself before you click. Every leg is a one-tap link straight into the market. You buy with your own wallet, we never hold a key.</p></div>
- </div>
- <div class="panel">
- <div class="panel-bar">
- <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
- <span class="panel-title">t.me/oddsengine · 14:10 UTC</span>
- </div>
- <div class="signal"><b>ODDSENGINE, MILAN</b>
+  <div class="two">
+    <div>
+      <div class="section-label" data-de="Telegram · veröffentlicht vor der Auflösung" data-tr="Telegram · kapanıştan önce yayınlandı">Telegram · published before resolution</div>
+      <h2 data-de="So sieht ein Signal aus" data-tr="Bir sinyal böyle görünür">What a signal looks like</h2>
+      <p data-de="Jede Zahl, die die Engine benutzt hat, steht in der Nachricht. Du entscheidest, was du kaufst, die Aufteilung ist ein Vorschlag, keine Anweisung." data-tr="Motorun kullandığı her sayı mesajda. Ne alacağına sen karar veriyorsun, dağılım bir öneri, talimat değil.">Every number the engine used, in the message. You decide what to buy, the
+        allocation is a suggestion, not an instruction.</p>
+      <div class="note"><p data-de="Zwei Zeilen, die andere Signalkanäle weglassen: was der ganze Block im Markt kostet, und der Vorsprung. Ohne sie ist eine Wahrscheinlichkeit eine Behauptung. Mit ihnen siehst du genau, warum das Signal existiert, und kannst es selbst nachrechnen, bevor du klickst. Jedes Bein ist ein Ein-Klick-Link direkt in den Markt. Du kaufst mit deiner eigenen Wallet, wir halten nie einen Schlüssel." data-tr="Diğer sinyal kanallarının atladığı iki satır: tüm bloğun piyasada kaça mal olduğu ve avantaj. Onlar olmadan bir olasılık sadece bir iddiadır. Onlarla, sinyalin neden var olduğunu tam olarak görür ve tıklamadan önce kendin hesaplayabilirsin. Her bacak, doğrudan piyasaya tek dokunuşluk bir bağlantı. Kendi cüzdanınla alıyorsun, biz asla bir anahtar tutmuyoruz.">Two lines most signal channels leave out:
+        <b>what the whole block costs in the market</b>, and <b>the edge</b>. Without them
+        a probability is a claim. With them you can see exactly why the signal exists, and
+        check it yourself before you click. Every leg is a one-tap link straight into the
+        market. You buy with your own wallet, we never hold a key.</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title">t.me/OddsEngine · 14:10 UTC</span>
+      </div>
+      <div class="signal"><b>ODDSENGINE, MILAN</b>
 <span class="d">
-Market:
 Highest temperature at Milano Malpensa
 July 12, 2026
 
-Mode:</span>
-Balanced
-<span class="d">
+─────────────
+
 Selected range:</span>
 33°C · 34°C · 35°C
 <span class="d">
@@ -483,38 +511,35 @@ whichever one it is.
 If it lands outside that range:</span>
 the stake is gone.
 <span class="d">
-On the $5.00 example:</span>
-hit, $5.82 (+$0.82)
-miss, $0.00 (-$5.00)
-<span class="d">
 Outside-range risk:</span>
 9%</div>
- </div>
- </div>
+    </div>
+  </div>
 </div></section>
 
 <section class="feature-section" id="record"><div class="container">
- <div class="two">
- <div>
- <div class="section-label" data-de="Echte Märkte · echte Preise · Dez 2025, Mär 2026">Real markets · real prices · Dec 2025, Mar 2026</div>
- <h2 data-de="Die einzige Aussage, die zählt">The only claim worth making</h2>
- <p data-de="Nicht Rendite. Nicht Trefferquote. Beides ist leicht zu fälschen und leicht durch Zufall zu bekommen. Die Frage ist einfacher:">Not return. Not win rate. Both are easy to fake and easy to get by
- accident. The question is simpler:</p>
- <p style="color:var(--text); font-size:1.25rem; font-weight:600;
- letter-spacing:-0.02em; margin:22px 0; line-height:1.3;" data-de="Wenn wir 90 % sagen, passiert es dann in 90 % der Fälle?">
- When we say 90%, does it happen 90% of the time?</p>
- <p data-de="Gemessen an bereits aufgelösten Märkten, mit den Prognoseläufen von damals, nicht mit heutigen Modellen, die rückwärts schauen. Die Wahrheit ist der aufgelöste Markt selbst.">Scored against markets that had already resolved, using the forecast
- runs as they existed at the time, not today's models looking backwards.
- Truth is the settled market itself.</p>
- <div class="note"><p data-de="Alles daran ist echt: aufgelöste Märkte, die Modellläufe von damals, Preise aus dem Markt. Nichts simuliert. Gemessen im Rückblick. Dasselbe läuft jetzt live, öffentlich, und jedes Ergebnis kommt dazu, Treffer wie Niete."><b>Everything here is real:</b> settled markets, the model runs as they were issued, prices from the market. Nothing simulated. Measured in hindsight. The same thing now runs live, in public, and every result joins it, hit or miss.</p></div>
- </div>
- <div class="panel">
- <div class="panel-bar">
- <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
- <span class="panel-title" data-de="261 Märkte, was wir sagten vs. was passierte">261 markets, what we said vs what happened</span>
- </div>
- <div class="panel-body">
- <svg viewBox="0 0 380 268" role="img" aria-label="We said it would happen 85 times out of 100. It did 85 times out of 100. The market priced it at 77 out of 100.">
+  <div class="two">
+    <div>
+      <div class="section-label" data-de="Echte Märkte · echte Preise · Dez 2025 bis Mär 2026" data-tr="Gerçek piyasalar · gerçek fiyatlar · Ara 2025 - Mar 2026">Real markets · real prices · Dec 2025 to Mar 2026</div>
+      <h2 data-de="Die einzige Aussage, die zählt" data-tr="Önemli olan tek iddia">The only claim worth making</h2>
+      <p data-de="Nicht Rendite. Nicht Trefferquote. Beides ist leicht zu fälschen und leicht durch Zufall zu bekommen. Die Frage ist einfacher:" data-tr="Getiri değil. İsabet oranı da değil. İkisi de kolayca uydurulur, kolayca şans eseri elde edilir. Soru daha basit:">Not return. Not win rate. Both are easy to fake and easy to get by accident.
+        The question is simpler:</p>
+      <p style="color:var(--text); font-size:1.25rem; font-weight:600; letter-spacing:-0.02em; margin:22px 0; line-height:1.3;" data-de="Wenn wir 90 % sagen, passiert es dann in 90 % der Fälle?" data-tr="90 dediğimizde, gerçekten 100 kezin 90&#x27;ında oluyor mu?">When we say 90%, does it happen 90% of the time?</p>
+      <p data-de="Gemessen an bereits aufgelösten Märkten, mit den Prognoseläufen von damals, nicht mit heutigen Modellen, die rückwärts schauen. Die Wahrheit ist der aufgelöste Markt selbst." data-tr="Zaten kapanmış piyasalara karşı ölçüldü, o zamanki tahmin çalışmalarıyla; geriye bakan bugünün modelleriyle değil. Gerçek, kapanmış piyasanın kendisi.">Scored against markets that had already resolved, using the forecast runs as they
+        existed at the time, not today's models looking backwards. Truth is the settled
+        market itself.</p>
+      <div class="note"><p data-de="Alles daran ist echt: aufgelöste Märkte, die Modellläufe von damals, Preise aus dem Markt. Nichts simuliert. Gemessen im Rückblick. Dasselbe läuft jetzt live, öffentlich, und jedes Ergebnis kommt dazu, Treffer wie Niete." data-tr="Buradaki her şey gerçek: kapanmış piyasalar, o zamanki model çalışmaları, piyasadan gelen fiyatlar. Hiçbiri simülasyon değil. Geriye dönük ölçüldü. Aynısı şimdi canlı çalışıyor, açıkta, ve her sonuç buna ekleniyor, tutan da tutmayan da."><b>Everything here is real:</b>
+        settled markets, the model runs as they were issued, prices from the market.
+        Nothing simulated. Measured in hindsight. The same thing now runs live, in public,
+        and every result joins it, hit or miss.</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="panel-title" data-de="261 Märkte, was wir sagten vs. was passierte" data-tr="261 piyasa, ne dedik ve ne oldu">261 markets, what we said vs what happened</span>
+      </div>
+      <div class="panel-body">
+        <svg viewBox="0 0 380 268" role="img" aria-label="We said it would happen 85 times out of 100. It did 85 times out of 100. The market priced it at 77 out of 100.">
           <line x1="66" y1="204" x2="352" y2="204" stroke="#1a1a1a"/>
           <g stroke="#141414" stroke-dasharray="2 4">
             <line x1="66" y1="44" x2="352" y2="44"/><line x1="66" y1="124" x2="352" y2="124"/>
@@ -541,147 +566,157 @@ Outside-range risk:</span>
             <text x="300" y="238" fill="#86868b">MARKET PRICE</text>
           </g>
           <path d="M 340 81 L 350 81 L 350 68 L 340 68" fill="none" stroke="#30d158" stroke-width="1.5"/>
-          <text x="356" y="78" font-family="DM Mono" font-size="9" fill="#30d158">8</text>
           <text x="209" y="260" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle" letter-spacing=".06em">YOU PAY FOR 77. YOU GET 85.</text>
         </svg>
- <div class="stats">
- <div class="stat"><div class="n" style="color:var(--text)" id="sErr">0.2</div><div class="l" data-de="Daneben, von 100">Off by, out of 100</div></div>
- <div class="stat"><div class="n" style="color:var(--text)" id="sN">261</div><div class="l" data-de="Märkte gescort">Markets scored</div></div>
- <div class="stat"><div class="n" style="color:var(--green)" id="sEdge">8</div><div class="l" data-de="Von 100 zu deinen Gunsten">Out of 100 in your favour</div></div>
- </div>
- </div>
- </div>
- </div>
+        <div class="stats">
+          <div class="stat"><div class="n" style="color:var(--text)" id="sN">261</div>
+            <div class="l" data-de="Märkte gescort" data-tr="Piyasa puanlandı">Markets scored</div></div>
+          <div class="stat"><div class="n" style="color:var(--text)" id="sSaid">85 / 85</div>
+            <div class="l" data-de="Gesagt / passiert" data-tr="Dedik / oldu">We said / it happened</div></div>
+          <div class="stat"><div class="n" style="color:var(--text)" id="sStreak">3</div>
+            <div class="l" data-de="Längste Verlustserie" data-tr="En uzun kayıp serisi">Longest losing streak</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
- <div class="section-label" style="margin-top:56px" data-de="Rechner, gefüttert aus dem, was schon aufgelöst ist">Calculator, fed by what has already settled</div>
- <div class="calc">
- <div class="calc-in">
- <label for="stake" data-de="Einsatz pro Signal">Stake per signal</label>
- <div class="calc-field"><span>$</span><input id="stake" type="number" value="10" min="1" max="10000" step="1"></div>
- <input id="stakeR" type="range" min="1" max="500" value="10" step="1" aria-label="Stake per signal">
- <p class="calc-hint" data-de="Zieh den Regler. Alles rechts wird aus den 261 aufgelösten Märkten nachgespielt, Signal für Signal, in der Reihenfolge, in der sie fielen.">Drag the slider. Everything on the right replays the 261 settled markets, signal by signal, in the order they landed.</p>
- </div>
- <div class="calc-out">
- <div class="calc-row"><span data-de="Signale">Signals</span><b id="cN">261</b></div>
- <div class="calc-row"><span data-de="Davon getroffen">Of those, hit</span><b id="cHit">221 of 261</b></div>
- <div class="calc-row"><span data-de="Eingesetzt">Staked</span><b id="cIn">$2,610</b></div>
- <div class="calc-row"><span data-de="Zurück">Returned</span><b id="cOut">$2,841</b></div>
- <div class="calc-row big"><span data-de="Ergebnis">Result</span><b id="cNet" class="pos">+$231 (+8.8%)</b></div>
- <div class="calc-row"><span data-de="Längste Verlustserie">Longest losing streak</span><b id="cStreak">3 in a row</b></div>
- </div>
- </div>
- <div class="note"><p data-de="Das ist ein Nachspielen, keine Hochrechnung. Es rechnet nach, was diese 261 bereits entschiedenen Märkte ergeben hätten. Sobald genug Live-Signale aufgelöst sind, rechnet der Rechner mit denen.">This replays, it does not project. It works out what these 261 already decided markets would have returned. As soon as enough live signals resolve, the calculator switches to those.</p></div>
+  <div class="section-label" style="margin-top:56px" data-de="Nachgespielt: 116 Signale über 23 Handelstage, Dez 2025 bis März 2026" data-tr="Yeniden oynatıldı: 23 işlem gününde 116 sinyal, Ara 2025 - Mar 2026">Replayed: 116 signals over 23 trading days, Dec 2025 to Mar 2026</div>
+  <div class="calc">
+    <div class="calc-in">
+      <label for="stake" data-de="Einsatz pro Signal" data-tr="Sinyal başına yatırım">Stake per signal</label>
+      <div class="calc-field"><span>$</span><input id="stake" type="number" value="10" min="1" max="10000" step="1"></div>
+      <input id="stakeR" type="range" min="1" max="500" value="10" step="1" aria-label="Stake per signal">
+      <p class="calc-hint" data-de="In diesem Zeitraum kamen an 23 Tagen Signale, im Schnitt fünf am Tag. An den übrigen Tagen war kein Markt den Preis wert. Zieh den Regler, rechts wird jedes der 116 Signale nachgespielt." data-tr="Bu dönemde 23 günde sinyal geldi, günde ortalama beş. Diğer günlerde hiçbir piyasa fiyatına değmedi. Kaydırıcıyı çek, sağda 116 sinyalin her biri yeniden oynatılıyor.">Over this period, signals came on 23 days, about five a day. On the other days no
+        market was worth the price. Drag the slider and every one of the 116 gets replayed.</p>
+    </div>
+    <div class="calc-out">
+      <div class="calc-row"><span data-de="Zeitraum" data-tr="Dönem">Period</span><b>23 trading days</b></div>
+      <div class="calc-row"><span data-de="Signale" data-tr="Sinyaller">Signals</span><b id="cN">116</b></div>
+      <div class="calc-row"><span data-de="Davon getroffen" data-tr="Bunlardan tutan">Of those, hit</span><b id="cHit">84 of 116</b></div>
+      <div class="calc-row"><span data-de="Eingesetzt" data-tr="Yatırılan">Staked</span><b id="cIn">$1,160</b></div>
+      <div class="calc-row"><span data-de="Zurück" data-tr="Geri gelen">Returned</span><b id="cOut">$1,398</b></div>
+      <div class="calc-row big"><span data-de="Ergebnis" data-tr="Sonuç">Result</span><b id="cNet" class="pos">+$238</b></div>
+      <div class="calc-row"><span data-de="Längste Verlustserie" data-tr="En uzun kayıp serisi">Longest losing streak</span><b id="cStreak">3 in a row</b></div>
+    </div>
+  </div>
+  <div class="note"><p data-de="Das ist ein Nachspielen, keine Hochrechnung, und schon gar keine Jahresrendite. Es rechnet nach, was diese 116 bereits entschiedenen Signale über 23 Handelstage ergeben hätten. Ob die nächsten 23 Tage genauso laufen, weiß niemand." data-tr="Bu bir yeniden oynatma, bir projeksiyon değil ve kesinlikle yıllık getiri değil. Zaten karara bağlanmış bu 116 sinyalin 23 işlem gününde ne getireceğini hesaplıyor. Sonraki 23 günün aynı gidip gitmeyeceğini kimse bilmiyor.">This replays, it does not project, and it is not an annual return. It works out what
+    these 116 already decided signals would have returned over 23 trading days. Whether
+    the next 23 days look the same, nobody knows.</p></div>
 
- <div class="cards">
- <div class="card"><div class="k" data-de="Robustheit">Robustness</div>
- <h3 data-de="Die Edge bewegt sich nicht">The edge doesn't move</h3>
- <p data-de="Wir haben die Zuversichts-Einstellung des Modells über ihren gesamten plausiblen Bereich durchgefahren. Die Trefferquote schwankte von 77 % auf 96 %. Die Edge gegenüber dem Markt bewegte sich kaum. Ein Overfit wandert mit seinen Parametern. Dieser nicht.">We swept the model's confidence setting across its entire plausible
- range. Hit rate swung from 77% to 96%. The edge over the market barely
- moved. An overfit wanders with its parameters. This doesn't.</p></div>
- <div class="card"><div class="k" data-de="Kontrolle">Control</div>
- <h3 data-de="Blind kaufen verliert 38 %">Buying blind loses 38%</h3>
- <p data-de="Gleiche Märkte, gleicher Zeitraum, keine Engine, einfach jeden Tag die billigsten Bereiche kaufen: −38,1 %. Die Extreme sind teuer, die Mitte ist billig. Genau diese Lücke soll die Engine finden.">Same markets, same period, no engine, just buy the cheapest block
- every day: −38.1%. The extremes are expensive and the middle is cheap.
- That gap is what the engine is built to find.</p></div>
- <div class="card"><div class="k" data-de="Korrektur">Correction</div>
- <h3 data-de="Die Korrektur, die sonst keiner macht">The correction nobody else makes</h3>
- <p data-de="Wer den besten aus vielen Blöcken nimmt, selektiert auf den eigenen Optimismus. Das ist messbar, also messen wir es und ziehen es ab, bevor ein Signal rausgeht. Sonst verspricht man 81 und liefert 72. Weniger Signale, dafür stimmt jedes.">Picking the best of many blocks selects for your own optimism. That is measurable, so we measure it and subtract it before a signal goes out. Otherwise you promise 81 and deliver 72. Fewer signals, and every one of them means what it says.</p></div>
- </div>
+  <div class="cards">
+    <div class="card"><div class="k" data-de="Robustheit" data-tr="Sağlamlık">Robustness</div>
+      <h3 data-de="Die Edge bewegt sich nicht" data-tr="Avantaj yerinden oynamıyor">The edge doesn't move</h3>
+      <p data-de="Wir haben die Zuversichts-Einstellung des Modells über ihren gesamten plausiblen Bereich durchgefahren. Die Trefferquote schwankte von 77 % auf 96 %. Der Vorsprung gegenüber dem Markt bewegte sich kaum. Ein Overfit wandert mit seinen Parametern. Dieser nicht." data-tr="Modelin güven ayarını makul aralığın tamamında taradık. İsabet oranı 77&#x27;den 96&#x27;ya savruldu. Piyasaya karşı avantaj neredeyse hiç oynamadı. Aşırı uyum, parametreleriyle birlikte gezer. Bu gezmiyor.">We swept the model's confidence setting across its entire plausible range. Hit
+        rate swung from 77% to 96%. The edge over the market barely moved. An overfit
+        wanders with its parameters. This doesn't.</p></div>
+    <div class="card"><div class="k" data-de="Kontrolle" data-tr="Kontrol">Control</div>
+      <h3 data-de="Blind kaufen verliert 38 %" data-tr="Körlemesine almak 38 % kaybettiriyor">Buying blind loses 38%</h3>
+      <p data-de="Gleiche Märkte, gleicher Zeitraum, keine Engine, einfach jeden Tag die billigsten Bereiche kaufen: −38,1 %. Die Extreme sind teuer, die Mitte ist billig. Genau diese Lücke soll die Engine finden." data-tr="Aynı piyasalar, aynı dönem, motor yok, her gün sadece en ucuz aralıkları al: −38,1 %. Uçlar pahalı, orta ucuz. Motorun bulmak için kurulduğu boşluk tam da bu.">Same markets, same period, no engine, just buy the cheapest brackets every day:
+        −38.1%. The extremes are expensive and the middle is cheap. That gap is what the
+        engine is built to find.</p></div>
+    <div class="card"><div class="k" data-de="Korrektur" data-tr="Düzeltme">Correction</div>
+      <h3 data-de="Die Korrektur, die sonst keiner macht" data-tr="Kimsenin yapmadığı düzeltme">The correction nobody else makes</h3>
+      <p data-de="Wer den besten aus vielen Blöcken nimmt, selektiert auf den eigenen Optimismus. Das ist messbar, also messen wir es und ziehen es ab, bevor ein Signal rausgeht. Sonst verspricht man 81 und liefert 72. Weniger Signale, dafür stimmt jedes." data-tr="Birçok blok arasından en iyisini seçen, kendi iyimserliğini seçmiş olur. Bu ölçülebilir, biz de ölçüp bir sinyal çıkmadan önce düşüyoruz. Yoksa 81 vaat edip 72 teslim edersin. Daha az sinyal, ama her biri söylediği şeyi ifade ediyor.">Picking the best of many blocks selects for your own optimism. That is measurable,
+        so we measure it and subtract it before a signal goes out. Otherwise you promise
+        81 and deliver 72. Fewer signals, and every one of them means what it says.</p></div>
+  </div>
 </div></section>
 
 <section class="feature-section" id="dashboard"><div class="container">
   <div class="section-label">public.oddsengine.live</div>
-  <h2 data-de="Jeder Markt, nicht nur die Tipps">Every market, not just the picks</h2>
-  <p data-de="Die Signale sind die Schlagzeile. Der Beleg soll das Dashboard werden: jeder Live-Markt, den wir prüfen, und jedes Signal nach der Auflösung, Nieten inklusive. Es füllt sich, sobald der Worker die ersten Tage gelaufen ist.">The signals are the headline. The dashboard is meant to be the evidence:
-    every live market we look at, and every signal once it settles, misses included.
-    It fills up as the worker runs.</p>
-  <div class="note"><p data-de="Jede Zeile dort wurde geschrieben, bevor irgendjemand das Ergebnis kannte. Die Liste wächst mit jedem Markt, der auflöst."><b>Every line there was written before anyone knew the result.</b> The list grows with every market that settles.</p></div>
+  <h2 data-de="Jeder Markt, nicht nur die Tipps" data-tr="Her piyasa, sadece seçtiklerimiz değil">Every market, not just the picks</h2>
+  <p data-de="Die Signale sind die Schlagzeile. Der Beleg soll das Dashboard werden: jeder Live-Markt, den wir prüfen, und jedes Signal nach der Auflösung, Nieten inklusive. Es füllt sich, sobald der Worker die ersten Tage gelaufen ist." data-tr="Sinyaller manşet. Kanıt panoya düşüyor: baktığımız her canlı piyasa ve kapandıktan sonra her sinyal, tutmayanlar dahil. Motor çalıştıkça doluyor.">The signals are the headline. The dashboard is meant to be the evidence: every live
+    market we look at, and every signal once it settles, misses included. It fills up as
+    the worker runs.</p>
+  <div class="note"><p data-de="Jede Zeile dort wurde geschrieben, bevor irgendjemand das Ergebnis kannte. Die Liste wächst mit jedem Markt, der auflöst." data-tr="Oradaki her satır, sonucu kimse bilmeden önce yazıldı. Liste, kapanan her piyasayla büyüyor."><b>Every line there was written before anyone knew the result.</b>
+    The list grows with every market that settles.</p></div>
 </div></section>
 
 <section class="feature-section" id="api"><div class="container">
   <div class="two">
     <div>
-      <div class="section-label" data-de="Für Handelstische">For trading desks</div>
-      <h2 data-de="Für Desks">For desks</h2>
-      <p data-de="Der Kanal ist ein Weg, die Zahlen zu lesen. Für Desks, die selbst bepreisen, soll es einen zweiten geben: dieselben Wahrscheinlichkeiten, maschinenlesbar, für jeden Wettermarkt am Tag.">The channel is one way to read the numbers. For desks that price their own
-        book there should be a second: the same probabilities, machine readable,
-        for every weather market of the day.</p>
-      <p data-de="Trading-Desks, Market Maker, Research-Teams. Wer selbst bepreist und eine zweite, unabhängig gescorte Meinung neben sein eigenes Buch legen will."><b style="color:var(--text)">Who it is for.</b>
-        Trading desks, market makers, research teams. Anyone pricing their own book
-        who wants a second, independently scored opinion next to it.</p>
-      <div class="note"><p data-de="Schreib uns auf Telegram. Wir klären Umfang, Volumen und Bedingungen, dann bekommst du deinen Zugang. Jede Antwort wird archiviert, also kannst du jederzeit ein vergangenes Datum abrufen und uns selbst nachrechnen."><b>Message us on Telegram.</b> We settle scope, volume and terms, then you get your access. Every response is archived, so you can pull any past date and score us yourself.</p></div>
+      <div class="section-label" data-de="Für Handelstische" data-tr="Trading masaları için">For trading desks</div>
+      <h2 data-de="Für Desks" data-tr="Masalar için">For desks</h2>
+      <p data-de="Der Kanal ist ein Weg, die Zahlen zu lesen. Für Desks, die selbst bepreisen, soll es einen zweiten geben: dieselben Wahrscheinlichkeiten, maschinenlesbar, für jeden Wettermarkt am Tag." data-tr="Kanal, sayıları okumanın bir yolu. Kendi kitabını fiyatlayan masalar için bir ikincisi olmalı: aynı olasılıklar, makine tarafından okunabilir, günün her hava piyasası için.">The channel is one way to read the numbers. For desks that price their own book
+        there should be a second: the same probabilities, machine readable, for every
+        weather market of the day.</p>
+      <p data-de="Trading-Desks, Market Maker, Research-Teams. Wer selbst bepreist und eine zweite, unabhängig gescorte Meinung neben sein eigenes Buch legen will." data-tr="Trading masaları, piyasa yapıcılar, araştırma ekipleri. Kendi kitabını fiyatlayıp yanına bağımsız puanlanmış ikinci bir görüş koymak isteyen herkes."><b style="color:var(--text)">Who it is for.</b>
+        Trading desks, market makers, research teams. Anyone pricing their own book who
+        wants a second, independently scored opinion next to it.</p>
+      <div class="note"><p data-de="Die API geht auf, wenn der Record lang genug ist, dass man ihn prüfen kann. Wer sie vorher will, schreibt uns auf Telegram: wir klären Umfang und Bedingungen vorher." data-tr="API, sicil kontrol edilebilecek kadar uzadığında açılıyor. Daha önce isteyen Telegram&#x27;dan yazsın: kapsamı ve koşulları önceden konuşuruz."><b>The API opens when the record is long enough to check.</b>
+        If you want it before that, message us on Telegram and we settle scope and terms
+        with you beforehand.</p></div>
     </div>
     <div>
-      <p style="font-size:1.15rem;color:var(--text);font-weight:600;letter-spacing:-.02em;line-height:1.4;margin-bottom:18px"
-         data-de="Jeder Datenanbieter behauptet Genauigkeit. Wir sind der Einzige, bei dem du sie nachrechnen kannst: jede Zahl wird veröffentlicht, bevor die Station meldet, und danach gegen sie gescort. Was du kaufst, ist nicht eine Prognose. Es ist eine Prognose mit einer Bilanz.">Every data vendor claims accuracy. We are the only one you can check:
-        every number is published before the station reports, and scored against it
-        afterwards. What you buy is not a forecast. It is a forecast with a record.</p>
+      <p style="font-size:1.15rem;color:var(--text);font-weight:600;letter-spacing:-.02em;line-height:1.4;margin-bottom:18px" data-de="Jeder Datenanbieter behauptet Genauigkeit. Wir sind der Einzige, bei dem du sie nachrechnen kannst: jede Zahl wird veröffentlicht, bevor die Station meldet, und danach gegen sie gescort. Was du kaufst, ist nicht eine Prognose. Es ist eine Prognose mit einer Bilanz." data-tr="Her veri sağlayıcı doğruluk iddia eder. Kontrol edebileceğin tek sağlayıcı biziz: her sayı istasyon bildirmeden önce yayınlanır ve sonrasında ona karşı puanlanır. Aldığın şey bir tahmin değil. Sicili olan bir tahmin.">Every data vendor claims accuracy. We are the only one you can check: every number
+        is published before the station reports, and scored against it afterwards. What
+        you buy is not a forecast. It is a forecast with a record.</p>
       <div class="cards" style="margin-top:26px;grid-template-columns:1fr">
         <div class="card">
-          <div class="k" data-de="Preis">Price</div>
+          <div class="k" data-de="Preis" data-tr="Fiyat">Price</div>
           <div style="font-size:2.1rem;font-weight:700;letter-spacing:-.03em;margin:6px 0 4px">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-          <p style="font-size:.85rem" data-de="Größere Volumen und eigene Bedingungen auf Anfrage.">
-            Higher volume and bespoke terms on request.</p>
+          <p style="font-size:.85rem" data-de="Größere Volumen und eigene Bedingungen auf Anfrage." data-tr="Daha büyük hacim ve özel koşullar talep üzerine.">Higher volume and bespoke terms on request.</p>
         </div>
       </div>
-      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" style="margin-top:18px"
-         data-de="Zugang anfragen">Request access</a>
+      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" style="margin-top:18px" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
     </div>
   </div>
 </div></section>
 
 <section class="feature-section" id="access"><div class="container">
- <div class="section-label" data-de="Preise">Pricing</div>
- <h2 data-de="Was du bekommst">What you get</h2>
- <p data-de="Jedes Signal, sobald die Engine eines findet, bevor die Station meldet. Jedes Ergebnis danach, Treffer wie Niete, alle. 261 Märkte sind bereits gescort, und der Zähler oben bewegt sich, während weitere auflösen. An den meisten Tagen kommen zwei bis fünf Signale. An manchen keines, weil keiner der Märkte den Preis wert ist.">Every signal the engine finds, published before the station reports. Every result afterwards, hit or miss, all of them. 261 markets are already scored and the counter above moves as more settle. Most days bring two to five signals. Some bring none, because none of the markets were worth the price.</p>
+  <div class="section-label" data-de="Preise" data-tr="Fiyatlar">Pricing</div>
+  <h2 data-de="Was du bekommst" data-tr="Ne alıyorsun">What you get</h2>
+  <p data-de="Jedes Signal, sobald die Engine eines findet, bevor die Station meldet. Jedes Ergebnis danach, Treffer wie Niete, alle. 261 Märkte sind bereits gescort, und der Zähler oben bewegt sich, während weitere auflösen. An den meisten Tagen kommen zwei bis fünf Signale. An manchen keines, weil keiner der Märkte den Preis wert ist." data-tr="Motor bir sinyal bulduğu anda, istasyon bildirmeden önce. Sonrasında her sonuç, tutan da tutmayan da, hepsi. 261 piyasa şimdiden puanlandı ve yukarıdaki sayaç, yenileri kapandıkça hareket ediyor. Çoğu gün iki ila beş sinyal gelir. Bazı günler hiç, çünkü hiçbir piyasa fiyatına değmemiştir.">Every signal the engine finds, published before the station reports. Every result
+    afterwards, hit or miss, all of them. 261 markets are already scored and the counter
+    above moves as more settle. Most days bring two to five signals. Some bring none,
+    because none of the markets were worth the price.</p>
 
- <div class="tiers">
- <div class="tier now">
-      <div class="name" data-de="Signale">Signals</div>
+  <div class="tiers">
+    <div class="tier now">
+      <div class="name" data-de="Signale" data-tr="Sinyaller">Signals</div>
       <div class="price">€99<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-      <div class="per" data-de="der private Kanal">the private channel</div>
+      <div class="per" data-de="der private Kanal" data-tr="özel kanal">the private channel</div>
       <ul>
-        <li data-de="Jedes Signal, bevor die Station meldet">Every signal, before the station reports</li>
-        <li data-de="Ein-Klick-Links zu jedem Ausgang">One-tap links to each outcome</li>
-        <li data-de="Volle Verteilung und echte Preise">Full distribution and real prices</li>
-        <li data-de="Jedes Ergebnis danach, Treffer wie Niete">Every result afterwards, hit or miss</li>
-        <li data-de="Alle 50 Städte, alle Modi">All 50 cities, all modes</li>
+        <li data-de="Jedes Signal, bevor die Station meldet" data-tr="Her sinyal, istasyon bildirmeden önce">Every signal, before the station reports</li>
+        <li data-de="Ein-Klick-Links zu jedem Ausgang" data-tr="Her sonuca tek dokunuşluk bağlantı">One-tap links to each outcome</li>
+        <li data-de="Volle Verteilung und echte Preise" data-tr="Tam dağılım ve gerçek fiyatlar">Full distribution and real prices</li>
+        <li data-de="Jedes Ergebnis danach, Treffer wie Niete" data-tr="Sonrasında her sonuç, tutan da tutmayan da">Every result afterwards, hit or miss</li>
+        <li data-de="Alle 50 Städte, alle Modi" data-tr="50 şehrin tamamı, tüm modlar">All 50 cities, all modes</li>
       </ul>
-      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" data-de="Zugang anfragen">Request access</a>
-      <p style="font-size:.72rem;color:var(--text-tertiary);margin-top:12px;line-height:1.5"
-         data-de="Schreib uns, wir lassen dich rein. Der Kanal ist klein und bleibt es.">Message us and we let you in. The channel is small and stays that way.</p>
+      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
+      <p style="font-size:.72rem;color:var(--text-tertiary);margin-top:12px;line-height:1.5" data-de="Schreib uns, wir lassen dich rein. Der Kanal ist klein und bleibt es." data-tr="Bize yaz, seni içeri alalım. Kanal küçük ve öyle kalacak.">Message us and we let you in. The channel is small and stays that way.</p>
     </div>
-    
-    <div class="tier">
-      <div class="name" data-de="Der Record">The record</div>
-      <div class="price" data-de="Gratis">Free</div>
-      <div class="per" data-de="öffentlicher Kanal">public channel</div>
-      <ul>
-        <li data-de="Jedes Signal, nachdem es aufgelöst ist">Every signal, once it has settled</li>
-        <li data-de="Was wir sagten, was passierte">What we said, what happened</li>
-        <li data-de="Nieten genauso wie Treffer">Misses exactly like hits</li>
-        <li data-de="Genug, um uns selbst nachzurechnen">Enough to score us yourself</li>
-      </ul>
-      <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Kanal ansehen">See the channel</a>
-    </div>
-    <div class="tier">
- <div class="name">API</div>
- <div class="price">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
- <div class="per" data-de="pro Monat">per month</div>
- <ul>
- <li data-de="JSON, jeder Markt">JSON, every market</li>
- <li data-de="Volle Verteilung, nicht nur der Tipp">Full distribution, not just the pick</li>
- <li data-de="Historische Snapshots">Historical snapshots</li>
- <li data-de="Für Bots und Analyseplattformen">For bots and analytics platforms</li>
- </ul>
- <a href="https://t.me/OddsEnginePublicBot" class="btn btn-secondary" data-de="Zugang anfragen">Request access</a>
- </div>
- </div>
-</div></section>
 
+    <div class="tier">
+      <div class="name" data-de="Der Record" data-tr="Sicil">The record</div>
+      <div class="price" data-de="Gratis" data-tr="Ücretsiz">Free</div>
+      <div class="per" data-de="öffentlicher Kanal" data-tr="açık kanal">public channel</div>
+      <ul>
+        <li data-de="Jedes Signal, nachdem es aufgelöst ist" data-tr="Her sinyal, kapandıktan sonra">Every signal, once it has settled</li>
+        <li data-de="Was wir sagten, was passierte" data-tr="Ne dedik, ne oldu">What we said, what happened</li>
+        <li data-de="Nieten genauso wie Treffer" data-tr="Tutmayanlar da tutanlar gibi">Misses exactly like hits</li>
+        <li data-de="Genug, um uns selbst nachzurechnen" data-tr="Bizi kendin puanlamana yetecek kadar">Enough to score us yourself</li>
+      </ul>
+      <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Kanal ansehen" data-tr="Kanalı gör">See the channel</a>
+    </div>
+
+    <div class="tier">
+      <div class="name">API</div>
+      <div class="price">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
+      <div class="per" data-de="pro Monat" data-tr="aylık">per month</div>
+      <ul>
+        <li data-de="JSON, jeder Markt" data-tr="JSON, her piyasa">JSON, every market</li>
+        <li data-de="Volle Verteilung, nicht nur der Tipp" data-tr="Tam dağılım, sadece seçim değil">Full distribution, not just the pick</li>
+        <li data-de="Historische Snapshots" data-tr="Geçmiş kayıtlar">Historical snapshots</li>
+        <li data-de="Für Bots und Analyseplattformen" data-tr="Botlar ve analiz platformları için">For bots and analytics platforms</li>
+      </ul>
+      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-secondary" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
+    </div>
+  </div>
+</div></section>
 <footer><div class="container">
- <div class="section-label" data-de="Haftungsausschluss">Disclaimer</div>
- <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Wettermodelle, Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen aufgelösten Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab, prüfe das, bevor du teilnimmst.">OddsEngine publishes probability estimates and market data. It is
+ <div class="section-label" data-de="Haftungsausschluss" data-tr="Sorumluluk reddi">Disclaimer</div>
+ <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Wettermodelle, Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen aufgelösten Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab, prüfe das, bevor du teilnimmst." data-tr="OddsEngine olasılık tahminleri ve piyasa verisi yayınlar. Bu bilgidir; yatırım tavsiyesi değildir ve alım satım teklifi değildir. Olasılıklar ve fiyatlar, bir sinyal yayınlandığında mevcut olan veriyi yansıtır; hava modelleri, piyasa fiyatları ve likidite sonrasında değişir. Tahmin piyasaları, yatırılan tutarın tamamının kaybedilmesi riskini taşır. Burada hiçbir şey kazanç vaadi değildir ve bu sayfada, kapanmış bir piyasaya karşı ölçülmemiş hiçbir rakam yoktur. Tahmin piyasalarının erişilebilirliği bulunduğun ülkeye bağlıdır, katılmadan önce bunu kontrol et.">OddsEngine publishes probability estimates and market data. It is
  information, not financial advice, and not an offer to buy or sell anything.
  Probabilities, prices and suggested allocations reflect the data available when a
  signal is published; weather models, market prices and liquidity change afterwards.
@@ -693,7 +728,7 @@ Outside-range risk:</span>
  <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
  <div class="footer-links">
  <a href="#engine">Engine</a>
- <a href="#record" data-de="Bilanz">Track record</a>
+ <a href="#record" data-de="Bilanz" data-tr="Sicil">Track record</a>
  <a href="https://public.oddsengine.live">Dashboard</a>
  <a href="https://t.me/OddsEngine">Telegram</a>
  </div>
@@ -708,27 +743,59 @@ Outside-range risk:</span>
 // drift out of sync. English stays the default  the readers who matter here
 // are on Polymarket, and that market speaks English.
 (function () {
+ // Three languages, one attribute each. English is the default because that is
+ // what Polymarket speaks. German and Turkish are here because two audiences
+ // that actually care about weather markets read them.
+ var LANGS = { en: ['\uD83C\uDDEC\uD83C\uDDE7', 'EN'],
+               de: ['\uD83C\uDDE9\uD83C\uDDEA', 'DE'],
+               tr: ['\uD83C\uDDF9\uD83C\uDDF7', 'TR'] };
  var btn = document.getElementById('lang');
- var nodes = document.querySelectorAll('[data-de]');
+ var menu = document.getElementById('langMenu');
+ if (!btn || !menu) return;
+
+ var nodes = document.querySelectorAll('[data-de],[data-tr]');
  nodes.forEach(function (n) { n.dataset.en = n.innerHTML; });
 
  function set(lang) {
+  if (!LANGS[lang]) lang = 'en';
   nodes.forEach(function (n) {
-   n.innerHTML = lang === 'de' ? n.dataset.de : n.dataset.en;
+   var v = lang === 'en' ? n.dataset.en : n.dataset[lang];
+   // No translation for this language, keep the English. Half a sentence in
+   // the wrong language is worse than an honest fallback.
+   n.innerHTML = v || n.dataset.en;
   });
   document.documentElement.lang = lang;
-  btn.textContent = lang === 'de' ? 'EN' : 'DE';
-  btn.setAttribute('aria-label', lang === 'de' ? 'English' : 'Deutsch');
+  document.getElementById('langFlag').textContent = LANGS[lang][0];
+  document.getElementById('langCode').textContent = LANGS[lang][1];
+  menu.querySelectorAll('button').forEach(function (b) {
+   b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false');
+  });
   try { localStorage.setItem('oe_lang', lang); } catch (e) {}
  }
 
  var saved = null;
  try { saved = localStorage.getItem('oe_lang'); } catch (e) {}
- if (!saved && (navigator.language || '').slice(0, 2) === 'de') saved = 'de';
- if (saved === 'de') set('de');
+ if (!saved) {
+  var nav = (navigator.language || '').slice(0, 2);
+  if (LANGS[nav]) saved = nav;
+ }
+ set(saved || 'en');
 
- btn.addEventListener('click', function () {
-  set(document.documentElement.lang === 'de' ? 'en' : 'de');
+ btn.addEventListener('click', function (e) {
+  e.stopPropagation();
+  var open = menu.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+ });
+ menu.addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  set(b.dataset.lang);
+  menu.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+ });
+ document.addEventListener('click', function () {
+  menu.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
  });
 })();
 </script>
@@ -767,7 +834,14 @@ Outside-range risk:</span>
 // runs on the real record instead. Hardcoding a number and never touching it is
 // how a page starts lying six weeks later.
 (function () {
- var M = { n: 261, hit: 0.847, cost: 0.778, streak: 3 };
+ // The 116 signals that actually cleared the gates, over 23 trading days
+  // (31 Dec 2025 to 11 Mar 2026). 72.4 of every 100 landed; the average block
+  // cost 60.1c, so a hit paid 1/0.601.
+  //
+  // NOT the 261 from the chart above: those are markets where a block existed
+  // at all. Only 116 were worth taking. Running a calculator on the bigger
+  // number would flatter the result with signals we would never have sent.
+  var M = { n: 116, hit: 0.724, cost: 0.601, streak: 3 };
  var num = document.getElementById('stake'), rng = document.getElementById('stakeR');
  if (!num) return;
 
