@@ -238,7 +238,7 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
 
 <header><div class="container">
   <div class="hero-wide">
-    <div class="badge"><span class="dot"></span><span id="badgeTxt" data-de="Öffentlich gescort, laufend" data-tr="Açıkta puanlanıyor, sürekli">Scored in public, continuously</span></div>
+    <div class="badge"><span class="dot"></span><span id="badgeN"></span><span id="badgeTxt" data-de="Öffentlich gescort, laufend" data-tr="Açıkta puanlanıyor, sürekli">Scored in public, continuously</span></div>
     <div class="hero">
       <h1 data-de="Die Zahl steht fest, bevor der Tag es tut." data-tr="Sayı, gün belli olmadan önce belli.">The number is fixed before the day is.</h1>
     </div>
@@ -499,7 +499,16 @@ either way.</span></div>
       if(avg!=null)document.getElementById('mSaid').innerHTML=pct(avg)+'<small>%</small>';
       document.getElementById('mHit').innerHTML=pct(hits/done.length)+'<small>%</small>';
       var b=document.getElementById('badgeTxt');
-      if(b)b.textContent=done.length+' '+(document.documentElement.lang==='de'?'Signale gescort':'signals scored');
+      var bn=document.getElementById('badgeN');
+      if(b&&bn){
+        // The count lives in its own node, so switching language never wipes it.
+        // The label is rewritten in all three, so switching keeps it correct.
+        bn.textContent=done.length+' ';
+        b.dataset.en='signals scored';
+        b.dataset.de='Signale gescort';
+        b.dataset.tr='sinyal puanlandı';
+        b.innerHTML=b.dataset[document.documentElement.lang]||b.dataset.en;
+      }
 
       // Anything published but not yet decided sits at the right end, open.
       var settled={};
