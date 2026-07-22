@@ -4,10 +4,10 @@
 <script>window.ODDSENGINE_API = "https://web-production-6b61c.up.railway.app";</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OddsEngine — Prediction Market Intelligence</title>
-<meta name="description" content="Scan live weather markets. Calculate outcome probabilities. Build optimized 3–5 outcome portfolios. Published before resolution, scored after.">
-<meta property="og:title" content="OddsEngine · Prediction Market Intelligence">
-<meta property="og:description" content="Probability distributions for Polymarket temperature markets. Published before resolution, scored against the station after.">
+<title>OddsEngine — Precision Signals. Zero Noise.</title>
+<meta name="description" content="Every number published before the outcome is known, and scored in public afterwards. Hits and misses both.">
+<meta property="og:title" content="OddsEngine · Precision Signals. Zero Noise.">
+<meta property="og:description" content="Published before. Scored after. In public.">
 <meta property="og:image" content="https://oddsengine.live/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -15,8 +15,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OddsEngine">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OddsEngine · Prediction Market Intelligence">
-<meta name="twitter:description" content="Probability distributions for weather prediction markets. Published before resolution, scored after.">
+<meta name="twitter:title" content="OddsEngine · Precision Signals. Zero Noise.">
+<meta name="twitter:description" content="Published before. Scored after. In public.">
 <meta name="twitter:image" content="https://oddsengine.live/og-image.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -24,667 +24,347 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#1e90ff">
-<link rel="icon" type="image/png" href="data:image/png;base64,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">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #000000;
-  --bg-elevated: #0a0a0a;
-  --bg-card: #111111;
-  --bg-card-hover: #161616;
-  --border: #1a1a1a;
-  --border-hover: #2a2a2a;
-  --text: #f5f5f7;
-  --text-secondary: #86868b;
-  --text-tertiary: #48484a;
-  --blue: #2997ff;
-  --blue-bright: #64b5ff;
-  --blue-glow: rgba(41,151,255,0.15);
-  --blue-subtle: rgba(41,151,255,0.08);
-  --green: #30d158;
-  --red: #ff453a;
-  --amber: #f59e0b;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'DM Mono', 'SF Mono', monospace;
+:root{
+  --bg:#000000; --bg-elevated:#0a0a0a; --bg-card:#111111; --bg-card-hover:#161616;
+  --border:#1a1a1a; --border-hover:#2a2a2a;
+  --text:#f5f5f7; --text-secondary:#86868b; --text-tertiary:#48484a;
+  --blue:#2997ff; --blue-bright:#64b5ff;
+  --blue-glow:rgba(41,151,255,0.15); --blue-subtle:rgba(41,151,255,0.08);
+  --green:#30d158; --red:#ff453a; --amber:#f59e0b;
+  --font-body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'DM Mono','SF Mono',monospace;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
-body {
-  background:var(--bg); color:var(--text); font-family:var(--font-body);
-  font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);
+  font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
 }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior:auto; }
-  *, *::before, *::after { animation:none !important; transition:none !important; }
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+/* Nav */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 0;
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  background:rgba(0,0,0,0.72);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:var(--font-mono);font-size:.95rem;font-weight:500;color:var(--text);letter-spacing:-.3px}
+.logo img{width:26px;height:26px;border-radius:6px}
+.nav-right{display:flex;align-items:center;gap:26px}
+.nav-right a.link{font-size:.82rem;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.nav-right a.link:hover{color:var(--text)}
+@media (max-width:860px){.nav-right a.link{display:none}}
+.langbox{position:relative}
+.lang{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border-hover);
+  color:var(--text-secondary);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;
+  padding:6px 10px;border-radius:980px;cursor:pointer;transition:all .2s}
+.lang:hover{border-color:var(--text-secondary);color:var(--text)}
+.lang>span:first-child{font-size:.95rem;line-height:1}
+.langmenu{position:absolute;top:calc(100% + 8px);right:0;min-width:150px;background:var(--bg-card);
+  border:1px solid var(--border-hover);border-radius:12px;padding:5px;display:none;
+  flex-direction:column;z-index:60;box-shadow:0 12px 34px rgba(0,0,0,.6)}
+.langmenu.open{display:flex}
+.langmenu button{display:flex;align-items:center;gap:9px;background:none;border:0;
+  color:var(--text-secondary);font-family:var(--font-body);font-size:.85rem;padding:9px 11px;
+  border-radius:8px;cursor:pointer;text-align:left;transition:all .15s}
+.langmenu button:hover{background:var(--bg-card-hover);color:var(--text)}
+.langmenu button[aria-current="true"]{color:var(--blue)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;
+  padding:10px 20px;border-radius:980px;text-decoration:none;transition:all .2s;
+  border:1px solid transparent;white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-bright);box-shadow:0 0 24px var(--blue-glow)}
+.btn-secondary{border-color:var(--border-hover);color:var(--text)}
+.btn-secondary:hover{border-color:var(--text-secondary);background:rgba(255,255,255,.04)}
+
+/* Type */
+h1{font-size:clamp(2.6rem,6vw,4.3rem);font-weight:700;line-height:1.05;letter-spacing:-.038em;
+  background:linear-gradient(180deg,#fff 30%,#86868b 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+h3{font-size:1.05rem;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
+p{color:var(--text-secondary);font-size:.98rem;line-height:1.65;max-width:62ch}
+.section-label{font-family:var(--font-mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:18px}
+
+/* Hero */
+header{padding:170px 0 40px;position:relative}
+header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:1100px;height:620px;pointer-events:none;
+  background:radial-gradient(ellipse at center,var(--blue-glow) 0%,transparent 60%)}
+.hero{position:relative;max-width:20ch}
+.hero-wide{position:relative;max-width:none}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);
+  border:1px solid var(--border);border-radius:980px;padding:6px 14px;margin-bottom:26px;background:var(--bg-card)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-sub{margin:26px 0 34px;font-size:1.1rem;max-width:52ch}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ── SIGNATURE: the public ledger ── */
+.ledger{margin-top:74px;border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-elevated) 100%);overflow:hidden}
+.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 22px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.ledger-head .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-secondary)}
+.ledger-key{display:flex;gap:18px;font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--text-tertiary)}
+.ledger-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.ledger-body{padding:30px 22px 24px}
+.marks{display:flex;align-items:flex-end;gap:3px;height:96px;overflow:hidden}
+.mark{flex:1 1 0;min-width:2px;border-radius:2px;transform-origin:bottom;
+  animation:markin .5s cubic-bezier(.2,.8,.3,1) backwards}
+.mark.hit{background:var(--blue);box-shadow:0 0 10px var(--blue-glow)}
+.mark.miss{background:#26262a}
+.mark.pend{background:#151518}
+@keyframes markin{from{transform:scaleY(.04);opacity:0}to{transform:scaleY(1);opacity:1}}
+.ledger-axis{display:flex;justify-content:space-between;margin-top:14px;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-tertiary)}
+.ledger-foot{border-top:1px solid var(--border);padding:20px 22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lf{display:flex;flex-direction:column;gap:6px}
+.lf .v{font-size:2.3rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--text)}
+.lf .v small{font-size:1.05rem;font-weight:500;color:var(--text-tertiary);margin-left:3px}
+.lf .l{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-tertiary)}
+@media (max-width:700px){
+  .ledger-foot{grid-template-columns:1fr;gap:22px}
+  .lf .v{font-size:2rem}
+  .marks{height:70px}
 }
-.container { max-width:1080px; margin:0 auto; padding:0 24px; }
-a { color:inherit; }
-:focus-visible { outline:2px solid var(--blue); outline-offset:3px; border-radius:4px; }
 
-/* ── Nav ── */
-nav {
-  position:fixed; top:0; width:100%; z-index:100; padding:16px 0;
-  backdrop-filter:saturate(180%) blur(20px);
-  -webkit-backdrop-filter:saturate(180%) blur(20px);
-  background:rgba(0,0,0,0.72); border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.nav-inner { display:flex; align-items:center; justify-content:space-between; }
-.logo { display:flex; align-items:center; gap:10px; text-decoration:none;
-  font-family:var(--font-mono); font-size:0.95rem; font-weight:500;
-  color:var(--text); letter-spacing:-0.3px; }
-.logo img { width:26px; height:26px; border-radius:6px; }
-.nav-right { display:flex; align-items:center; gap:26px; }
-.nav-right a.link { font-size:0.82rem; color:var(--text-secondary);
-  text-decoration:none; transition:color .2s; }
-.nav-right a.link:hover { color:var(--text); }
-@media (max-width:860px) { .nav-right a.link { display:none; } }
+/* Sections */
+.feature-section{padding:120px 0;border-top:1px solid var(--border)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media (max-width:940px){.two{grid-template-columns:1fr;gap:36px}.feature-section{padding:84px 0}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:44px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .2s}
+.card:hover{background:var(--bg-card-hover);border-color:var(--border-hover)}
+.card .k{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+.card p{font-size:.88rem}
+.note{border-left:2px solid var(--blue);background:var(--blue-subtle);border-radius:0 10px 10px 0;
+  padding:16px 20px;margin-top:26px}
+.note p{font-size:.9rem;max-width:none}
+.note b{color:var(--text);font-weight:600}
 
-.langbox { position:relative; }
-.lang { display:flex; align-items:center; gap:6px; background:none;
-  border:1px solid var(--border-hover); color:var(--text-secondary);
-  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.04em; padding:6px 10px;
-  border-radius:980px; cursor:pointer; transition:all .2s; }
-.lang:hover { border-color:var(--text-secondary); color:var(--text); }
-.lang > span:first-child { font-size:0.95rem; line-height:1; }
-.langmenu { position:absolute; top:calc(100% + 8px); right:0; min-width:150px;
-  background:var(--bg-card); border:1px solid var(--border-hover); border-radius:12px;
-  padding:5px; display:none; flex-direction:column; z-index:60;
-  box-shadow:0 12px 34px rgba(0,0,0,.6); }
-.langmenu.open { display:flex; }
-.langmenu button { display:flex; align-items:center; gap:9px; background:none; border:0;
-  color:var(--text-secondary); font-family:var(--font-body); font-size:0.85rem;
-  padding:9px 11px; border-radius:8px; cursor:pointer; text-align:left; width:100%;
-  transition:all .15s; }
-.langmenu button:hover { background:var(--bg-card-hover); color:var(--text); }
-.langmenu button[aria-current="true"] { color:var(--blue); }
-.btn { display:inline-flex; align-items:center; gap:8px; font-size:0.85rem;
-  font-weight:500; padding:10px 20px; border-radius:980px; text-decoration:none;
-  transition:all .2s; border:1px solid transparent; white-space:nowrap; }
-.btn-primary { background:var(--blue); color:#fff; }
-.btn-primary:hover { background:var(--blue-bright); box-shadow:0 0 24px var(--blue-glow); }
-.btn-secondary { border-color:var(--border-hover); color:var(--text); }
-.btn-secondary:hover { border-color:var(--text-secondary); background:rgba(255,255,255,0.04); }
+/* Panel */
+.panel{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.panel-bar{display:flex;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);
+  background:var(--bg-elevated)}
+.dots{display:flex;gap:6px}
+.dots i{width:10px;height:10px;border-radius:50%;display:block}
+.panel-title{font-family:var(--font-mono);font-size:.65rem;color:var(--text-tertiary);
+  margin-left:12px;letter-spacing:.06em}
+.signal{font-family:var(--font-mono);font-size:.76rem;line-height:1.95;white-space:pre-wrap;
+  color:var(--text-secondary);padding:22px;overflow-x:auto}
+.signal b{color:var(--text);font-weight:500}
+.signal .hi{color:var(--blue)}
+.signal .g{color:var(--green)}
+.signal .d{color:var(--text-tertiary)}
 
-/* ── Type ── */
-h1 { font-size:clamp(2.6rem, 6vw, 4.2rem); font-weight:700; line-height:1.06;
-  letter-spacing:-0.035em;
-  background:linear-gradient(180deg, #fff 30%, #86868b 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text; }
-h2 { font-size:clamp(1.9rem, 3.6vw, 2.9rem); font-weight:700;
-  letter-spacing:-0.03em; line-height:1.1; margin-bottom:16px; }
-h3 { font-size:1.05rem; font-weight:600; letter-spacing:-0.01em; margin-bottom:8px; }
-p { color:var(--text-secondary); font-size:0.98rem; line-height:1.65; max-width:62ch; }
-.mono { font-family:var(--font-mono); }
+/* Pricing */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.tier{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:30px;
+  display:flex;flex-direction:column}
+.tier.now{border-color:var(--blue);box-shadow:0 0 40px var(--blue-glow)}
+.tier .name{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+.tier .price{font-size:2.1rem;font-weight:700;letter-spacing:-.03em}
+.tier .per{font-family:var(--font-mono);font-size:.68rem;color:var(--text-tertiary);margin-bottom:20px}
+.tier ul{list-style:none;flex:1;margin-bottom:24px}
+.tier li{font-size:.86rem;color:var(--text-secondary);padding:7px 0 7px 20px;position:relative}
+.tier li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1px;background:var(--text-tertiary)}
+.tier .btn{width:100%;justify-content:center}
+@media (max-width:860px){.tiers{grid-template-columns:1fr}}
 
-.section-label { font-family:var(--font-mono); font-size:0.7rem; font-weight:500;
-  letter-spacing:0.14em; text-transform:uppercase; color:var(--blue);
-  margin-bottom:18px; }
+/* Footer */
+footer{padding:64px 0 72px;border-top:1px solid var(--border)}
+.disc{font-size:.78rem;color:var(--text-tertiary);line-height:1.75;max-width:76ch}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:34px;
+  padding-top:26px;border-top:1px solid var(--border);flex-wrap:wrap}
+.footer-bot span{font-family:var(--font-mono);font-size:.68rem;color:var(--text-tertiary)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:.75rem;color:var(--text-tertiary);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--text-secondary)}
 
-/* ── Hero ── */
-header { padding:180px 0 100px; position:relative; }
-header::before { content:""; position:absolute; top:0; left:50%;
-  transform:translateX(-50%); width:1100px; height:640px; pointer-events:none;
-  background:radial-gradient(ellipse at center, var(--blue-glow) 0%, transparent 60%); }
-.hero { position:relative; display:grid; grid-template-columns:1fr 1fr;
-  gap:56px; align-items:center; }
-@media (max-width:940px) { .hero { grid-template-columns:1fr; gap:44px; }
-  header { padding:140px 0 72px; } }
-.badge { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono);
-  font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--text-secondary); border:1px solid var(--border); border-radius:980px;
-  padding:6px 14px; margin-bottom:26px; background:var(--bg-card); }
-.dot { width:6px; height:6px; border-radius:50%; background:var(--green);
-  animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-.hero-sub { margin:24px 0 32px; font-size:1.08rem; max-width:44ch; }
-.hero-sub strong { color:var(--text); font-weight:500; }
-.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
-
-/* ── Panels ── */
-.panel { background:var(--bg-card); border:1px solid var(--border);
-  border-radius:16px; overflow:hidden; }
-.panel-bar { display:flex; align-items:center; padding:11px 14px;
-  border-bottom:1px solid var(--border); background:var(--bg-elevated); }
-.dots { display:flex; gap:6px; }
-.dots i { width:10px; height:10px; border-radius:50%; display:block; }
-.panel-title { font-family:var(--font-mono); font-size:0.65rem; color:var(--text-tertiary);
-  margin-left:12px; letter-spacing:0.06em; }
-.panel-body { padding:22px; }
-.panel-body svg { width:100%; height:auto; display:block; }
-
-.bar-rise { transform-origin:bottom; animation:rise .8s cubic-bezier(.2,.8,.3,1) backwards; }
-@keyframes rise { from{transform:scaleY(0)} to{transform:scaleY(1)} }
-.tick-drop { animation:drop .6s cubic-bezier(.2,.8,.3,1) backwards; }
-@keyframes drop { from{opacity:0; transform:translateY(-12px)} to{opacity:1} }
-
-/* ── Sections ── */
-.feature-section { padding:130px 0; border-top:1px solid var(--border); }
-.two { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
-@media (max-width:940px) { .two { grid-template-columns:1fr; gap:36px; }
-  .feature-section { padding:88px 0; } }
-
-.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:16px; margin-top:44px; }
-.card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px;
-  padding:26px; transition:all .2s; }
-.card:hover { background:var(--bg-card-hover); border-color:var(--border-hover); }
-.card .k { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.12em;
-  text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
-.card p { font-size:0.88rem; }
-
-.note { border-left:2px solid var(--blue); background:var(--blue-subtle);
-  border-radius:0 10px 10px 0; padding:16px 20px; margin-top:26px; }
-.note p { font-size:0.9rem; max-width:none; }
-.note b { color:var(--text); font-weight:600; }
-
-/* ── Signal ── */
-.signal { font-family:var(--font-mono); font-size:0.76rem; line-height:1.9;
-  white-space:pre-wrap; color:var(--text-secondary); padding:22px;
-  overflow-x:auto; }
-.signal b { color:var(--text); font-weight:500; }
-.signal .hi { color:var(--blue); }
-.signal .g { color:var(--green); }
-.signal .d { color:var(--text-tertiary); }
-
-/* ── Big numbers ── */
-.bignums { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; }
-.bn { background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
-  padding:30px 26px; }
-.bn-v { font-size:3.2rem; font-weight:700; letter-spacing:-0.04em; line-height:1;
-  color:var(--text); }
-.bn-v span { font-size:1.6rem; font-weight:600; margin-left:2px; }
-.bn-l { font-size:0.95rem; color:var(--text); font-weight:500; margin-top:12px; }
-.bn-s { font-size:0.82rem; color:var(--text-tertiary); margin-top:6px; line-height:1.5; }
-@media (max-width:860px) { .bignums { grid-template-columns:1fr; } }
-
-/* ── Technical disclosure ── */
-.tech { margin-top:32px; border:1px solid var(--border); border-radius:14px;
-  background:var(--bg-card); overflow:hidden; }
-.tech summary { padding:18px 24px; cursor:pointer; font-family:var(--font-mono);
-  font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--text-secondary); list-style:none; transition:color .2s; }
-.tech summary::-webkit-details-marker { display:none; }
-.tech summary::before { content:"+ "; color:var(--blue); }
-.tech[open] summary::before { content:"− "; }
-.tech summary:hover { color:var(--text); }
-.tech-body { padding:0 24px 26px; }
-.tech-body p { font-size:0.88rem; }
-.t { width:100%; border-collapse:collapse; margin-top:16px; font-family:var(--font-mono);
-  font-size:0.78rem; }
-.t th { text-align:right; padding:8px 10px; color:var(--text-tertiary);
-  border-bottom:1px solid var(--border); font-weight:400; }
-.t th:first-child, .t td:first-child { text-align:left; }
-.t td { text-align:right; padding:7px 10px; color:var(--text-secondary);
-  border-bottom:1px solid var(--border); }
-.t tr.hl td { color:var(--text); background:var(--blue-subtle); font-weight:500; }
-.t .pos { color:var(--green); }
-.t .neg { color:var(--amber); }
-
-/* ── Stats ── */
-.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
-.stat { background:var(--bg-elevated); border:1px solid var(--border);
-  border-radius:12px; padding:18px; }
-.stat .n { font-size:1.05rem; font-weight:600; color:var(--text-secondary);
-  letter-spacing:-0.01em; }
-.stat .l { font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.1em;
-  text-transform:uppercase; color:var(--text-tertiary); margin-top:6px; }
-@media (max-width:640px) { .stats { grid-template-columns:1fr; } }
-
-/* ── Pricing ── */
-.tiers { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px; }
-.tier { background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
-  padding:30px; display:flex; flex-direction:column; }
-.tier.now { border-color:var(--blue); box-shadow:0 0 40px var(--blue-glow); }
-.tier .name { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em;
-  text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
-.tier .price { font-size:2.1rem; font-weight:700; letter-spacing:-0.03em; }
-.tier .per { font-family:var(--font-mono); font-size:0.68rem; color:var(--text-tertiary);
-  margin-bottom:20px; }
-.tier ul { list-style:none; flex:1; margin-bottom:24px; }
-.tier li { font-size:0.86rem; color:var(--text-secondary); padding:7px 0 7px 20px;
-  position:relative; }
-.tier li::before { content:""; position:absolute; left:0; top:14px; width:8px;
-  height:1px; background:var(--text-tertiary); }
-.tier .btn { width:100%; justify-content:center; }
-@media (max-width:860px) { .tiers { grid-template-columns:1fr; } }
-
-/* ── Footer ── */
-footer { padding:64px 0 72px; border-top:1px solid var(--border); }
-.disc { font-size:0.78rem; color:var(--text-tertiary); line-height:1.75; max-width:76ch; }
-.footer-bot { display:flex; justify-content:space-between; align-items:center;
-  gap:20px; margin-top:34px; padding-top:26px; border-top:1px solid var(--border);
-  flex-wrap:wrap; }
-.footer-bot span { font-family:var(--font-mono); font-size:0.68rem;
-  color:var(--text-tertiary); }
-.footer-links { display:flex; gap:24px; }
-.footer-links a { font-size:0.75rem; color:var(--text-tertiary); text-decoration:none;
-  transition:color .2s; }
-.footer-links a:hover { color:var(--text-secondary); }
-
-
-.calc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 8px}
-.calc-in,.calc-out{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px}
-.calc-in label{display:block;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px}
-.calc-field{display:flex;align-items:center;gap:6px;border:1px solid var(--border-hover);
-  border-radius:10px;padding:10px 14px;background:var(--bg-elevated)}
-.calc-field span{font-family:var(--font-mono);color:var(--text-tertiary);font-size:1.1rem}
-.calc-field input{background:none;border:0;color:var(--text);font-family:var(--font-mono);
-  font-size:1.5rem;font-weight:500;width:100%;outline:none;-moz-appearance:textfield}
-.calc-field input::-webkit-outer-spin-button,.calc-field input::-webkit-inner-spin-button{
-  -webkit-appearance:none;margin:0}
-#stakeR{width:100%;margin-top:18px;accent-color:var(--blue)}
-.calc-hint{font-size:.78rem;color:var(--text-tertiary);margin-top:16px;max-width:none;line-height:1.6}
-.calc-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;
-  border-bottom:1px solid var(--border);font-size:.86rem;color:var(--text-secondary)}
-.calc-row:last-child{border:0}
-.calc-row b{font-family:var(--font-mono);color:var(--text);font-weight:500;font-size:.95rem}
-.calc-row.big{padding:16px 0 9px;font-size:1rem}
-.calc-row.big b{font-size:1.35rem;font-weight:700}
-.calc-row b.pos{color:var(--green)} .calc-row b.neg{color:var(--red)}
-@media (max-width:640px){.calc{grid-template-columns:1fr;gap:12px}
-  .calc-in,.calc-out{padding:18px} .calc-row.big b{font-size:1.15rem}}
-
-/* ── Mobile ── */
 @media (max-width:640px){
   .container{padding:0 18px}
-  header{padding:110px 0 56px}
-  h1{font-size:2.05rem;letter-spacing:-.03em}
-  h2{font-size:1.65rem}
-  .hero-sub{font-size:.98rem;max-width:none}
-  .hero-btns{gap:8px}
+  header{padding:112px 0 30px}
+  h1{font-size:2.15rem;letter-spacing:-.03em}
+  h2{font-size:1.7rem}
+  .hero{max-width:none}
+  .hero-sub{font-size:1rem;max-width:none}
   .hero-btns .btn{flex:1;justify-content:center;padding:12px 14px}
   .feature-section{padding:64px 0}
-  .two{gap:28px}
-  .cards{gap:12px;margin-top:28px}
-  .card{padding:20px}
-  .panel-body{padding:14px}
-  .signal{font-size:.68rem;padding:16px;line-height:1.75}
-  .stats{grid-template-columns:1fr 1fr;gap:8px}
-  .stat{padding:14px}
-  .stat .n{font-size:1.15rem}
-  .tiers{gap:12px;margin-top:28px}
-  .tier{padding:24px}
-  .tier .price{font-size:1.8rem}
-  .note{padding:13px 15px}
-  .note p{font-size:.85rem}
-  .section-label{font-size:.62rem;letter-spacing:.1em}
-  footer{padding:44px 0 52px}
-  .footer-bot{flex-direction:column;align-items:flex-start;gap:12px}
-  .footer-links{flex-wrap:wrap;gap:16px}
-  nav{padding:11px 0}
-  .nav-inner{gap:8px}
-  .logo{font-size:.84rem}
-  .logo img{width:22px;height:22px}
-  /* The links go, the language switch and the CTA stay. Dropping the switch
-     on mobile meant half the audience could not read the page. */
-  .nav-links{display:none}
-  .nav-right{gap:8px;flex-shrink:0}
-  .nav-right .btn{padding:8px 14px;font-size:.76rem}
-  .lang{padding:6px 9px;font-size:.66rem;flex-shrink:0}
-  .langmenu{min-width:138px}
+  .ledger{margin-top:44px}
 }
-@media (max-width:400px){
-  h1{font-size:1.8rem}
-  .stats{grid-template-columns:1fr}
-  .signal{font-size:.62rem}
-}
-</style></head>
+</style>
+</head>
 <body>
+
 <nav><div class="container nav-inner">
- <a href="#" class="logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAQM0lEQVR42t2da4xd1XXHf2ufc+dpj8dgC5zwcoxdFxcagQOBpAlO6spJaUICgYgorSpFaRGqVFT6oVXaRKqSD41oPkRqpaakitSEAglBTaKWNhiiJChA3VBiCLQGm2cJ9tiejj2Pe8/eqx/2uXPf557n9dArjcG+Z/bZez3+67/WXvscMcYoq5+2/+35yJDv034k4TstMJaW8HtScD7Z1i5AmCzk5t+lawBNebOyF5CkQEmpUMlgEN3rTZLPMEVK39mFvb/Yb1CtUKiaUuCauJji3tRPWDpkTE1pCIPnK8aIjtaCkzxJCkAJGb2zaqjRIRDpvwurF2pWy8iihG5PlYoNJ+1a03urSb6B5IASyYizZQZuzTjXsqxfcq/RFBN6GbirbT9ZxpASBKc5x9Uug8srE+3nAUr/wDwK2qkJliUZ7iV9xpAUFiw51qwZGVUiBEnJrjlonDzWo0OopIwUOvJ5fu+8TTmWnCUeZHF7Kdk4hDP/6ZRJOFr6qSmEoyWMpTk9LktyKQU8gSQFFMluJcfkZEiZQDIah+aY2yCY6ydwyWl4klYBOiRRymKtWhAK0uQJkvJ+aTLorN5fvEIQFmMtaZVRFvZqDojQHEpPSxyKryvMzlAkl6tVI/gsdRdNieN5BSsJMtA+95duGqoJkJMVLpTyAl9ZZYOiWXBaypotMQvTu6Qk1DuyWN9a+Qyz2CprS5I2EdMMliM5PEQHeF5ZMSTP2FpgrOzzN9kxPivz0ZQLzFMS6a4haQVCL8tzU9PQbvcsIzFKQxE1QThpy79l1qVGE5PCdIxiGP3Mi5NSoSC0VKjId+/hZfmwuBazMoO89XvJUa5I62V5lamFFWjKt4x+5V8d8n1az9CSPEQrgp6scK15PUBJt+uVZLFJafyQhciAgKzD7pVVWJrD2zXTd2F2Ny5iHTkxVoz/UQW1YN3gKZqg7VqXIvinYUaSUybDIa+tKyJLBicF3DNlXV/EC9I5/7MKmgaZ2gjjGyAcAwRxEbo8jy6dgKjROc2g5pWmmsI7pQSDSVsvG9oVUUYZNifOSgA2Arzg5ZxLka17MFuuxJy9HbNhCzK+DjU1P7KN0PppdPEYnDiMffUA+uJ+9NUn0KjhZx6GsSLTtsJITkMcBKn9416CBxRlDGkWpr1Qow51ikzMEO66Cbn0E8i5V8DEenCKRCugUQwv7SMZCGpIOIaKIFEdd/Rp7DP3oU99HZ1/KfaIEJwdMI80ZWtNsOzhfUApFVAEbrKUpduuNQFEERhDcMWnCa6+HTl7B9qIoH4aXNQGTV1eKX4sUdAmU5IAwilkbAx36hfYA3+He/ROdPkEEsQxIrWVa4LCisW9ChSQxgK0B3LURpi3XE5t35fgwvfAyrIXfDMW5KmtqfOCDsdhYh06dwj7r3+Me/YBCILYiyQjlpdbcu9SQJm1D01BR2Ph2ojgik8R7vsrCKbQpZPegtvnJP4Pb+yaPqpI00Ec1MYJZqZp3H8b9cf+GqmNec9STYH7ZcsnUyJWhPEkUDgxqI0I93yW8MNf8WRlaR5MOBAKVC2qLrbu5o/1gnS2V8ka/64qEk5hf/4w0c//CQlCaNQ7GVZl5QpN8gCj6YNv1s7kBMyXELUNau//C4L3fgZdONGJ702rFGkJOhiD2jQSmjglcHFOZuIk2UFjEaIV/3sm8P/uGjC9CQ7vp/6P10NjwYeJ898Jc895jzOmD1Ut0yD7yzPDnnCJk5MAtQ3Cq26LhX/cC6D93iL+ljZCx6agNgmLc+hLP4ZfHMDNPQeLxzxVHd+AbNiKvOUdyJbdyOyFPh+oL3ilTG3CHd5PdO9HwC6Cgrn4Nwhv+Q7uZ/cSffuTjKYbPJUHVFUN1A6Oby56D7Xf/j66stjfQlQ91k9uhPkj2AN/iz5zD3r8heRbr9uM2X4dZvetmC27IRDcoYeI7rkeoiVw1gv/xm/6+07OYB+8A/vonXGuYEvH+RRBeBQ305ZVj61j7FOPwYat0DiNStA5A+dQE0JtGvfvX8b98PPo6aP+uyBoY0VdMUId2FiAQUhw9e1w/ruw3/oERMuoswTb9xHeeF/sXXXUhGhYw951Dfr6kz5PUFsJ4znzCoi5frj3CwTv/hN0Yc4vuEf4NdRa7D/fij59d1y1qrViwbBCnQRgGy39GAGnmB0fJLzhXnAKroGKAbXI5Cz2hYewX9/nr+24R7WyMeXhuyZUHTWmmxbOehvmilthaaFX+KqoCbxxfuujXvhhDQIT08UUjEXVXyvGjx/WvO53XEd40/1+DNeIvUgRCWDpJMG2vZid1/s5mpBRfUx6PC/qa54KBlfeBpOzqK33v2xsPe57n0YP74cenj4owA0qTzeLcIoun/DsSD0UdmQSArgIc9UfxAVAS3md08lGasoXfr+NE/HFtamNmJ0fhZVFD0cd0GNhchb7n1/FHYwt3zZysI3uYG4hCNGXfkz0b3egEzNozP1lNTYFUD+FOe8a5Lx3+NxAzFrxgLSKSNjfjfm42bYX2XAhNJZ6GVIwhv7va9j9n1ktypVG+5yDIMT9x124w4/4wp66tlXF3hKOYXbd1PLYSuioZFGAZHTF5BzCXLyv/2jOwvg63JNfhVOvt9VpihiH9GFgDn3szlaCpl3ZcrSCuXCP30NoFv/WhgcU0XIMP+E4smV3nKUaf1XzMlNDV07hnrmnRSeH1tzTKkFaShbBHX4InXsOxqZ8EqdtomiswOzbYONWz5RE3owK6Bd8QWYvQGYuQG0djYOgj60OxqZwxw6iR5/xM1pVQLZDz0M9JQigvoR78QdQm+j1MhfBxHpk887W/sRoFFAl3sVjb3grjE17S1x1f/WWFobwxlMeqzsooCaUxiWnR4C+/BNfnOv6VY2FLrPbRklDK3az5vCTm1EJW3jcVfZh7r+zsZtEwxmw99CksydfQBvLfQDAK0Wmz0nJ7t4MENQUxthMlzzaOo8VWDqRsLQsZ8uSekTjv9fnMdrowXhp5ozj60fmARWnfNpm5TLksjS9pUn7zBk9uWNrs/MOspqj5D3IfUY9YIAgo6U2WXdaqAPc5OYCS0sJDbHAzfRmpDaBNINwd9diPNf+B75LjwFFcC1FU1KMu7p4FNTFm4rSc1vZtL2E0sew6mV879ltnvo294zbJyPgmpXXvspdUzEgKTB2YfPCa4hb7i1BYCBqYLZc7hOgZjk5d0auwz3lrVeiql2XiodJBTd/pLqa2OhoaDyu+mq3nnwZXXgjroC2d7oJNBaRs3ci5/5qbMRBNXOxPuOW898N9aVOY4jbGjVabjGyjnykjAa1gQqoci803gdYnse9/lMIJzo3wjVOgMJJzNt/t+BcEoRjAlDF7LgOc9YOX49q0mFpJmo1dP4V9OizcbyvfkOmYg+gI6PUI/vBmFgtbVYlASwvILtugY3bfOkicxYqwz0xCDFX3Q623tXc5csfUptEX/kJrDT3Kqo/NTOammvsyu7Qv/i2k6DWib0IuAYyPoP59S82S3dkf0DIAIGZ0PceXX075rwroX6qTywSVBV97gFG+ak4E5aWAoIA5g6hLz4C4+sRtV3VygCWThBc8hGCq+/wewEmLO6dpoZGdeSCdxH82mdhcd7fS7sy5HASnTuEe/5B7x3Okf9ETmYaOoJMOHZ5+/iXga5afPO/cayQ930Buex3IKq3zgbkKQKaGkR1zLlvb23Eax+WpRYdm8Q++fewcsoby4gO7QUi8rnqN+XjErMJ4PjzyDmXe8bTWOwVroK4CPnlG9DGErz8oxi/a+m8QYy/j7VxC8oHqN14LzIx6xOsHoalUJuCk0ew3/s9cPU+wVeq9IARf0RwD/8pWl/0FtpdOxVBUKRxGrP3i5iPPQCbL/GNVjbemJfAw1PHTyxYa/2ZgOlNBHv/kuBj9/s6VKNL+HEpQtXB2CT2kT+H5ZNxg5iOThwjbUtp0sEoQt75h4Qf+BIszCGmP+NQdTCxEV05iTt4H+7gP8Crj4Nd6Z/7iiCbdyGX3EB42Sc9o1o80QGB0laDVutbFu1Td2O/fUtXT9DIFGBGp+6muJod0Tfcjbns48jCsTZvaLcHAWd9k9b4TJwkPQtvPIUefx5dOoqoQyY3Ihu3IZsugc27YGIDsnLaXy+dyZas7pBF6MQs7ujTRF+7FlbmW32opSogOZcYoQe0g3xcCwonCT7+XczWa5HTx+LzXO3z1TaGaX03dTiJhOP+FIzEJeRmVdvWPdS4CBGzavXx1ktrWBfB+AZ08XUaX9uDzh0acF5gZJ1xRQJN1p55bQVLZ2F8luDmBwi2vhdOzcWnHKVXAauVVIeoomjLmlcVa1axXQYFUBfB1Fno/BEa3/gQ+sbBAT2hZRxSqTwG5JmkdjIWZ6E2TfChuzCX3owsLngm0owLOQBSpANzYhYWY/v0LPrKEzS+eTN6/HBCQ+5oHrGTIgakPUs1TBH9zl21KUFBrvkjatd+DsJpz0hUM+cA7UHW3yYuOY/PgAmIDvwN9sE7PFR1CP9Np4AsjxEbcoqwefLdWuTcywje/3nMxb/pL1lZ8L2cSO8Jee2b6/keU3W+73N8HYQh7pUnsA//GfbQg16nEgzpvljzNLTfY2TyPDGrz0lJwGzfh9n9+8hF7/N7tNb5RMo2WkeROk5CxRmzqflDeUEIUR332uO4n34F97Nv+DwiCLtO0J/Zp3iVxIKKKKBPcEZbjyM451cIfum3MBftgbN3IpObIJhApU+YdXV06Th68nn0xR/i/us76MuPxkgWt62rHUlwLQGCyqRgOZ4VLXE9pm2HTNZtQma3wsx5MLXJW7rxO2osHoOF19ATL6AL/9N5NsAECafkq1pzKQpIayVlT7yN3K8+qCPhIR09BRbxLKr5cI9MRGHNKKBqOppj7GYQTnxcjUt4MEc12WyRTwV9Qd3Buay3Z2irg0GHXFeVAbx5qqGD3ohRVvtLvxcuVC+sihRQRr+jlHydDhF+ksJLR+mc864MgrQCgedN8KqaAyO7V1jMKqXkResZEcLoPy0jLvk9YlqB8GUNCry8x5nlfIdM1n79LFgrIxBeVeNo5jHCte/eZXHwtcCQetmaGe3ENPdEexlPkVffnukg3KLPXb2hwxY2bPFV0cG0mfaw+wtrLUibbNYpa8Tdk2JQFU9+rw7mwnLcLEvtRdcYHGS9VksQfgcNlTOwcK1QQFUpPs1DCLPAZWYamkbjaTm75IAaPSMQURwik+WUoxZURaCtCqs1ZeZeBcNJJyeTX7tpmleHnNfN/B5hSWEUed9PXJbHZzvHZspxzzSL1QKYnCXrHOWL5PrdL9t7xEz5EZ4Ubi+k7zVKAx9pXqOe5xnYmlL5+csypjjN0hQxIqvw0iy+jLfaFYk1adcoRfOAMne0hrmyZpiHpLym6NPfZYjxSSGvG8EBjbI3yMtiR1qhBw2D5L6vMhyUxssIJpfEsPIEvlHXfIbVxwbLK+Hh3WXiaBa2ky6B+f/ySfnw7mGYKyS/fjxrk1fZwbTq5jJNiBlSNAYUfUBGGbCUlQyUna2ngZjsshDg/wB3iPAQJMp0vAAAAABJRU5ErkJggg==" alt="">OddsEngine</a>
- <div class="nav-right">
- <a href="#engine" class="link" data-de="Engine" data-tr="Motor">Engine</a>
- <a href="#signals" class="link" data-de="Signale" data-tr="Sinyaller">Signals</a>
- <a href="#record" class="link" data-de="Bilanz" data-tr="Sicil">Track record</a>
- <a href="#api" class="link" data-de="API" data-tr="API">API</a>
- <div class="langbox">
- <button id="lang" class="lang" aria-haspopup="true" aria-expanded="false">
-  <span id="langFlag">&#127468;&#127463;</span><span id="langCode">EN</span>
-  <svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
- </button>
- <div class="langmenu" id="langMenu">
-  <button data-lang="en">&#127468;&#127463; English</button>
-  <button data-lang="de">&#127465;&#127466; Deutsch</button>
-  <button data-lang="tr">&#127481;&#127479; T&uuml;rk&ccedil;e</button>
- </div>
-</div>
- <a href="#access" class="btn btn-primary" data-de="Zugang" data-tr="Erişim">Get access</a>
- </div>
-</div></nav><header><div class="container">
-  <div class="hero-glow"></div>
-  <div class="badge" data-de="261 aufgelöste Märkte gescort" data-tr="261 kapanmış piyasa puanlandı"><span class="dot"></span><span id="badgeN">261</span> settled markets scored</div>
-  <div class="two hero-grid">
-    <div>
-      <h1 data-de="Wir veröffentlichen die Zahl vor dem Tag. Und was danach passiert ist." data-tr="Sayıyı günden önce yayınlıyoruz. Ve sonrasında ne olduğunu.">We publish the number before the day. And what happened after.</h1>
-      <p class="hero-sub" data-de="Live-Wettermärkte scannen. Für jeden Temperaturbereich eine Wahrscheinlichkeit rechnen. Die nehmen, die den Preis wert sind.&lt;br&gt;&lt;br&gt;&lt;strong&gt;Bei 261 aufgelösten Märkten sagten wir: passiert 85 von 100 Mal. Es passierte 85 von 100 Mal.&lt;/strong&gt;" data-tr="Canlı hava piyasalarını tara. Her sıcaklık aralığına bir olasılık ver. Fiyatına değenleri al.&lt;br&gt;&lt;br&gt;&lt;strong&gt;261 kapanmış piyasada dedik ki: 100 kezin 85&#x27;inde olur. 100 kezin 85&#x27;inde oldu.&lt;/strong&gt;">Scan live weather markets. Put a probability on every temperature bracket. Take the ones worth the price.<br><br>
-        <strong>On 261 settled markets we said it would happen 85 times out of 100. It happened 85 times out of 100.</strong></p>
-      <div class="hero-btns">
-        <a href="#signals" class="btn btn-primary" data-de="Signal ansehen" data-tr="Bir sinyal gör">See a signal</a>
-        <a href="#record" class="btn btn-secondary" data-de="Bilanz ansehen" data-tr="Puanlamayı gör">See the scoring</a>
+  <a href="#" class="logo"><img src="logo.png" alt=""> ODDSENGINE</a>
+  <div class="nav-right">
+    <a href="#record" class="link" data-de="Bilanz" data-tr="Sicil">Record</a>
+    <a href="#signal" class="link" data-de="Signal" data-tr="Sinyal">Signal</a>
+    <a href="#access" class="link" data-de="Zugang" data-tr="Erişim">Access</a>
+    <div class="langbox">
+      <button id="lang" class="lang" aria-haspopup="true" aria-expanded="false">
+        <span id="langFlag">&#127468;&#127463;</span><span id="langCode">EN</span>
+      </button>
+      <div class="langmenu" id="langMenu">
+        <button data-lang="en">&#127468;&#127463; English</button>
+        <button data-lang="de">&#127465;&#127466; Deutsch</button>
+        <button data-lang="tr">&#127481;&#127479; Türkçe</button>
       </div>
     </div>
-    <div class="panel">
-      <div class="panel-bar">
-        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title" data-de="ein Tag, eine Stadt" data-tr="bir gün, bir şehir">one day, one city</span>
+    <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Bilanz ansehen" data-tr="Sicili gör">See the record</a>
+  </div>
+</div></nav>
+
+<header><div class="container">
+  <div class="hero-wide">
+    <div class="badge"><span class="dot"></span><span id="badgeTxt" data-de="Öffentlich gescort, laufend" data-tr="Açıkta puanlanıyor, sürekli">Scored in public, continuously</span></div>
+    <div class="hero">
+      <h1 data-de="Die Zahl steht fest, bevor der Tag es tut." data-tr="Sayı, gün belli olmadan önce belli.">The number is fixed before the day is.</h1>
+    </div>
+    <p class="hero-sub" data-de="Wir veröffentlichen eine Wahrscheinlichkeit, solange der Ausgang noch offen ist. Danach wird sie gegen das gemessen, was tatsächlich passiert ist. &lt;strong&gt;Jedes Ergebnis kommt in dieselbe öffentliche Liste, Treffer wie Niete.&lt;/strong&gt;" data-tr="Sonuç henüz belli değilken bir olasılık yayınlıyoruz. Sonra bu, gerçekte olanla ölçülüyor. &lt;strong&gt;Her sonuç aynı açık listeye giriyor, tutan da tutmayan da.&lt;/strong&gt;">We publish a probability while the outcome is still open. Afterwards it gets measured against what actually happened. <strong>Every result joins the same public list, hits and misses alike.</strong></p>
+    <div class="hero-btns">
+      <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Öffentlichen Kanal ansehen" data-tr="Açık kanalı gör">Open the public channel</a>
+      <a href="#access" class="btn btn-secondary" data-de="Signale abonnieren" data-tr="Sinyallere abone ol">Subscribe to signals</a>
+    </div>
+  </div>
+
+  <!-- SIGNATURE ELEMENT: the ledger -->
+  <div class="ledger">
+    <div class="ledger-head">
+      <span class="t" data-de="Die Liste" data-tr="Liste">The list</span>
+      <span class="ledger-key">
+        <span><i style="background:var(--blue)"></i><span data-de="Getroffen" data-tr="Tuttu">Hit</span></span>
+        <span><i style="background:#26262a"></i><span data-de="Daneben" data-tr="Tutmadı">Miss</span></span>
+        <span><i style="background:#151518"></i><span data-de="Läuft noch" data-tr="Devam ediyor">Open</span></span>
+      </span>
+    </div>
+    <div class="ledger-body">
+      <div class="marks" id="marks" role="img" aria-label="Every published signal, in order, hit or miss"></div>
+      <div class="ledger-axis">
+        <span data-de="Ältestes" data-tr="En eski">Oldest</span>
+        <span id="axisMid" data-de="Jedes veröffentlichte Signal, der Reihe nach" data-tr="Yayınlanan her sinyal, sırayla">Every published signal, in order</span>
+        <span data-de="Neuestes" data-tr="En yeni">Newest</span>
       </div>
-      <div class="panel-body">
-        <svg viewBox="0 0 460 268" role="img" aria-label="A probability for every temperature bracket, the ones we take highlighted, next to what the market charges for them">
-          <rect x="196" y="26" width="174" height="176" rx="4" fill="#2997ff" opacity=".06"/>
-          <line x1="196" y1="26" x2="196" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-          <line x1="370" y1="26" x2="370" y2="202" stroke="#2997ff" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/>
-          <line x1="40" y1="202" x2="440" y2="202" stroke="#1a1a1a"/>
-          <rect class="bar-rise" x="86"  y="196" width="48" height="6"   rx="2" fill="#2a2a2c" style="animation-delay:.55s"/>
-          <rect class="bar-rise" x="144" y="163" width="48" height="39"  rx="2" fill="#2a2a2c" style="animation-delay:.62s"/>
-          <rect class="bar-rise" x="202" y="88"  width="48" height="114" rx="2" fill="#2997ff" style="animation-delay:.69s"/>
-          <rect class="bar-rise" x="260" y="28"  width="48" height="174" rx="2" fill="#2997ff" style="animation-delay:.76s"/>
-          <rect class="bar-rise" x="318" y="144" width="48" height="58"  rx="2" fill="#2997ff" style="animation-delay:.83s"/>
-          <rect class="bar-rise" x="376" y="192" width="48" height="10"  rx="2" fill="#2a2a2c" style="animation-delay:.9s"/>
-          <g font-family="DM Mono" font-size="11" text-anchor="middle">
-            <text x="110" y="189" fill="#48484a">1</text>
-            <text x="168" y="156" fill="#48484a">7</text>
-            <text x="226" y="81"  fill="#f5f5f7">24</text>
-            <text x="284" y="21"  fill="#f5f5f7">37</text>
-            <text x="342" y="137" fill="#f5f5f7">25</text>
-            <text x="400" y="185" fill="#48484a">6</text>
-          </g>
-          <text x="40" y="21" font-family="DM Mono" font-size="8" fill="#48484a">OUT OF 100</text>
-          <g font-family="DM Mono" font-size="10.5" fill="#86868b" text-anchor="middle">
-            <text x="110" y="220">31°</text><text x="168" y="220">32°</text>
-            <text x="226" y="220">33°</text><text x="284" y="220">34°</text>
-            <text x="342" y="220">35°</text><text x="400" y="220">36°</text>
-          </g>
-          <g font-family="DM Mono" font-size="10" text-anchor="middle">
-            <text x="40" y="240" fill="#48484a" text-anchor="start">MARKET WANTS</text>
-            <text x="226" y="240" fill="#86868b">44¢</text>
-            <text x="284" y="240" fill="#86868b">34¢</text>
-            <text x="342" y="240" fill="#86868b">8¢</text>
-          </g>
-          <line x1="40" y1="250" x2="440" y2="250" stroke="#1a1a1a"/>
-          <text x="40" y="264" font-family="DM Mono" font-size="10" fill="#86868b">WE TAKE 33° TO 35°  ·  86 OUT OF 100  ·  IT COSTS 86¢</text>
-        </svg>
-      </div>
+    </div>
+    <div class="ledger-foot">
+      <div class="lf"><span class="v" id="mScored">—</span>
+        <span class="l" data-de="Aufgelöst und gescort" data-tr="Kapandı ve puanlandı">Settled and scored</span></div>
+      <div class="lf"><span class="v" id="mSaid">—<small>%</small></span>
+        <span class="l" data-de="Was wir gesagt haben" data-tr="Ne dedik">What we said</span></div>
+      <div class="lf"><span class="v" id="mHit">—<small>%</small></span>
+        <span class="l" data-de="Was daraus wurde" data-tr="Ne oldu">What it became</span></div>
     </div>
   </div>
 </div></header>
 
-<section class="feature-section" id="engine"><div class="container">
-  <div class="section-label" data-de="Wie die Zahl entsteht" data-tr="Sayı nasıl oluşuyor">How the number is made</div>
-  <h2 data-de="So funktioniert es" data-tr="Nasıl çalışır">How it works</h2>
-  <p data-de="Polymarket betreibt Temperaturmärkte in 50 Städten. Elf Bereiche, einer gewinnt. Wir prognostizieren die gesamte Verteilung und vergleichen sie mit dem Preis, den der Markt tatsächlich verlangt. Wo die Lücke es wert ist, posten wir." data-tr="Polymarket 50 şehirde sıcaklık piyasaları işletiyor. On bir aralık, biri kazanıyor. Biz tüm dağılımı tahmin ediyor ve piyasanın gerçekte istediği fiyatla karşılaştırıyoruz. Aradaki fark değerse, paylaşıyoruz.">Polymarket runs temperature markets on 50 cities. Eleven brackets, one wins.
-    We forecast the whole distribution and compare it to what the market is actually
-    charging. Where the gap is worth taking, we post.</p>
+<section class="feature-section" id="record"><div class="container">
+  <div class="section-label" data-de="Warum diese Liste" data-tr="Neden bu liste">Why this list</div>
+  <h2 data-de="Die einzige Aussage, die zählt" data-tr="Önemli olan tek iddia">The only claim worth making</h2>
+  <p data-de="Nicht Rendite. Nicht Trefferquote. Beides lässt sich leicht behaupten und leicht durch Zufall erreichen. Die Frage ist einfacher:" data-tr="Getiri değil. İsabet oranı da değil. İkisi de kolayca iddia edilir, kolayca şans eseri elde edilir. Soru daha basit:">Not return. Not win rate. Both are easy to claim and easy to hit by accident. The question is simpler:</p>
+  <p style="color:var(--text);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:24px 0;line-height:1.3" data-de="Wenn wir 90 % sagen, passiert es dann in 90 von 100 Fällen?" data-tr="90 dediğimizde, gerçekten 100 kezin 90&#x27;ında oluyor mu?">When we say 90%, does it happen 90 times out of 100?</p>
+  <p data-de="Eine Wahrscheinlichkeit, die vorher feststeht, lässt sich hinterher nicht mehr zurechtbiegen. Deshalb steht sie oben in der Liste, bevor irgendetwas entschieden ist, und das Ergebnis daneben, sobald es entschieden ist. Wer uns nicht glaubt, zählt selbst nach." data-tr="Önceden sabitlenmiş bir olasılık sonradan eğilip bükülemez. Bu yüzden hiçbir şey belli değilken listeye giriyor, ve belli olur olmaz sonucu yanına yazılıyor. İnanmayan kendi sayar.">A probability that is fixed in advance cannot be bent afterwards. That is why it goes into the list before anything is decided, with the result beside it as soon as it is. Anyone who doubts us can count it themselves.</p>
 
   <div class="cards">
-    <div class="card"><div class="k" data-de="Market Discovery" data-tr="Piyasa taraması">Market discovery</div>
-      <h3 data-de="Jeder Live-Markt, automatisch" data-tr="Her canlı piyasa, otomatik">Every live market, automatically</h3>
-      <p data-de="Keine feste Städteliste. Die Engine liest den Markt-Feed und extrahiert Bereiche, Einheit, Deadline und Auflösungsregeln, inklusive der Station, auf die der Markt tatsächlich auflöst. Neue Städte erscheinen am Tag ihrer Listung." data-tr="Sabit bir şehir listesi yok. Motor piyasa akışını okuyup aralıkları, birimi, son tarihi ve kapanış kurallarını çıkarıyor, piyasanın gerçekte hangi istasyona göre kapandığı dahil. Yeni şehirler listelendikleri gün beliriyor.">No fixed city list. The engine reads the market feed and extracts the brackets,
-        the unit, the deadline and the resolution rules, including which station the
-        market actually settles on. New cities appear the day they list.</p></div>
-    <div class="card"><div class="k" data-de="Probability Engine" data-tr="Olasılık motoru">Probability engine</div>
-      <h3 data-de="Eine Wahrscheinlichkeit je Bereich" data-tr="Her aralık için bir olasılık">A probability for every bracket</h3>
-      <p data-de="Wir prognostizieren das Tagesmaximum an genau der Station, auf die der Markt auflöst, nicht in der Stadtmitte, die einen ganzen Bereich danebenliegen kann. Jeder Bereich bekommt eine Wahrscheinlichkeit. Zusammen ergeben sie 100 %." data-tr="Günün en yüksek sıcaklığını, piyasanın kapandığı tam noktada tahmin ediyoruz; şehir merkezinde değil, çünkü orası tam bir aralık kayabilir. Her aralık bir olasılık alıyor. Toplamları 100 ediyor.">We forecast the day's high at the exact point the market settles on, not the
-        city centre, which can be a full bracket away. Every bracket gets a probability.
-        They sum to 100%.</p></div>
-    <div class="card"><div class="k" data-de="Der echte Preis" data-tr="Gerçek fiyat">The real price</div>
-      <h3 data-de="Der Preis, den du wirklich zahlst" data-tr="Gerçekten ödediğin fiyat">The price you actually pay</h3>
-      <p data-de="Der angezeigte Prozentwert ist kein Preis, zu dem du kaufen kannst. Wir prüfen, was wirklich zu haben ist und in welcher Menge. Reicht es nicht, gibt es kein Signal." data-tr="Ekranda görünen yüzde, alabileceğin bir fiyat değil. Gerçekte neyin, ne miktarda mevcut olduğunu kontrol ediyoruz. Yetmiyorsa sinyal yok.">The displayed percentage is not a price you can fill. We check what is really
-        available, and in what size. If there is not enough, there is no signal.</p></div>
-    <div class="card"><div class="k" data-de="Wie wir setzen" data-tr="Nasıl oynuyoruz">How we place it</div>
-      <h3 data-de="Eine Quote, egal welches trifft" data-tr="Tek oran, hangisi tutarsa tutsun">One quote, whichever lands</h3>
-      <p data-de="Mehrere benachbarte Bereiche, so aufgeteilt, dass die Auszahlung identisch ist, egal welcher das Tagesmaximum wird. Eine Zahl zum Lesen, ein Ergebnis zum Prüfen." data-tr="Birbirine komşu birkaç aralık, ödeme hangisi günün en yükseği olursa olsun aynı kalacak şekilde bölünür. Okunacak tek bir sayı, kontrol edilecek tek bir sonuç.">A few neighbouring brackets, split so the payout is identical whichever one is
-        the day's high. One number to read, one outcome to check.</p></div>
+    <div class="card"><div class="k" data-de="Vorher" data-tr="Önce">Before</div>
+      <h3 data-de="Zeitstempel, nicht Erinnerung" data-tr="Zaman damgası, hafıza değil">Timestamped, not remembered</h3>
+      <p data-de="Jedes Signal wird veröffentlicht, solange noch offen ist, was passiert. Der Zeitstempel steht im Kanal, und er lässt sich nachträglich nicht ändern." data-tr="Her sinyal, ne olacağı henüz belli değilken yayınlanıyor. Zaman damgası kanalda duruyor ve sonradan değiştirilemiyor.">Every signal is published while the outcome is still open. The timestamp sits in the channel and cannot be changed later.</p></div>
+    <div class="card"><div class="k" data-de="Nachher" data-tr="Sonra">After</div>
+      <h3 data-de="Nieten stehen genauso drin" data-tr="Tutmayanlar da yazılıyor">Misses are posted too</h3>
+      <p data-de="Wir sortieren nicht aus. Ein Kanal, der nur seine guten Tage zeigt, zeigt gar nichts. Der Anteil daneben steht direkt neben dem Anteil getroffen." data-tr="Ayıklama yapmıyoruz. Sadece iyi günlerini gösteren bir kanal hiçbir şey göstermiyordur. Tutmayanların oranı, tutanların oranının hemen yanında.">We do not curate. A channel that shows only its good days shows nothing. The miss rate sits right next to the hit rate.</p></div>
+    <div class="card"><div class="k" data-de="Meistens" data-tr="Çoğu zaman">Most days</div>
+      <h3 data-de="Stille ist das Normale" data-tr="Sessizlik normaldir">Silence is the default</h3>
+      <p data-de="An den meisten Tagen ist nichts den Preis wert, dann kommt nichts. Ein Kanal mit zwanzig Signalen am Tag postet fünfzehn schlechte." data-tr="Çoğu gün hiçbir şey fiyatına değmez, o zaman hiçbir şey gelmez. Günde yirmi sinyal atan bir kanal on beşini kötü atıyordur.">On most days nothing is worth the price, so nothing comes. A channel with twenty signals a day is posting fifteen bad ones.</p></div>
+    <div class="card"><div class="k" data-de="Immer" data-tr="Her zaman">Always</div>
+      <h3 data-de="Dein Geld bleibt bei dir" data-tr="Paran sende kalır">Your money stays yours</h3>
+      <p data-de="Wir halten keine Einlagen und keine Schlüssel. Du siehst die Zahl und entscheidest selbst, was du damit machst." data-tr="Ne mevduat ne anahtar tutuyoruz. Sayıyı görüyorsun ve onunla ne yapacağına kendin karar veriyorsun.">We hold no deposits and no keys. You see the number and decide for yourself what to do with it.</p></div>
   </div>
 
-  <div class="note"><p data-de="Die meisten Märkte ergeben nichts. Die Engine schweigt, wenn der Vorsprung dünn ist, der Markt zu klein, die Spanne zu weit oder die Modelle sich uneinig sind. Ein Kanal, der zwanzig Signale am Tag postet, postet fünfzehn schlechte." data-tr="Piyasaların çoğundan hiçbir şey çıkmaz. Avantaj inceyse, piyasa küçükse, makas genişse ya da modeller anlaşamıyorsa motor susar. Günde yirmi sinyal atan bir kanal, on beşini kötü atıyordur."><b>Most markets produce nothing.</b>
-    The engine stays silent when the edge is thin, the market is too small, the spread
-    is too wide, or the models disagree. A channel posting twenty signals a day is
-    posting fifteen bad ones.</p></div>
+  <div class="note"><p data-de="Was noch offen ist, steht auch da. Solange die Liste dünn ist, ist sie dünn, und wir schreiben keine Zahl daneben, die sie nicht trägt. Deshalb ist der öffentliche Kanal gratis." data-tr="Henüz açık olan da orada duruyor. Liste inceyken incedir, ve taşımadığı bir rakamı yanına yazmıyoruz. Açık kanalın ücretsiz olmasının sebebi bu."><b>What is still open is shown as open.</b> While the list is thin, it is thin, and we do not put a number next to it that it cannot carry. That is why the public channel is free.</p></div>
 </div></section>
 
-<section class="feature-section" id="signals"><div class="container">
+<section class="feature-section" id="signal"><div class="container">
   <div class="two">
     <div>
-      <div class="section-label" data-de="Telegram · veröffentlicht vor der Auflösung" data-tr="Telegram · kapanıştan önce yayınlandı">Telegram · published before resolution</div>
+      <div class="section-label" data-de="Telegram · vor der Auflösung" data-tr="Telegram · kapanıştan önce">Telegram · before resolution</div>
       <h2 data-de="So sieht ein Signal aus" data-tr="Bir sinyal böyle görünür">What a signal looks like</h2>
-      <p data-de="Jede Zahl, die die Engine benutzt hat, steht in der Nachricht. Du entscheidest, was du kaufst, die Aufteilung ist ein Vorschlag, keine Anweisung." data-tr="Motorun kullandığı her sayı mesajda. Ne alacağına sen karar veriyorsun, dağılım bir öneri, talimat değil.">Every number the engine used, in the message. You decide what to buy, the
-        allocation is a suggestion, not an instruction.</p>
-      <div class="note"><p data-de="Zwei Zeilen, die andere Signalkanäle weglassen: was der ganze Block im Markt kostet, und der Vorsprung. Ohne sie ist eine Wahrscheinlichkeit eine Behauptung. Mit ihnen siehst du genau, warum das Signal existiert, und kannst es selbst nachrechnen, bevor du klickst. Jedes Bein ist ein Ein-Klick-Link direkt in den Markt. Du kaufst mit deiner eigenen Wallet, wir halten nie einen Schlüssel." data-tr="Diğer sinyal kanallarının atladığı iki satır: tüm bloğun piyasada kaça mal olduğu ve avantaj. Onlar olmadan bir olasılık sadece bir iddiadır. Onlarla, sinyalin neden var olduğunu tam olarak görür ve tıklamadan önce kendin hesaplayabilirsin. Her bacak, doğrudan piyasaya tek dokunuşluk bir bağlantı. Kendi cüzdanınla alıyorsun, biz asla bir anahtar tutmuyoruz.">Two lines most signal channels leave out:
-        <b>what the whole block costs in the market</b>, and <b>the edge</b>. Without them
-        a probability is a claim. With them you can see exactly why the signal exists, and
-        check it yourself before you click. Every leg is a one-tap link straight into the
-        market. You buy with your own wallet, we never hold a key.</p></div>
+      <p data-de="Eine Wahrscheinlichkeit je Ausgang, der Preis, der dafür wirklich verlangt wird, und die Differenz zwischen beiden. Mehr braucht eine Entscheidung nicht." data-tr="Her sonuç için bir olasılık, bunun için gerçekte istenen fiyat, ve ikisi arasındaki fark. Bir karar için fazlası gerekmez.">A probability per outcome, the price actually being charged for it, and the difference between the two. A decision needs nothing more.</p>
+      <div class="note"><p data-de="Zwei Zeilen, die andere Kanäle weglassen: was das Ganze im Markt kostet und wie groß der Vorsprung ist. Ohne sie ist eine Wahrscheinlichkeit nur eine Behauptung. Mit ihnen kannst du vor dem Klick selbst nachrechnen. Jede Zeile ist ein Link direkt dorthin, wo du kaufst, mit deiner eigenen Wallet." data-tr="Diğer kanalların atladığı iki satır: bunun piyasada kaça mal olduğu ve avantajın büyüklüğü. Onlar olmadan bir olasılık yalnızca bir iddiadır. Onlarla, tıklamadan önce kendin hesaplarsın. Her satır, kendi cüzdanınla alacağın yere doğrudan bir bağlantı.">Two lines other channels leave out: <b>what the whole thing costs in the market</b>, and <b>how large the edge is</b>. Without them a probability is only a claim. With them you can check it yourself before you click. Every line is a link straight to where you buy, with your own wallet.</p></div>
     </div>
     <div class="panel">
       <div class="panel-bar">
         <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title">t.me/OddsEngine · 14:10 UTC</span>
+        <span class="panel-title">t.me/OddsEngine</span>
       </div>
-      <div class="signal"><b>ODDSENGINE, MILAN</b>
+      <div class="signal"><b>ODDSENGINE</b>
 <span class="d">
-Highest temperature at Milano Malpensa
-July 12, 2026
+Published before resolution
+Reference example
 
 ─────────────
 
-Selected range:</span>
-33°C · 34°C · 35°C
+Selected outcomes:</span>
+A · B · C
 <span class="d">
-Engine probabilities:</span>
-33°C, 24%
-34°C, 38%
-35°C, 29%
+Our probability:</span>
+A, 24%
+B, 38%
+C, 25%
+<span class="hi">Together, 87%</span>
 <span class="d">
-Combined coverage:</span>
-<b>91%</b>
-<span class="d">
-Current executable prices:</span>
-33°C, 44.0¢
-34°C, 34.0¢
-35°C, 7.9¢
-<span class="d">
-Market price of block:</span>
-<b>85.9¢</b>
+Price in the market:</span>
+<b>61¢</b> <span class="d">for all three</span>
 <span class="d">
 Edge:</span>
-<b class="g">+5 in 100</b>
+<span class="g">+26 points</span>
 <span class="d">
-Suggested split of your stake:</span>
-33°C, 51.2%
-34°C, 39.6%
-35°C, 9.2%
+Suggested split:</span>
+A 27% · B 42% · C 31%
 <span class="d">
-Example, 5% of $100 = $5.00 staked:</span>
-33°C, $2.56
-34°C, $1.98
-35°C, $0.46
-<span class="d">
-If ANY of 33°C or 34°C or 35°C is the day's high:</span>
-you get <b class="hi">1.16x</b> your stake, the same,
-whichever one it is.
-<span class="d">
-If it lands outside that range:</span>
-the stake is gone.
-<span class="d">
-Outside-range risk:</span>
-9%</div>
-    </div>
-  </div>
-</div></section>
-
-<section class="feature-section" id="record"><div class="container">
-  <div class="two">
-    <div>
-      <div class="section-label" data-de="Echte Märkte · echte Preise · Dez 2025 bis Mär 2026" data-tr="Gerçek piyasalar · gerçek fiyatlar · Ara 2025 - Mar 2026">Real markets · real prices · Dec 2025 to Mar 2026</div>
-      <h2 data-de="Die einzige Aussage, die zählt" data-tr="Önemli olan tek iddia">The only claim worth making</h2>
-      <p data-de="Nicht Rendite. Nicht Trefferquote. Beides ist leicht zu fälschen und leicht durch Zufall zu bekommen. Die Frage ist einfacher:" data-tr="Getiri değil. İsabet oranı da değil. İkisi de kolayca uydurulur, kolayca şans eseri elde edilir. Soru daha basit:">Not return. Not win rate. Both are easy to fake and easy to get by accident.
-        The question is simpler:</p>
-      <p style="color:var(--text); font-size:1.25rem; font-weight:600; letter-spacing:-0.02em; margin:22px 0; line-height:1.3;" data-de="Wenn wir 90 % sagen, passiert es dann in 90 % der Fälle?" data-tr="90 dediğimizde, gerçekten 100 kezin 90&#x27;ında oluyor mu?">When we say 90%, does it happen 90% of the time?</p>
-      <p data-de="Gemessen an bereits aufgelösten Märkten, mit den Prognoseläufen von damals, nicht mit heutigen Modellen, die rückwärts schauen. Die Wahrheit ist der aufgelöste Markt selbst." data-tr="Zaten kapanmış piyasalara karşı ölçüldü, o zamanki tahmin çalışmalarıyla; geriye bakan bugünün modelleriyle değil. Gerçek, kapanmış piyasanın kendisi.">Scored against markets that had already resolved, using the forecast runs as they
-        existed at the time, not today's models looking backwards. Truth is the settled
-        market itself.</p>
-      <div class="note"><p data-de="Alles daran ist echt: aufgelöste Märkte, die Modellläufe von damals, Preise aus dem Markt. Nichts simuliert. Gemessen im Rückblick. Dasselbe läuft jetzt live, öffentlich, und jedes Ergebnis kommt dazu, Treffer wie Niete." data-tr="Buradaki her şey gerçek: kapanmış piyasalar, o zamanki model çalışmaları, piyasadan gelen fiyatlar. Hiçbiri simülasyon değil. Geriye dönük ölçüldü. Aynısı şimdi canlı çalışıyor, açıkta, ve her sonuç buna ekleniyor, tutan da tutmayan da."><b>Everything here is real:</b>
-        settled markets, the model runs as they were issued, prices from the market.
-        Nothing simulated. Measured in hindsight. The same thing now runs live, in public,
-        and every result joins it, hit or miss.</p></div>
-    </div>
-    <div class="panel">
-      <div class="panel-bar">
-        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title" data-de="261 Märkte, was wir sagten vs. was passierte" data-tr="261 piyasa, ne dedik ve ne oldu">261 markets, what we said vs what happened</span>
-      </div>
-      <div class="panel-body">
-        <svg viewBox="0 0 380 268" role="img" aria-label="We said it would happen 85 times out of 100. It did 85 times out of 100. The market priced it at 77 out of 100.">
-          <line x1="66" y1="204" x2="352" y2="204" stroke="#1a1a1a"/>
-          <g stroke="#141414" stroke-dasharray="2 4">
-            <line x1="66" y1="44" x2="352" y2="44"/><line x1="66" y1="124" x2="352" y2="124"/>
-          </g>
-          <g font-family="DM Mono" font-size="8" fill="#48484a" text-anchor="end">
-            <text x="58" y="48">100</text><text x="58" y="128">50</text><text x="58" y="207">0</text>
-          </g>
-          <rect class="bar-rise" x="86"  y="68" width="68" height="136" rx="3" fill="#2997ff" opacity=".4" style="animation-delay:.1s"/>
-          <rect class="bar-rise" x="176" y="68" width="68" height="136" rx="3" fill="#2997ff" style="animation-delay:.25s"/>
-          <rect class="bar-rise" x="266" y="81" width="68" height="123" rx="3" fill="#3a3a3c" style="animation-delay:.4s"/>
-          <g font-family="DM Mono" font-size="22" fill="#f5f5f7" text-anchor="middle">
-            <text x="120" y="60" id="kSaid">85</text>
-            <text x="210" y="60" id="kHit">85</text>
-            <text x="300" y="73" fill="#86868b" id="kMkt">77</text>
-          </g>
-          <g font-family="DM Mono" font-size="8" fill="#48484a" text-anchor="middle">
-            <text x="120" y="222">out of 100</text>
-            <text x="210" y="222">out of 100</text>
-            <text x="300" y="222">out of 100</text>
-          </g>
-          <g font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">
-            <text x="120" y="238" fill="#86868b">WE SAID</text>
-            <text x="210" y="238" fill="#2997ff">IT HAPPENED</text>
-            <text x="300" y="238" fill="#86868b">MARKET PRICE</text>
-          </g>
-          <path d="M 340 81 L 350 81 L 350 68 L 340 68" fill="none" stroke="#30d158" stroke-width="1.5"/>
-          <text x="209" y="260" font-family="DM Mono" font-size="9" fill="#48484a" text-anchor="middle" letter-spacing=".06em">YOU PAY FOR 77. YOU GET 85.</text>
-        </svg>
-        <div class="stats">
-          <div class="stat"><div class="n" style="color:var(--text)" id="sN">261</div>
-            <div class="l" data-de="Märkte gescort" data-tr="Piyasa puanlandı">Markets scored</div></div>
-          <div class="stat"><div class="n" style="color:var(--text)" id="sSaid">85 / 85</div>
-            <div class="l" data-de="Gesagt / passiert" data-tr="Dedik / oldu">We said / it happened</div></div>
-          <div class="stat"><div class="n" style="color:var(--text)" id="sStreak">3</div>
-            <div class="l" data-de="Längste Verlustserie" data-tr="En uzun kayıp serisi">Longest losing streak</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-label" style="margin-top:56px" data-de="Nachgespielt: 116 Signale über 23 Handelstage, Dez 2025 bis März 2026" data-tr="Yeniden oynatıldı: 23 işlem gününde 116 sinyal, Ara 2025 - Mar 2026">Replayed: 116 signals over 23 trading days, Dec 2025 to Mar 2026</div>
-  <div class="calc">
-    <div class="calc-in">
-      <label for="stake" data-de="Einsatz pro Signal" data-tr="Sinyal başına yatırım">Stake per signal</label>
-      <div class="calc-field"><span>$</span><input id="stake" type="number" value="10" min="1" max="10000" step="1"></div>
-      <input id="stakeR" type="range" min="1" max="500" value="10" step="1" aria-label="Stake per signal">
-      <p class="calc-hint" data-de="In diesem Zeitraum kamen an 23 Tagen Signale, im Schnitt fünf am Tag. An den übrigen Tagen war kein Markt den Preis wert. Zieh den Regler, rechts wird jedes der 116 Signale nachgespielt." data-tr="Bu dönemde 23 günde sinyal geldi, günde ortalama beş. Diğer günlerde hiçbir piyasa fiyatına değmedi. Kaydırıcıyı çek, sağda 116 sinyalin her biri yeniden oynatılıyor.">Over this period, signals came on 23 days, about five a day. On the other days no
-        market was worth the price. Drag the slider and every one of the 116 gets replayed.</p>
-    </div>
-    <div class="calc-out">
-      <div class="calc-row"><span data-de="Zeitraum" data-tr="Dönem">Period</span><b>23 trading days</b></div>
-      <div class="calc-row"><span data-de="Signale" data-tr="Sinyaller">Signals</span><b id="cN">116</b></div>
-      <div class="calc-row"><span data-de="Davon getroffen" data-tr="Bunlardan tutan">Of those, hit</span><b id="cHit">84 of 116</b></div>
-      <div class="calc-row"><span data-de="Eingesetzt" data-tr="Yatırılan">Staked</span><b id="cIn">$1,160</b></div>
-      <div class="calc-row"><span data-de="Zurück" data-tr="Geri gelen">Returned</span><b id="cOut">$1,398</b></div>
-      <div class="calc-row big"><span data-de="Ergebnis" data-tr="Sonuç">Result</span><b id="cNet" class="pos">+$238</b></div>
-      <div class="calc-row"><span data-de="Längste Verlustserie" data-tr="En uzun kayıp serisi">Longest losing streak</span><b id="cStreak">3 in a row</b></div>
-    </div>
-  </div>
-  <div class="note"><p data-de="Das ist ein Nachspielen, keine Hochrechnung, und schon gar keine Jahresrendite. Es rechnet nach, was diese 116 bereits entschiedenen Signale über 23 Handelstage ergeben hätten. Ob die nächsten 23 Tage genauso laufen, weiß niemand." data-tr="Bu bir yeniden oynatma, bir projeksiyon değil ve kesinlikle yıllık getiri değil. Zaten karara bağlanmış bu 116 sinyalin 23 işlem gününde ne getireceğini hesaplıyor. Sonraki 23 günün aynı gidip gitmeyeceğini kimse bilmiyor.">This replays, it does not project, and it is not an annual return. It works out what
-    these 116 already decided signals would have returned over 23 trading days. Whether
-    the next 23 days look the same, nobody knows.</p></div>
-
-  <div class="cards">
-    <div class="card"><div class="k" data-de="Robustheit" data-tr="Sağlamlık">Robustness</div>
-      <h3 data-de="Die Edge bewegt sich nicht" data-tr="Avantaj yerinden oynamıyor">The edge doesn't move</h3>
-      <p data-de="Wir haben die Zuversichts-Einstellung des Modells über ihren gesamten plausiblen Bereich durchgefahren. Die Trefferquote schwankte von 77 % auf 96 %. Der Vorsprung gegenüber dem Markt bewegte sich kaum. Ein Overfit wandert mit seinen Parametern. Dieser nicht." data-tr="Modelin güven ayarını makul aralığın tamamında taradık. İsabet oranı 77&#x27;den 96&#x27;ya savruldu. Piyasaya karşı avantaj neredeyse hiç oynamadı. Aşırı uyum, parametreleriyle birlikte gezer. Bu gezmiyor.">We swept the model's confidence setting across its entire plausible range. Hit
-        rate swung from 77% to 96%. The edge over the market barely moved. An overfit
-        wanders with its parameters. This doesn't.</p></div>
-    <div class="card"><div class="k" data-de="Kontrolle" data-tr="Kontrol">Control</div>
-      <h3 data-de="Blind kaufen verliert 38 %" data-tr="Körlemesine almak 38 % kaybettiriyor">Buying blind loses 38%</h3>
-      <p data-de="Gleiche Märkte, gleicher Zeitraum, keine Engine, einfach jeden Tag die billigsten Bereiche kaufen: −38,1 %. Die Extreme sind teuer, die Mitte ist billig. Genau diese Lücke soll die Engine finden." data-tr="Aynı piyasalar, aynı dönem, motor yok, her gün sadece en ucuz aralıkları al: −38,1 %. Uçlar pahalı, orta ucuz. Motorun bulmak için kurulduğu boşluk tam da bu.">Same markets, same period, no engine, just buy the cheapest brackets every day:
-        −38.1%. The extremes are expensive and the middle is cheap. That gap is what the
-        engine is built to find.</p></div>
-    <div class="card"><div class="k" data-de="Korrektur" data-tr="Düzeltme">Correction</div>
-      <h3 data-de="Die Korrektur, die sonst keiner macht" data-tr="Kimsenin yapmadığı düzeltme">The correction nobody else makes</h3>
-      <p data-de="Wer den besten aus vielen Blöcken nimmt, selektiert auf den eigenen Optimismus. Das ist messbar, also messen wir es und ziehen es ab, bevor ein Signal rausgeht. Sonst verspricht man 81 und liefert 72. Weniger Signale, dafür stimmt jedes." data-tr="Birçok blok arasından en iyisini seçen, kendi iyimserliğini seçmiş olur. Bu ölçülebilir, biz de ölçüp bir sinyal çıkmadan önce düşüyoruz. Yoksa 81 vaat edip 72 teslim edersin. Daha az sinyal, ama her biri söylediği şeyi ifade ediyor.">Picking the best of many blocks selects for your own optimism. That is measurable,
-        so we measure it and subtract it before a signal goes out. Otherwise you promise
-        81 and deliver 72. Fewer signals, and every one of them means what it says.</p></div>
-  </div>
-</div></section>
-
-<section class="feature-section" id="dashboard"><div class="container">
-  <div class="section-label">public.oddsengine.live</div>
-  <h2 data-de="Jeder Markt, nicht nur die Tipps" data-tr="Her piyasa, sadece seçtiklerimiz değil">Every market, not just the picks</h2>
-  <p data-de="Die Signale sind die Schlagzeile. Der Beleg soll das Dashboard werden: jeder Live-Markt, den wir prüfen, und jedes Signal nach der Auflösung, Nieten inklusive. Es füllt sich, sobald der Worker die ersten Tage gelaufen ist." data-tr="Sinyaller manşet. Kanıt panoya düşüyor: baktığımız her canlı piyasa ve kapandıktan sonra her sinyal, tutmayanlar dahil. Motor çalıştıkça doluyor.">The signals are the headline. The dashboard is meant to be the evidence: every live
-    market we look at, and every signal once it settles, misses included. It fills up as
-    the worker runs.</p>
-  <div class="note"><p data-de="Jede Zeile dort wurde geschrieben, bevor irgendjemand das Ergebnis kannte. Die Liste wächst mit jedem Markt, der auflöst." data-tr="Oradaki her satır, sonucu kimse bilmeden önce yazıldı. Liste, kapanan her piyasayla büyüyor."><b>Every line there was written before anyone knew the result.</b>
-    The list grows with every market that settles.</p></div>
-</div></section>
-
-<section class="feature-section" id="api"><div class="container">
-  <div class="two">
-    <div>
-      <div class="section-label" data-de="Für Handelstische" data-tr="Trading masaları için">For trading desks</div>
-      <h2 data-de="Für Desks" data-tr="Masalar için">For desks</h2>
-      <p data-de="Der Kanal ist ein Weg, die Zahlen zu lesen. Für Desks, die selbst bepreisen, soll es einen zweiten geben: dieselben Wahrscheinlichkeiten, maschinenlesbar, für jeden Wettermarkt am Tag." data-tr="Kanal, sayıları okumanın bir yolu. Kendi kitabını fiyatlayan masalar için bir ikincisi olmalı: aynı olasılıklar, makine tarafından okunabilir, günün her hava piyasası için.">The channel is one way to read the numbers. For desks that price their own book
-        there should be a second: the same probabilities, machine readable, for every
-        weather market of the day.</p>
-      <p data-de="Trading-Desks, Market Maker, Research-Teams. Wer selbst bepreist und eine zweite, unabhängig gescorte Meinung neben sein eigenes Buch legen will." data-tr="Trading masaları, piyasa yapıcılar, araştırma ekipleri. Kendi kitabını fiyatlayıp yanına bağımsız puanlanmış ikinci bir görüş koymak isteyen herkes."><b style="color:var(--text)">Who it is for.</b>
-        Trading desks, market makers, research teams. Anyone pricing their own book who
-        wants a second, independently scored opinion next to it.</p>
-      <div class="note"><p data-de="Die API geht auf, wenn der Record lang genug ist, dass man ihn prüfen kann. Wer sie vorher will, schreibt uns auf Telegram: wir klären Umfang und Bedingungen vorher." data-tr="API, sicil kontrol edilebilecek kadar uzadığında açılıyor. Daha önce isteyen Telegram&#x27;dan yazsın: kapsamı ve koşulları önceden konuşuruz."><b>The API opens when the record is long enough to check.</b>
-        If you want it before that, message us on Telegram and we settle scope and terms
-        with you beforehand.</p></div>
-    </div>
-    <div>
-      <p style="font-size:1.15rem;color:var(--text);font-weight:600;letter-spacing:-.02em;line-height:1.4;margin-bottom:18px" data-de="Jeder Datenanbieter behauptet Genauigkeit. Wir sind der Einzige, bei dem du sie nachrechnen kannst: jede Zahl wird veröffentlicht, bevor die Station meldet, und danach gegen sie gescort. Was du kaufst, ist nicht eine Prognose. Es ist eine Prognose mit einer Bilanz." data-tr="Her veri sağlayıcı doğruluk iddia eder. Kontrol edebileceğin tek sağlayıcı biziz: her sayı istasyon bildirmeden önce yayınlanır ve sonrasında ona karşı puanlanır. Aldığın şey bir tahmin değil. Sicili olan bir tahmin.">Every data vendor claims accuracy. We are the only one you can check: every number
-        is published before the station reports, and scored against it afterwards. What
-        you buy is not a forecast. It is a forecast with a record.</p>
-      <div class="cards" style="margin-top:26px;grid-template-columns:1fr">
-        <div class="card">
-          <div class="k" data-de="Preis" data-tr="Fiyat">Price</div>
-          <div style="font-size:2.1rem;font-weight:700;letter-spacing:-.03em;margin:6px 0 4px">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-          <p style="font-size:.85rem" data-de="Größere Volumen und eigene Bedingungen auf Anfrage." data-tr="Daha büyük hacim ve özel koşullar talep üzerine.">Higher volume and bespoke terms on request.</p>
-        </div>
-      </div>
-      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" style="margin-top:18px" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
+─────────────
+Scored against the outcome
+either way.</span></div>
     </div>
   </div>
 </div></section>
 
 <section class="feature-section" id="access"><div class="container">
-  <div class="section-label" data-de="Preise" data-tr="Fiyatlar">Pricing</div>
+  <div class="section-label" data-de="Zugang" data-tr="Erişim">Access</div>
   <h2 data-de="Was du bekommst" data-tr="Ne alıyorsun">What you get</h2>
-  <p data-de="Jedes Signal, sobald die Engine eines findet, bevor die Station meldet. Jedes Ergebnis danach, Treffer wie Niete, alle. 261 Märkte sind bereits gescort, und der Zähler oben bewegt sich, während weitere auflösen. An den meisten Tagen kommen zwei bis fünf Signale. An manchen keines, weil keiner der Märkte den Preis wert ist." data-tr="Motor bir sinyal bulduğu anda, istasyon bildirmeden önce. Sonrasında her sonuç, tutan da tutmayan da, hepsi. 261 piyasa şimdiden puanlandı ve yukarıdaki sayaç, yenileri kapandıkça hareket ediyor. Çoğu gün iki ila beş sinyal gelir. Bazı günler hiç, çünkü hiçbir piyasa fiyatına değmemiştir.">Every signal the engine finds, published before the station reports. Every result
-    afterwards, hit or miss, all of them. 261 markets are already scored and the counter
-    above moves as more settle. Most days bring two to five signals. Some bring none,
-    because none of the markets were worth the price.</p>
+  <p data-de="Der öffentliche Kanal zeigt jedes Signal, nachdem es entschieden ist. Bezahlt wird für das Einzige, was tatsächlich etwas kostet: es vorher zu sehen." data-tr="Açık kanal her sinyali karara bağlandıktan sonra gösteriyor. Ödeme, gerçekten bir bedeli olan tek şey için: onu önceden görmek.">The public channel shows every signal after it has been decided. What you pay for is the only thing that genuinely costs something: seeing it beforehand.</p>
 
   <div class="tiers">
     <div class="tier now">
       <div class="name" data-de="Signale" data-tr="Sinyaller">Signals</div>
       <div class="price">€99<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-      <div class="per" data-de="der private Kanal" data-tr="özel kanal">the private channel</div>
+      <div class="per" data-de="pro Monat, privater Kanal" data-tr="aylık, özel kanal">per month, private channel</div>
       <ul>
-        <li data-de="Jedes Signal, bevor die Station meldet" data-tr="Her sinyal, istasyon bildirmeden önce">Every signal, before the station reports</li>
-        <li data-de="Ein-Klick-Links zu jedem Ausgang" data-tr="Her sonuca tek dokunuşluk bağlantı">One-tap links to each outcome</li>
+        <li data-de="Jedes Signal, sobald es steht" data-tr="Her sinyal, oluşur oluşmaz">Every signal the moment it exists</li>
         <li data-de="Volle Verteilung und echte Preise" data-tr="Tam dağılım ve gerçek fiyatlar">Full distribution and real prices</li>
-        <li data-de="Jedes Ergebnis danach, Treffer wie Niete" data-tr="Sonrasında her sonuç, tutan da tutmayan da">Every result afterwards, hit or miss</li>
-        <li data-de="Alle 50 Städte, alle Modi" data-tr="50 şehrin tamamı, tüm modlar">All 50 cities, all modes</li>
+        <li data-de="Ein Klick pro Zeile in den Markt" data-tr="Her satır için piyasaya tek tık">One tap per line into the market</li>
+        <li data-de="Jederzeit kündbar" data-tr="İstediğin zaman iptal">Cancel any time</li>
       </ul>
       <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
-      <p style="font-size:.72rem;color:var(--text-tertiary);margin-top:12px;line-height:1.5" data-de="Schreib uns, wir lassen dich rein. Der Kanal ist klein und bleibt es." data-tr="Bize yaz, seni içeri alalım. Kanal küçük ve öyle kalacak.">Message us and we let you in. The channel is small and stays that way.</p>
     </div>
 
     <div class="tier">
@@ -714,174 +394,127 @@ Outside-range risk:</span>
     </div>
   </div>
 </div></section>
+
 <footer><div class="container">
- <div class="section-label" data-de="Haftungsausschluss" data-tr="Sorumluluk reddi">Disclaimer</div>
- <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Wettermodelle, Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen aufgelösten Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab, prüfe das, bevor du teilnimmst." data-tr="OddsEngine olasılık tahminleri ve piyasa verisi yayınlar. Bu bilgidir; yatırım tavsiyesi değildir ve alım satım teklifi değildir. Olasılıklar ve fiyatlar, bir sinyal yayınlandığında mevcut olan veriyi yansıtır; hava modelleri, piyasa fiyatları ve likidite sonrasında değişir. Tahmin piyasaları, yatırılan tutarın tamamının kaybedilmesi riskini taşır. Burada hiçbir şey kazanç vaadi değildir ve bu sayfada, kapanmış bir piyasaya karşı ölçülmemiş hiçbir rakam yoktur. Tahmin piyasalarının erişilebilirliği bulunduğun ülkeye bağlıdır, katılmadan önce bunu kontrol et.">OddsEngine publishes probability estimates and market data. It is
- information, not financial advice, and not an offer to buy or sell anything.
- Probabilities, prices and suggested allocations reflect the data available when a
- signal is published; weather models, market prices and liquidity change afterwards.
- Prediction markets carry the risk of total loss of the amount committed. Nothing
- here is a promise of profit, and no performance figure appears on this page that has
- not been scored against a resolved market. Availability of prediction markets
- depends on your jurisdiction, check before participating.</p>
- <div class="footer-bot">
- <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
- <div class="footer-links">
- <a href="#engine">Engine</a>
- <a href="#record" data-de="Bilanz" data-tr="Sicil">Track record</a>
- <a href="https://public.oddsengine.live">Dashboard</a>
- <a href="https://t.me/OddsEngine">Telegram</a>
- </div>
- </div>
- <div class="footer-bot" style="border:0; padding-top:0; margin-top:12px;">
- <span>Weather data: Open-Meteo &nbsp;·&nbsp; Markets: Polymarket</span>
- </div>
+  <div class="section-label" data-de="Haftungsausschluss" data-tr="Sorumluluk reddi">Disclaimer</div>
+  <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen bereits entschiedenen Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab, prüfe das, bevor du teilnimmst." data-tr="OddsEngine olasılık tahminleri ve piyasa verisi yayınlar. Bu bilgidir; yatırım tavsiyesi değildir ve alım satım teklifi değildir. Olasılıklar ve fiyatlar, bir sinyal yayınlandığında mevcut olan veriyi yansıtır; piyasa fiyatları ve likidite sonrasında değişir. Tahmin piyasaları, yatırılan tutarın tamamının kaybedilmesi riskini taşır. Burada hiçbir şey kazanç vaadi değildir ve bu sayfada, karara bağlanmış bir piyasaya karşı ölçülmemiş hiçbir rakam yoktur. Tahmin piyasalarının erişilebilirliği bulunduğun ülkeye bağlıdır, katılmadan önce bunu kontrol et.">OddsEngine publishes probability estimates and market data. It is information, not financial advice, and not an offer to buy or sell anything. Probabilities and prices reflect the data available when a signal is published; market prices and liquidity change afterwards. Prediction markets carry the risk of total loss of the amount committed. Nothing here is a promise of profit, and no figure appears on this page that has not been scored against a market that has already been decided. Availability of prediction markets depends on your jurisdiction, check before participating.</p>
+  <div class="footer-bot">
+    <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
+    <div class="footer-links">
+      <a href="#record" data-de="Bilanz" data-tr="Sicil">Record</a>
+      <a href="#signal" data-de="Signal" data-tr="Sinyal">Signal</a>
+      <a href="#access" data-de="Zugang" data-tr="Erişim">Access</a>
+      <a href="https://t.me/OddsEngine">Telegram</a>
+    </div>
+  </div>
 </div></footer>
 
 <script>
-// Every translatable node carries data-de. One attribute, no second file to
-// drift out of sync. English stays the default  the readers who matter here
-// are on Polymarket, and that market speaks English.
-(function () {
- // Three languages, one attribute each. English is the default because that is
- // what Polymarket speaks. German and Turkish are here because two audiences
- // that actually care about weather markets read them.
- var LANGS = { en: ['\uD83C\uDDEC\uD83C\uDDE7', 'EN'],
-               de: ['\uD83C\uDDE9\uD83C\uDDEA', 'DE'],
-               tr: ['\uD83C\uDDF9\uD83C\uDDF7', 'TR'] };
- var btn = document.getElementById('lang');
- var menu = document.getElementById('langMenu');
- if (!btn || !menu) return;
-
- var nodes = document.querySelectorAll('[data-de],[data-tr]');
- nodes.forEach(function (n) { n.dataset.en = n.innerHTML; });
-
- function set(lang) {
-  if (!LANGS[lang]) lang = 'en';
-  nodes.forEach(function (n) {
-   var v = lang === 'en' ? n.dataset.en : n.dataset[lang];
-   // No translation for this language, keep the English. Half a sentence in
-   // the wrong language is worse than an honest fallback.
-   n.innerHTML = v || n.dataset.en;
+/* ── Language. One attribute per node, no second file to drift. ── */
+(function(){
+  var LANGS={en:['\uD83C\uDDEC\uD83C\uDDE7','EN'],de:['\uD83C\uDDE9\uD83C\uDDEA','DE'],tr:['\uD83C\uDDF9\uD83C\uDDF7','TR']};
+  var btn=document.getElementById('lang'),menu=document.getElementById('langMenu');
+  if(!btn||!menu)return;
+  var nodes=document.querySelectorAll('[data-de],[data-tr]');
+  nodes.forEach(function(n){n.dataset.en=n.innerHTML;});
+  function set(lang){
+    if(!LANGS[lang])lang='en';
+    nodes.forEach(function(n){
+      var v=lang==='en'?n.dataset.en:n.dataset[lang];
+      n.innerHTML=v||n.dataset.en;
+    });
+    document.documentElement.lang=lang;
+    document.getElementById('langFlag').textContent=LANGS[lang][0];
+    document.getElementById('langCode').textContent=LANGS[lang][1];
+    menu.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-current',b.dataset.lang===lang?'true':'false');
+    });
+    try{localStorage.setItem('oe_lang',lang);}catch(e){}
+  }
+  var saved=null;
+  try{saved=localStorage.getItem('oe_lang');}catch(e){}
+  if(!saved){var nv=(navigator.language||'').slice(0,2);if(LANGS[nv])saved=nv;}
+  set(saved||'en');
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var open=menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
   });
-  document.documentElement.lang = lang;
-  document.getElementById('langFlag').textContent = LANGS[lang][0];
-  document.getElementById('langCode').textContent = LANGS[lang][1];
-  menu.querySelectorAll('button').forEach(function (b) {
-   b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false');
+  menu.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      set(b.dataset.lang);menu.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    });
   });
-  try { localStorage.setItem('oe_lang', lang); } catch (e) {}
- }
-
- var saved = null;
- try { saved = localStorage.getItem('oe_lang'); } catch (e) {}
- if (!saved) {
-  var nav = (navigator.language || '').slice(0, 2);
-  if (LANGS[nav]) saved = nav;
- }
- set(saved || 'en');
-
- btn.addEventListener('click', function (e) {
-  e.stopPropagation();
-  var open = menu.classList.toggle('open');
-  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
- });
- menu.addEventListener('click', function (e) {
-  var b = e.target.closest('button');
-  if (!b) return;
-  set(b.dataset.lang);
-  menu.classList.remove('open');
-  btn.setAttribute('aria-expanded', 'false');
- });
- document.addEventListener('click', function () {
-  menu.classList.remove('open');
-  btn.setAttribute('aria-expanded', 'false');
- });
+  document.addEventListener('click',function(){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');});
 })();
-</script>
-<script>
-// The numbers above are the retrospective fit. The moment the live record has
-// enough resolved signals, they get replaced by it  automatically. Hardcoding
-// them and never touching them again is how a page starts lying six weeks later,
-// which is exactly what the old dashboard did.
-(function () {
- var API = window.ODDSENGINE_API || 'https://api.oddsengine.live';
- fetch(API + '/v1/calibration').then(function (r) { return r.json(); }).then(function (d) {
-  if (!d || !d.signals_resolved || d.signals_resolved < 100) return;  // not earned yet
-  var said = 0, hit = 0, n = 0;
-  (d.bins || []).forEach(function (b) {
-   if (!b.n || b.predicted == null || b.observed == null) return;
-   said += b.predicted * b.n; hit += b.observed * b.n; n += b.n;
-  });
-  if (!n) return;
-  var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
-  set('kSaid', Math.round(said / n * 100));
-  set('kHit', Math.round(hit / n * 100));
-  set('sN', d.signals_resolved);
-  if (d.mean_abs_error_pp != null) set('sErr', d.mean_abs_error_pp.toFixed(1) + 'pp');
-  document.querySelectorAll('[data-live-label]').forEach(function (e) {
-   e.textContent = e.dataset.liveLabel;
-  });
- }).catch(function () { /* keep the measured figures; say nothing new */ });
-})();
-</script>
-<script>
-// Replay, not projection. These are the measured aggregates of the 261 settled
-// markets: 84.7 of every 100 landed, average block cost 77.8c, so a hit pays
-// 1/0.778. Arithmetic on markets that already closed, nothing more.
-//
-// Once live signals resolve, /v1/calibration overwrites these and the calculator
-// runs on the real record instead. Hardcoding a number and never touching it is
-// how a page starts lying six weeks later.
-(function () {
- // The 116 signals that actually cleared the gates, over 23 trading days
-  // (31 Dec 2025 to 11 Mar 2026). 72.4 of every 100 landed; the average block
-  // cost 60.1c, so a hit paid 1/0.601.
-  //
-  // NOT the 261 from the chart above: those are markets where a block existed
-  // at all. Only 116 were worth taking. Running a calculator on the bigger
-  // number would flatter the result with signals we would never have sent.
-  var M = { n: 116, hit: 0.724, cost: 0.601, streak: 3 };
- var num = document.getElementById('stake'), rng = document.getElementById('stakeR');
- if (!num) return;
 
- function usd(v){
-  return (v < 0 ? '-$' : '$') + Math.round(Math.abs(v)).toLocaleString('en-US',
-   { maximumFractionDigits: 0 });
- }
- function set(id, v){ var e = document.getElementById(id); if (e) e.textContent = v; }
+/* ── The ledger. Live only. Nothing is drawn that was not scored. ── */
+(function(){
+  var API=window.ODDSENGINE_API;
+  var wrap=document.getElementById('marks');
+  var MAX=140;
 
- function calc(){
-  var st = Math.max(1, parseFloat(num.value) || 1);
-  var _L = document.documentElement.lang;
-  var _of = _L === 'de' ? ' von ' : _L === 'tr' ? ' / ' : ' of ';
-  var _row = _L === 'de' ? ' in Folge' : _L === 'tr' ? ' hintereinander' : ' in a row';
-  var hits = Math.round(M.n * M.hit);
-  var staked = Math.round(st * M.n);
-  var back = Math.round(hits * (st / M.cost));
-  var net = back - staked;
-  set('cN', M.n);
-  set('cHit', hits + _of + M.n);
-  set('cIn', usd(staked));
-  set('cOut', usd(back));
-  set('cStreak', M.streak + _row);
-  var e = document.getElementById('cNet');
-  e.textContent = (net >= 0 ? '+' : '') + usd(net) + ' (' +
-   (net >= 0 ? '+' : '') + (net / staked * 100).toFixed(1) + '%)';
-  e.className = net >= 0 ? 'pos' : 'neg';
- }
- num.addEventListener('input', function(){ rng.value = Math.min(500, num.value || 1); calc(); });
- rng.addEventListener('input', function(){ num.value = rng.value; calc(); });
- calc();
+  function skeleton(){
+    var h='';
+    for(var i=0;i<MAX;i++){
+      h+='<span class="mark pend" style="height:22%;animation-delay:'+(i*4)+'ms"></span>';
+    }
+    wrap.innerHTML=h;
+  }
+  skeleton();
 
- var API = window.ODDSENGINE_API || 'https://api.oddsengine.live';
- fetch(API + '/v1/calibration').then(function (r){ return r.json(); }).then(function (d){
-  if (!d || !d.signals_resolved || d.signals_resolved < 100) return;
-  if (d.hit_rate == null || d.avg_cost == null) return;
-  M = { n: d.signals_resolved, hit: d.hit_rate, cost: d.avg_cost,
-     streak: d.longest_losing_streak || M.streak };
-  calc();
- }).catch(function(){ /* keep the measured figures, claim nothing new */ });
+  function draw(rows){
+    if(!rows.length)return;
+    var slice=rows.slice(-MAX);
+    var h='';
+    slice.forEach(function(r,i){
+      var cls=r.open?'pend':(r.hit?'hit':'miss');
+      var pc=r.said==null?26:Math.max(16,Math.min(100,Math.round(r.said*100)));
+      h+='<span class="mark '+cls+'" style="height:'+pc+'%;animation-delay:'+(i*7)+'ms"></span>';
+    });
+    wrap.innerHTML=h;
+  }
+
+  function pct(x){return Math.round(x*100);}
+
+  // Settled signals, oldest first. The API hands them back newest first.
+  fetch(API+'/v1/record?limit=1000')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var list=(d.signals||[]).slice().reverse();
+      if(!list.length)return;
+      var done=list.map(function(s){
+        return {said:s.said_coverage,hit:!!s.outcome_hit,open:false,slug:s.slug};
+      });
+
+      function render(open){
+        draw(done.concat(open||[]));
+      }
+      render([]);
+
+      var hits=done.filter(function(r){return r.hit;}).length;
+      var claimed=done.filter(function(r){return r.said!=null;});
+      var avg=claimed.length?claimed.reduce(function(a,r){return a+r.said;},0)/claimed.length:null;
+      document.getElementById('mScored').textContent=done.length;
+      if(avg!=null)document.getElementById('mSaid').innerHTML=pct(avg)+'<small>%</small>';
+      document.getElementById('mHit').innerHTML=pct(hits/done.length)+'<small>%</small>';
+      var b=document.getElementById('badgeTxt');
+      if(b)b.textContent=done.length+' '+(document.documentElement.lang==='de'?'Signale gescort':'signals scored');
+
+      // Anything published but not yet decided sits at the right end, open.
+      var settled={};
+      done.forEach(function(r){if(r.slug)settled[r.slug]=1;});
+      fetch(API+'/v1/signals?hours=168')
+        .then(function(r){return r.json();})
+        .then(function(o){
+          var open=(o.signals||[])
+            .filter(function(s){return s.slug && !settled[s.slug];})
+            .map(function(s){return {said:s.coverage,hit:false,open:true};});
+          if(open.length)render(open);
+        })
+        .catch(function(){});
+    })
+    .catch(function(){/* leave the skeleton and the dashes. Nothing invented. */});
 })();
 </script>
 </body>
