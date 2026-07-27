@@ -267,17 +267,17 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
       <div class="marks" id="marks" role="img" aria-label="Every published signal, in order, hit or miss"></div>
       <div class="ledger-axis">
         <span data-de="Ältestes" data-tr="En eski">Oldest</span>
-        <span id="axisMid" data-de="Jedes veröffentlichte Signal, der Reihe nach" data-tr="Yayınlanan her sinyal, sırayla">Every published signal, in order</span>
+        <span id="axisMid" data-de="Jedes veröffentlichte Signal · hell = getroffen, dunkel = daneben" data-tr="Yayınlanan her sinyal · açık = isabet, koyu = ıska">Every published signal · light = hit, dark = miss</span>
         <span data-de="Neuestes" data-tr="En yeni">Newest</span>
       </div>
     </div>
     <div class="ledger-foot">
       <div class="lf"><span class="v" id="mScored">—</span>
         <span class="l" data-de="Aufgelöst und gescort" data-tr="Kapandı ve puanlandı">Settled and scored</span></div>
-      <div class="lf"><span class="v" id="mSaid">—<small>%</small></span>
-        <span class="l" data-de="Was wir gesagt haben" data-tr="Ne dedik">What we said</span></div>
       <div class="lf"><span class="v" id="mHit">—<small>%</small></span>
-        <span class="l" data-de="Was daraus wurde" data-tr="Ne oldu">What it became</span></div>
+        <span class="l" data-de="Trefferquote" data-tr="İsabet oranı">Hit rate</span></div>
+      <div class="lf"><span class="v" id="mStreak">—</span>
+        <span class="l" data-de="Längste Fehlschlagserie" data-tr="En uzun ıska serisi">Longest run of misses</span></div>
     </div>
   </div>
 </div></header>
@@ -285,9 +285,9 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
 <section class="feature-section" id="record"><div class="container">
   <div class="section-label" data-de="Warum diese Liste" data-tr="Neden bu liste">Why this list</div>
   <h2 data-de="Die einzige Aussage, die zählt" data-tr="Önemli olan tek iddia">The only claim worth making</h2>
-  <p data-de="Nicht Rendite. Nicht Trefferquote. Beides lässt sich leicht behaupten und leicht durch Zufall erreichen. Die Frage ist einfacher:" data-tr="Getiri değil. İsabet oranı da değil. İkisi de kolayca iddia edilir, kolayca şans eseri elde edilir. Soru daha basit:">Not return. Not win rate. Both are easy to claim and easy to hit by accident. The question is simpler:</p>
-  <p style="color:var(--text);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:24px 0;line-height:1.3" data-de="Wenn wir 90 % sagen, passiert es dann in 90 von 100 Fällen?" data-tr="90 dediğimizde, gerçekten 100 kezin 90&#x27;ında oluyor mu?">When we say 90%, does it happen 90 times out of 100?</p>
-  <p data-de="Eine Wahrscheinlichkeit, die vorher feststeht, lässt sich hinterher nicht mehr zurechtbiegen. Deshalb steht sie oben in der Liste, bevor irgendetwas entschieden ist, und das Ergebnis daneben, sobald es entschieden ist. Wer uns nicht glaubt, zählt selbst nach." data-tr="Önceden sabitlenmiş bir olasılık sonradan eğilip bükülemez. Bu yüzden hiçbir şey belli değilken listeye giriyor, ve belli olur olmaz sonucu yanına yazılıyor. İnanmayan kendi sayar.">A probability that is fixed in advance cannot be bent afterwards. That is why it goes into the list before anything is decided, with the result beside it as soon as it is. Anyone who doubts us can count it themselves.</p>
+  <p data-de="Jeder kann eine Trefferquote behaupten. Der Unterschied liegt darin, was danach mit den Fehlschlägen passiert. Die Frage ist deshalb nicht, wie gut wir sind:" data-tr="Herkes bir isabet oranı iddia edebilir. Fark, ıskalara sonradan ne olduğudur. Yani soru ne kadar iyi olduğumuz değil:">Anyone can claim a hit rate. The difference is what happens to the misses afterwards. So the question is not how good we are:</p>
+  <p style="color:var(--text);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:24px 0;line-height:1.3" data-de="Steht jedes Signal noch da, auch das, das danebenging?" data-tr="Yayınladığımız her sinyal hâlâ orada mı — ıskalayan da dahil?">Is every signal still there, including the one that missed?</p>
+  <p data-de="Ein Signal, das vorher veröffentlicht wurde, lässt sich hinterher nicht mehr zurechtbiegen. Deshalb steht es oben in der Liste, bevor irgendetwas entschieden ist, und das Ergebnis daneben, sobald es entschieden ist. Nichts wird nachträglich entfernt, auch nicht die längste Pechsträhne. Wer uns nicht glaubt, zählt selbst nach." data-tr="Önceden sabitlenmiş bir olasılık sonradan eğilip bükülemez. Bu yüzden hiçbir şey belli değilken listeye giriyor, ve belli olur olmaz sonucu yanına yazılıyor. İnanmayan kendi sayar.">A signal published in advance cannot be bent afterwards. That is why it goes into the list before anything is decided, with the result beside it as soon as it is. Nothing is removed later, not even the longest losing streak. Anyone who doubts us can count it themselves.</p>
 
   <div class="cards">
     <div class="card"><div class="k" data-de="Vorher" data-tr="Önce">Before</div>
@@ -343,7 +343,7 @@ B — 21.0¢
 C — 8.0¢
 
   <span class="d">Market price of block ·</span> <b>61.0¢</b>
-📈 <b>Edge</b> <span class="g">· +26.0pp</span>
+📈 <b>Edge</b> <span class="g">· +26.0%</span>
 <span class="d">
 ─────────────
 </span>
@@ -352,25 +352,33 @@ A — 52.5%
 B — 34.4%
 C — 13.1%
 
-🧮 <b>Example — $25.00 staked:</b>
-  A — $13.11 <span class="d">→</span> $40.98 back
-  B — $8.61 <span class="d">→</span> $41.00 back
-  C — $3.28 <span class="d">→</span> $41.00 back
+🧮 <b>Example — $5.00 staked:</b>
+  A — $2.62 <span class="d">→</span> $8.20 back
+  B — $1.72 <span class="d">→</span> $8.20 back
+  C — $1.00 <span class="d">→</span> <span class="g">$12.50 back</span>
 <span class="d">
+  Total $5.34. Legs under $1 were raised to the $1
+  minimum, so the payouts above are uneven.
+
 If ANY of A or B or C is the day's high, you get
 the amount shown next to that leg above.
 
 If it lands outside that range:
 the stake is gone.
 </span>
-On the $25.00 above:
-  best case <span class="d">→</span> <span class="g">$41.00</span>
-  worst case <span class="d">→</span> <span class="g">$40.98</span>
+On the $5.34 above:
+  best case <span class="d">→</span> <span class="g">$12.50</span>
+  worst case <span class="d">→</span> <span class="g">$8.20</span>
   miss <span class="d">→ $0.00</span>
+
+A hit returns <span class="g">+53% to +134%</span> on the $5.34
+above, depending on which leg lands.
+To break even the block has to land 43% to 65%
+of the time.
 <span class="d">
 ─────────────
 </span>
-Expected value <span class="g">· +42.6%</span>
+Expected value <span class="g">· +54%</span>
 Outside-range risk <span class="d">· 13%</span>
 Lead time <span class="d">· 21h</span>
 <span class="d">
@@ -502,7 +510,12 @@ either way.</span></div>
     var h='';
     slice.forEach(function(r,i){
       var cls=r.open?'pend':(r.hit?'hit':'miss');
-      var pc=r.said==null?26:Math.max(16,Math.min(100,Math.round(r.said*100)));
+      // Frueher war die Balkenhoehe die behauptete Zuversicht -- eine Groesse,
+      // die nirgends erklaert wurde und die niemand lesen konnte. Jetzt sind
+      // alle Balken gleich hoch und nur die Farbe traegt Bedeutung: getroffen
+      // oder daneben. Die Reihe liest sich damit wie ein Strichcode aller
+      // veroeffentlichten Signale.
+      var pc=r.open?34:100;
       h+='<span class="mark '+cls+'" style="height:'+pc+'%;animation-delay:'+(i*7)+'ms"></span>';
     });
     wrap.innerHTML=h;
@@ -529,8 +542,12 @@ either way.</span></div>
       var claimed=done.filter(function(r){return r.said!=null;});
       var avg=claimed.length?claimed.reduce(function(a,r){return a+r.said;},0)/claimed.length:null;
       document.getElementById('mScored').textContent=done.length;
-      if(avg!=null)document.getElementById('mSaid').innerHTML=pct(avg)+'<small>%</small>';
       document.getElementById('mHit').innerHTML=pct(hits/done.length)+'<small>%</small>';
+      // Laengste Kette ohne Treffer. Die Zahl, die sonst niemand zeigt --
+      // und die im Gegensatz zur Rendite nicht taeglich um zehn Punkte springt.
+      var serie=0,lauf=0;
+      done.forEach(function(r){ if(r.hit){lauf=0;}else{lauf++;if(lauf>serie)serie=lauf;} });
+      document.getElementById('mStreak').textContent=serie;
       var b=document.getElementById('badgeTxt');
       var bn=document.getElementById('badgeN');
       if(b&&bn){
