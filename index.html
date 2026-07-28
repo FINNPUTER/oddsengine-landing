@@ -285,10 +285,10 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
     </div>
     <div id="karte"></div>
     <div class="karte-legende">
-      <span><i style="background:#f2a340"></i><span data-de="Tropen" data-tr="Tropikler">Tropics</span></span>
-      <span><i style="background:#e8843c"></i><span data-de="Subtropen" data-tr="Subtropikler">Subtropics</span></span>
-      <span><i style="background:#7e96be"></i><span data-de="Gemäßigt" data-tr="Ilıman">Temperate</span></span>
-      <span><i style="background:#5da9d6"></i><span data-de="Kalt" data-tr="Soğuk">Cold</span></span>
+      <span><i style="background:#45b37a"></i><span data-de="Tropen" data-tr="Tropikler">Tropics</span></span>
+      <span><i style="background:#e8b33c"></i><span data-de="Subtropen" data-tr="Subtropikler">Subtropics</span></span>
+      <span><i style="background:#5da9d6"></i><span data-de="Gemäßigt" data-tr="Ilıman">Temperate</span></span>
+      <span><i style="background:#e8eef4"></i><span data-de="Kalt" data-tr="Soğuk">Cold</span></span>
     </div>
   </div>
 
@@ -654,7 +654,9 @@ either way.</span></div>
     S.forEach(function(c,i){
       var p=proj([c[1],c[0]]); if(!p) return;
       var b=Math.abs(c[0]);
-      var f=b<15?'#f2a340':b<30?'#e8843c':b<45?'#c97a5c':b<55?'#7e96be':'#5da9d6';
+      // Vier Baender, an den echten Klimazonen ausgerichtet:
+      // Wendekreis bei 23.5 Grad, Subtropen bis 35, gemaessigt bis 55.
+      var f=b<23.5?'#45b37a':b<35?'#e8b33c':b<55?'#5da9d6':'#e8eef4';
       g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
         .attr('fill',f).attr('fill-opacity',.92)
         .transition().delay(i*20).duration(380).attr('r',2.7);
