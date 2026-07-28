@@ -639,14 +639,18 @@ either way.</span></div>
   d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(w){
     svg.append('g').selectAll('path')
       .data(topojson.feature(w,w.objects.countries).features).join('path')
-      .attr('d',d3.geoPath(proj)).attr('fill','#1a1a1e')
-      .attr('stroke','#26262a').attr('stroke-width',.4);
+      .attr('d',d3.geoPath(proj)).attr('fill','#171c24')
+      .attr('stroke','#2b3543').attr('stroke-width',.5);
     var g=svg.append('g');
     S.forEach(function(c,i){
       var p=proj([c[1],c[0]]); if(!p) return;
+      // Warm am Aequator, kuehl zu den Polen. Verraet nichts und macht aus
+      // der grauen Punktwolke etwas, das nach Wetter aussieht.
+      var b=Math.abs(c[0]);
+      var f=b<15?'#f2a340':b<30?'#e8843c':b<45?'#c97a5c':b<55?'#7e96be':'#5da9d6';
       g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
-        .attr('fill','#3c82f6').attr('fill-opacity',.9)
-        .transition().delay(i*20).duration(380).attr('r',2.4);
+        .attr('fill',f).attr('fill-opacity',.92)
+        .transition().delay(i*20).duration(380).attr('r',2.6);
     });
   });
 })();
