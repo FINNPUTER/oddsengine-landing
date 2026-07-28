@@ -117,16 +117,19 @@ header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 
 /* ── SIGNATURE: the public ledger ── */
-.karte-box{margin-top:64px;border:1px solid var(--border);border-radius:18px;
-  overflow:hidden;background:rgba(255,255,255,.012)}
+.karte-box{margin-top:64px;border:1px solid var(--border);border-radius:18px;overflow:hidden}
 .karte-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
   padding:18px 22px;border-bottom:1px solid var(--border)}
 .karte-kopf .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
   text-transform:uppercase;color:var(--dim)}
 .karte-zahl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim)}
 .karte-zahl b{color:var(--fg);font-weight:500;font-size:.95rem;margin-right:6px}
-#karte{padding:8px 12px 4px}
-.ledger{margin-top:74px;border:1px solid var(--border);border-radius:18px;
+#karte{padding:8px 12px 0}
+.karte-legende{display:flex;gap:20px;flex-wrap:wrap;padding:8px 22px 18px;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;color:var(--dim)}
+.karte-legende i{display:inline-block;width:8px;height:8px;border-radius:50%;
+  margin-right:7px;vertical-align:middle}
+.ledger{margin-top:64px;border:1px solid var(--border);border-radius:18px;
   background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-elevated) 100%);overflow:hidden}
 .ledger-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:16px 22px;border-bottom:1px solid var(--border);flex-wrap:wrap}
@@ -272,19 +275,23 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
     </div>
   </div>
 
-  <!-- Weltkarte: zeigt die Reichweite, verraet keine einzige Zahl. Preise,
-       Wahrscheinlichkeiten und Staedtebewertungen bleiben hinter der Schranke --
-       hier steht nur, WO gemessen wird, nicht WAS dabei herauskommt. -->
+  <!-- SIGNATURE ELEMENT: the ledger -->
+  <!-- Weltkarte: zeigt die Reichweite, verraet keine einzige Zahl. -->
   <div class="karte-box">
     <div class="karte-kopf">
       <span class="t" data-de="Das Netz" data-tr="Ağ">The network</span>
-      <span class="karte-zahl"><b id="kn">50</b>
+      <span class="karte-zahl"><b>50</b>
         <span data-de="Stationen · rund um die Uhr" data-tr="istasyon · 7/24">stations · around the clock</span></span>
     </div>
     <div id="karte"></div>
+    <div class="karte-legende">
+      <span><i style="background:#f2a340"></i><span data-de="Tropen" data-tr="Tropikler">Tropics</span></span>
+      <span><i style="background:#e8843c"></i><span data-de="Subtropen" data-tr="Subtropikler">Subtropics</span></span>
+      <span><i style="background:#7e96be"></i><span data-de="Gemäßigt" data-tr="Ilıman">Temperate</span></span>
+      <span><i style="background:#5da9d6"></i><span data-de="Kalt" data-tr="Soğuk">Cold</span></span>
+    </div>
   </div>
 
-  <!-- SIGNATURE ELEMENT: the ledger -->
   <div class="ledger">
     <div class="ledger-head">
       <span class="t" data-de="Die Liste" data-tr="Liste">The list</span>
@@ -296,10 +303,8 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
     </div>
     <div class="ledger-body">
       <div class="marks" id="marks" role="img" aria-label="Every published signal, in order, hit or miss"></div>
-      <div class="ledger-axis">
-        <span data-de="Ältestes" data-tr="En eski">Oldest</span>
-        <span id="axisMid" data-de="Trefferquote je Handelstag" data-tr="İşlem günü başına isabet oranı">Hit rate per trading day</span>
-        <span data-de="Neuestes" data-tr="En yeni">Newest</span>
+      <div class="ledger-axis" style="justify-content:center">
+        <span data-de="Trefferquote je Handelstag" data-tr="İşlem günü başına isabet oranı">Hit rate per trading day</span>
       </div>
     </div>
     <div class="ledger-foot">
@@ -537,10 +542,8 @@ either way.</span></div>
 
   function draw(rows){
     if(!rows.length)return;
-    // Sechzig gleich hohe Balken sind eine Wand, kein Argument. Was hier
-    // wirklich etwas erzaehlt, ist die Trefferquote je Handelstag: sie steigt,
-    // und das sieht man in sechs Balken sofort. Balkenhoehe = Quote, damit die
-    // Hoehe endlich eine Bedeutung hat statt nur Rhythmus zu sein.
+    /* Festes SVG statt Prozenthoehen: die loesen in einem Flex-Container
+       nicht auf, deshalb blieb der Kasten leer. */
     var tage={}, folge=[];
     rows.forEach(function(r){
       if(r.open||!r.date) return;
@@ -549,16 +552,22 @@ either way.</span></div>
     });
     folge=folge.filter(function(d){return tage[d].n>=3;}).slice(-8);
     if(folge.length<2){ wrap.innerHTML=''; return; }
-    var h='';
+    var W=880,H=210,oben=36,unten=36,n=folge.length;
+    var bw=Math.min(70,(W-40)/n-18), luecke=((W-40)-bw*n)/(n+1);
+    var sv='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">';
     folge.forEach(function(d,i){
       var q=Math.round(tage[d].h*100/tage[d].n);
-      var tag=d.slice(8)+'.'+d.slice(5,7)+'.';
-      h+='<span class="tag" style="animation-delay:'+(i*70)+'ms">'
-        +'<b>'+q+'</b>'
-        +'<span class="saeule '+(q>=60?'hit':'miss')+'" style="height:'+Math.max(q,6)+'%"></span>'
-        +'<em>'+tag+'</em></span>';
+      var hoehe=Math.max(5,Math.round((H-oben-unten)*q/100));
+      var x=Math.round(20+luecke+i*(bw+luecke)), y=H-unten-hoehe;
+      sv+='<rect x="'+x+'" y="'+y+'" width="'+Math.round(bw)+'" height="'+hoehe+
+          '" rx="5" fill="'+(q>=60?'#3c82f6':'#39414f')+'"/>'+
+          '<text x="'+Math.round(x+bw/2)+'" y="'+(y-12)+'" text-anchor="middle" '+
+          'fill="#e9edf2" font-size="16" font-family="ui-monospace,monospace">'+q+'</text>'+
+          '<text x="'+Math.round(x+bw/2)+'" y="'+(H-12)+'" text-anchor="middle" '+
+          'fill="#6b7280" font-size="11" font-family="ui-monospace,monospace">'+
+          d.slice(8)+'.'+d.slice(5,7)+'.</text>';
     });
-    wrap.innerHTML=h;
+    wrap.innerHTML=sv+'</svg>';
   }
 
   function pct(x){return Math.round(x*100);}
@@ -644,13 +653,11 @@ either way.</span></div>
     var g=svg.append('g');
     S.forEach(function(c,i){
       var p=proj([c[1],c[0]]); if(!p) return;
-      // Warm am Aequator, kuehl zu den Polen. Verraet nichts und macht aus
-      // der grauen Punktwolke etwas, das nach Wetter aussieht.
       var b=Math.abs(c[0]);
       var f=b<15?'#f2a340':b<30?'#e8843c':b<45?'#c97a5c':b<55?'#7e96be':'#5da9d6';
       g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
         .attr('fill',f).attr('fill-opacity',.92)
-        .transition().delay(i*20).duration(380).attr('r',2.6);
+        .transition().delay(i*20).duration(380).attr('r',2.7);
     });
   });
 })();
