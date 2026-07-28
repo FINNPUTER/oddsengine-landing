@@ -117,6 +117,15 @@ header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 
 /* ── SIGNATURE: the public ledger ── */
+.karte-box{margin-top:64px;border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;background:rgba(255,255,255,.012)}
+.karte-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:18px 22px;border-bottom:1px solid var(--border)}
+.karte-kopf .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--dim)}
+.karte-zahl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim)}
+.karte-zahl b{color:var(--fg);font-weight:500;font-size:.95rem;margin-right:6px}
+#karte{padding:8px 12px 4px}
 .ledger{margin-top:74px;border:1px solid var(--border);border-radius:18px;
   background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-elevated) 100%);overflow:hidden}
 .ledger-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -126,7 +135,17 @@ header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(
 .ledger-key{display:flex;gap:18px;font-family:var(--font-mono);font-size:.62rem;
   letter-spacing:.09em;text-transform:uppercase;color:var(--text-tertiary)}
 .ledger-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
-.ledger-body{padding:30px 22px 24px}
+.ledger-body{padding:30px 22px 24px;display:flex;align-items:flex-end;gap:14px;height:190px}
+.tag{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  height:100%;animation:auf .5s ease both}
+.tag b{font-family:var(--font-mono);font-size:.95rem;font-weight:500;margin-bottom:8px;
+  color:var(--fg)}
+.tag em{font-style:normal;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;
+  color:var(--dim);margin-top:10px}
+.saeule{width:100%;max-width:54px;border-radius:5px 5px 0 0;display:block}
+.saeule.hit{background:linear-gradient(180deg,var(--accent),rgba(60,130,246,.35))}
+.saeule.miss{background:rgba(255,255,255,.14)}
+@keyframes auf{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .marks{display:flex;align-items:flex-end;gap:3px;height:96px;overflow:hidden}
 .mark{flex:1 1 0;min-width:2px;border-radius:2px;transform-origin:bottom;
   animation:markin .5s cubic-bezier(.2,.8,.3,1) backwards}
@@ -253,6 +272,18 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
     </div>
   </div>
 
+  <!-- Weltkarte: zeigt die Reichweite, verraet keine einzige Zahl. Preise,
+       Wahrscheinlichkeiten und Staedtebewertungen bleiben hinter der Schranke --
+       hier steht nur, WO gemessen wird, nicht WAS dabei herauskommt. -->
+  <div class="karte-box">
+    <div class="karte-kopf">
+      <span class="t" data-de="Das Netz" data-tr="Ağ">The network</span>
+      <span class="karte-zahl"><b id="kn">50</b>
+        <span data-de="Stationen · rund um die Uhr" data-tr="istasyon · 7/24">stations · around the clock</span></span>
+    </div>
+    <div id="karte"></div>
+  </div>
+
   <!-- SIGNATURE ELEMENT: the ledger -->
   <div class="ledger">
     <div class="ledger-head">
@@ -267,7 +298,7 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
       <div class="marks" id="marks" role="img" aria-label="Every published signal, in order, hit or miss"></div>
       <div class="ledger-axis">
         <span data-de="Ältestes" data-tr="En eski">Oldest</span>
-        <span id="axisMid" data-de="Jedes veröffentlichte Signal · hell = getroffen, dunkel = daneben" data-tr="Yayınlanan her sinyal · açık = isabet, koyu = ıska">Every published signal · light = hit, dark = miss</span>
+        <span id="axisMid" data-de="Trefferquote je Handelstag" data-tr="İşlem günü başına isabet oranı">Hit rate per trading day</span>
         <span data-de="Neuestes" data-tr="En yeni">Newest</span>
       </div>
     </div>
@@ -506,17 +537,26 @@ either way.</span></div>
 
   function draw(rows){
     if(!rows.length)return;
-    var slice=rows.slice(-MAX);
+    // Sechzig gleich hohe Balken sind eine Wand, kein Argument. Was hier
+    // wirklich etwas erzaehlt, ist die Trefferquote je Handelstag: sie steigt,
+    // und das sieht man in sechs Balken sofort. Balkenhoehe = Quote, damit die
+    // Hoehe endlich eine Bedeutung hat statt nur Rhythmus zu sein.
+    var tage={}, folge=[];
+    rows.forEach(function(r){
+      if(r.open||!r.date) return;
+      if(!tage[r.date]){ tage[r.date]={n:0,h:0}; folge.push(r.date); }
+      tage[r.date].n++; if(r.hit) tage[r.date].h++;
+    });
+    folge=folge.filter(function(d){return tage[d].n>=3;}).slice(-8);
+    if(folge.length<2){ wrap.innerHTML=''; return; }
     var h='';
-    slice.forEach(function(r,i){
-      var cls=r.open?'pend':(r.hit?'hit':'miss');
-      // Frueher war die Balkenhoehe die behauptete Zuversicht -- eine Groesse,
-      // die nirgends erklaert wurde und die niemand lesen konnte. Jetzt sind
-      // alle Balken gleich hoch und nur die Farbe traegt Bedeutung: getroffen
-      // oder daneben. Die Reihe liest sich damit wie ein Strichcode aller
-      // veroeffentlichten Signale.
-      var pc=r.open?34:100;
-      h+='<span class="mark '+cls+'" style="height:'+pc+'%;animation-delay:'+(i*7)+'ms"></span>';
+    folge.forEach(function(d,i){
+      var q=Math.round(tage[d].h*100/tage[d].n);
+      var tag=d.slice(8)+'.'+d.slice(5,7)+'.';
+      h+='<span class="tag" style="animation-delay:'+(i*70)+'ms">'
+        +'<b>'+q+'</b>'
+        +'<span class="saeule '+(q>=60?'hit':'miss')+'" style="height:'+Math.max(q,6)+'%"></span>'
+        +'<em>'+tag+'</em></span>';
     });
     wrap.innerHTML=h;
   }
@@ -574,6 +614,41 @@ either way.</span></div>
         .catch(function(){});
     })
     .catch(function(){/* leave the skeleton and the dashes. Nothing invented. */});
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+(function(){
+  var S=[[40.777,-73.872],[41.979,-87.904],[33.64,-84.427],[25.795,-80.29],
+  [32.847,-96.852],[29.645,-95.279],[30.194,-97.67],[39.702,-104.751],
+  [33.942,-118.408],[37.619,-122.375],[47.449,-122.309],[43.677,-79.631],
+  [19.436,-99.072],[8.973,-79.556],[-34.822,-58.536],[-23.432,-46.47],
+  [51.505,0.055],[48.969,2.441],[52.309,4.764],[48.354,11.786],[45.63,8.723],
+  [40.472,-3.561],[52.166,20.967],[60.317,24.963],[55.599,37.261],
+  [41.262,28.742],[40.128,32.995],[37.469,126.451],[35.18,128.938],
+  [35.553,139.781],[25.069,121.552],[40.08,116.585],[31.143,121.805],
+  [23.392,113.299],[22.639,113.811],[29.719,106.642],[30.578,103.947],
+  [30.784,114.208],[36.362,120.375],[36.857,117.216],[34.52,113.841],
+  [1.359,103.989],[2.746,101.71],[14.509,121.02],[26.761,80.889],
+  [24.894,66.939],[21.68,39.157],[32.011,34.887],[-33.965,18.602],
+  [-41.327,174.805]];
+  var el=document.getElementById('karte'); if(!el||!window.d3) return;
+  var svg=d3.select(el).append('svg').attr('viewBox','0 0 660 320').attr('width','100%');
+  var proj=d3.geoNaturalEarth1().scale(122).translate([320,165]);
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(w){
+    svg.append('g').selectAll('path')
+      .data(topojson.feature(w,w.objects.countries).features).join('path')
+      .attr('d',d3.geoPath(proj)).attr('fill','#1a1a1e')
+      .attr('stroke','#26262a').attr('stroke-width',.4);
+    var g=svg.append('g');
+    S.forEach(function(c,i){
+      var p=proj([c[1],c[0]]); if(!p) return;
+      g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
+        .attr('fill','#3c82f6').attr('fill-opacity',.9)
+        .transition().delay(i*20).duration(380).attr('r',2.4);
+    });
+  });
 })();
 </script>
 </body>
