@@ -125,6 +125,10 @@ header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(
 .karte-zahl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim)}
 .karte-zahl b{color:var(--fg);font-weight:500;font-size:.95rem;margin-right:6px}
 #karte{padding:8px 12px 0}
+.karte-tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;
+  background:#0f1319;border:1px solid var(--border);border-radius:7px;
+  padding:5px 10px;font-family:var(--font-mono);font-size:.66rem;color:var(--fg);
+  white-space:nowrap;z-index:5}
 .karte-legende{display:flex;gap:20px;flex-wrap:wrap;padding:8px 22px 18px;
   font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;color:var(--dim)}
 .karte-legende i{display:inline-block;width:8px;height:8px;border-radius:50%;
@@ -433,15 +437,28 @@ either way.</span></div>
   <div class="tiers">
     <div class="tier now">
       <div class="name" data-de="Signale" data-tr="Sinyaller">Signals</div>
-      <div class="price">€99<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-      <div class="per" data-de="pro Monat, privater Kanal" data-tr="aylık, özel kanal">per month, private channel</div>
+      <div class="price">$25<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/week</span></div>
+      <div class="per" data-de="pro Woche, in USDC auf Polygon" data-tr="haftalık, Polygon üzerinde USDC">per week, in USDC on Polygon</div>
       <ul>
         <li data-de="Jedes Signal, sobald es steht" data-tr="Her sinyal, oluşur oluşmaz">Every signal the moment it exists</li>
         <li data-de="Volle Verteilung und echte Preise" data-tr="Tam dağılım ve gerçek fiyatlar">Full distribution and real prices</li>
         <li data-de="Ein Klick pro Zeile in den Markt" data-tr="Her satır için piyasaya tek tık">One tap per line into the market</li>
         <li data-de="Jederzeit kündbar" data-tr="İstediğin zaman iptal">Cancel any time</li>
       </ul>
-      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-primary" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
+      <a href="https://public.oddsengine.live/app.html" class="btn btn-primary" data-de="Wallet verbinden" data-tr="Cüzdanı bağla">Connect your wallet</a>
+    </div>
+
+    <div class="tier">
+      <div class="name" data-de="Kaufen über uns" data-tr="Bizim üzerimizden alım">Buying through us</div>
+      <div class="price">5<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">%</span></div>
+      <div class="per" data-de="vom Einsatz, freiwillig" data-tr="tutardan, isteğe bağlı">of your stake, optional</div>
+      <ul>
+        <li data-de="Drei Käufe in einer Unterschrift" data-tr="Tek imzayla üç alım">Three buys in one signature</li>
+        <li data-de="Dein Einsatz geht direkt an den Markt" data-tr="Tutarın doğrudan piyasaya gider">Your stake goes straight to the market</li>
+        <li data-de="Wir halten dein Geld nie" data-tr="Paranı asla tutmayız">We never hold your money</li>
+        <li data-de="Oder du setzt selbst — der Link steht dabei" data-tr="Ya da kendin oyna — bağlantı orada">Or place it yourself — the link is right there</li>
+      </ul>
+      <a href="https://public.oddsengine.live/app.html" class="btn btn-secondary" data-de="Ansehen" data-tr="Gör">See how</a>
     </div>
 
     <div class="tier">
@@ -642,14 +659,34 @@ either way.</span></div>
   [1.359,103.989],[2.746,101.71],[14.509,121.02],[26.761,80.889],
   [24.894,66.939],[21.68,39.157],[32.011,34.887],[-33.965,18.602],
   [-41.327,174.805]];
+  var N=['New York','Chicago','Atlanta','Miami','Dallas','Houston','Austin',
+  'Denver','Los Angeles','San Francisco','Seattle','Toronto','Mexico City',
+  'Panama City','Buenos Aires','São Paulo','London','Paris','Amsterdam',
+  'München','Milano','Madrid','Warschau','Helsinki','Moskau','Istanbul',
+  'Ankara','Seoul','Busan','Tokio','Taipei','Peking','Shanghai','Guangzhou',
+  'Shenzhen','Chongqing','Chengdu','Wuhan','Qingdao','Jinan','Zhengzhou',
+  'Singapur','Kuala Lumpur','Manila','Lucknow','Karachi','Jeddah','Tel Aviv',
+  'Kapstadt','Wellington'];
   var el=document.getElementById('karte'); if(!el||!window.d3) return;
+  el.style.position='relative';
   var svg=d3.select(el).append('svg').attr('viewBox','0 0 660 320').attr('width','100%');
   var proj=d3.geoNaturalEarth1().scale(122).translate([320,165]);
   d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(w){
+    var tip=d3.select(el).append('div').attr('class','karte-tip');
     svg.append('g').selectAll('path')
       .data(topojson.feature(w,w.objects.countries).features).join('path')
       .attr('d',d3.geoPath(proj)).attr('fill','#171c24')
-      .attr('stroke','#2b3543').attr('stroke-width',.5);
+      .attr('stroke','#2b3543').attr('stroke-width',.5)
+      .style('cursor','default')
+      .on('mouseenter',function(e,d){
+        d3.select(this).attr('fill','#212936');
+        tip.text((d.properties&&d.properties.name)||'').style('opacity',1);})
+      .on('mousemove',function(e){
+        var r=el.getBoundingClientRect();
+        tip.style('left',(e.clientX-r.left+14)+'px')
+           .style('top',(e.clientY-r.top-8)+'px');})
+      .on('mouseleave',function(){
+        d3.select(this).attr('fill','#171c24'); tip.style('opacity',0);});
     var g=svg.append('g');
     S.forEach(function(c,i){
       var p=proj([c[1],c[0]]); if(!p) return;
@@ -659,6 +696,16 @@ either way.</span></div>
       var f=b<23.5?'#45b37a':b<35?'#e8b33c':b<55?'#5da9d6':'#e8eef4';
       g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
         .attr('fill',f).attr('fill-opacity',.92)
+        .style('cursor','default')
+        .on('mouseenter',function(e){
+          d3.select(this).attr('r',5);
+          tip.text(N[i]).style('opacity',1);})
+        .on('mousemove',function(e){
+          var r=el.getBoundingClientRect();
+          tip.style('left',(e.clientX-r.left+14)+'px')
+             .style('top',(e.clientY-r.top-8)+'px');})
+        .on('mouseleave',function(){
+          d3.select(this).attr('r',2.7); tip.style('opacity',0);})
         .transition().delay(i*20).duration(380).attr('r',2.7);
     });
   });
