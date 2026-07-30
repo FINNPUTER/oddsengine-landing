@@ -437,7 +437,7 @@ either way.</span></div>
   <div class="tiers">
     <div class="tier now">
       <div class="name" data-de="Signale" data-tr="Sinyaller">Signals</div>
-      <div class="price">$25<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/week</span></div>
+      <div class="price">$8<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/week</span></div>
       <div class="per" data-de="pro Woche, in USDC auf Polygon" data-tr="haftalık, Polygon üzerinde USDC">per week, in USDC on Polygon</div>
       <ul>
         <li data-de="Jedes Signal, sobald es steht" data-tr="Her sinyal, oluşur oluşmaz">Every signal the moment it exists</li>
@@ -629,7 +629,7 @@ either way.</span></div>
       // Anything published but not yet decided sits at the right end, open.
       var settled={};
       done.forEach(function(r){if(r.slug)settled[r.slug]=1;});
-      fetch(API+'/v1/signals?hours=168')
+      fetch(API+'/v1/signals?hours=72')
         .then(function(r){return r.json();})
         .then(function(o){
           var open=(o.signals||[])
