@@ -596,7 +596,12 @@ either way.</span></div>
       var list=(d.signals||[]).slice().reverse();
       if(!list.length)return;
       var done=list.map(function(s){
-        return {said:s.said_coverage,hit:!!s.outcome_hit,open:false,slug:s.slug};
+        /* date FEHLTE hier. draw() beginnt mit `if(r.open||!r.date) return;`
+           und verwarf damit jede Zeile; danach griff `if(folge.length<2)
+           wrap.innerHTML=''` und leerte den Kasten vollstaendig. Die Zahlen
+           daneben stimmten trotzdem, weil sie nur `hit` benutzen. */
+        return {said:s.said_coverage,hit:!!s.outcome_hit,open:false,
+                slug:s.slug,date:s.date,city:s.city};
       });
 
       function render(open){
@@ -611,8 +616,19 @@ either way.</span></div>
       document.getElementById('mHit').innerHTML=pct(hits/done.length)+'<small>%</small>';
       // Laengste Kette ohne Treffer. Die Zahl, die sonst niemand zeigt --
       // und die im Gegensatz zur Rendite nicht taeglich um zehn Punkte springt.
+      /* Eine Fehlschlagserie haengt vollstaendig von der Reihenfolge ab.
+         Die Landing rechnete in API-Reihenfolge, das Portal sortiert nach
+         Datum: dieselbe Quelle ergab 4 hier und 2 dort. Bei mehreren
+         Signalen am selben Tag gibt es keine natuerliche Ordnung, deshalb
+         hier ausdruecklich Tag, dann Stadt. Beide Seiten benutzen jetzt
+         denselben Schluessel und muessen dieselbe Zahl zeigen. */
       var serie=0,lauf=0;
-      done.forEach(function(r){ if(r.hit){lauf=0;}else{lauf++;if(lauf>serie)serie=lauf;} });
+      done.slice().sort(function(a,b){
+        var d=String(a.date||'').localeCompare(String(b.date||''));
+        return d!==0?d:String(a.city||'').localeCompare(String(b.city||''));
+      }).forEach(function(r){
+        if(r.hit){lauf=0;}else{lauf++;if(lauf>serie)serie=lauf;}
+      });
       document.getElementById('mStreak').textContent=serie;
       var b=document.getElementById('badgeTxt');
       var bn=document.getElementById('badgeN');
