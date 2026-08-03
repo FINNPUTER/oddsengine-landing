@@ -242,6 +242,8 @@ footer{padding:64px 0 72px;border-top:1px solid var(--border)}
   .feature-section{padding:64px 0}
   .ledger{margin-top:44px}
 }
+  .ledger-fehler{font-family:var(--mono,monospace);font-size:12px;
+    color:#e8b33c;margin:12px 0 0;line-height:1.6;max-width:60ch}
 </style>
 </head>
 <body>
@@ -592,7 +594,11 @@ either way.</span></div>
     .then(function(r){return r.json();})
     .then(function(d){
       var list=(d.signals||[]).slice().reverse();
-      if(!list.length)return;
+      if(!list.length){
+        /* Antwort da, aber leer. Auch das war bisher ein stilles return. */
+        console.error('Bilanz leer:', d);
+        throw new Error('Die Bilanz kam leer zurueck.');
+      }
       var done=list.map(function(s){
         /* date FEHLTE hier. draw() beginnt mit `if(r.open||!r.date) return;`
            und verwarf damit jede Zeile; danach griff `if(folge.length<2)
@@ -651,9 +657,29 @@ either way.</span></div>
             .map(function(s){return {said:s.coverage,hit:false,open:true};});
           if(open.length)render(open);
         })
-        .catch(function(){});
+        .catch(function(e){ console.error('Offene Signale:', e); });
     })
-    .catch(function(){/* leave the skeleton and the dashes. Nothing invented. */});
+    .catch(function(e){
+      /* ⚠ 03.08.: hier stand ein leeres catch. Die Seite zeigte still drei
+         Kommas, und niemand konnte sehen, woran es lag. Genau der Fehlertyp,
+         der uns hier schon mehrfach Stunden gekostet hat: etwas scheitert,
+         und das Geruest bleibt stehen.
+
+         Jetzt steht der Grund in der Konsole UND unter den Zahlen. Erfunden
+         wird weiterhin nichts. */
+      console.error('Bilanz nicht ladbar:', e);
+      var f=document.querySelector('.ledger-foot');
+      if(f){
+        var p=document.createElement('p');
+        p.className='ledger-fehler';
+        p.textContent = (String(e && e.message || e).indexOf('Failed to fetch')>=0
+          || String(e).indexOf('NetworkError')>=0)
+          ? 'Die Bilanz ist gerade nicht erreichbar. Wenn das bleibt, muss '
+            + 'CORS_ORIGINS auf dem web-Dienst diese Domain erlauben.'
+          : 'Die Bilanz ist gerade nicht erreichbar: ' + (e && e.message || e);
+        f.parentNode.insertBefore(p, f.nextSibling);
+      }
+    });
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
