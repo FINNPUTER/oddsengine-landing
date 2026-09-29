@@ -1,754 +1,648 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<script>window.ODDSENGINE_API = "https://web-production-6b61c.up.railway.app";</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OddsEngine, Precision Signals. Zero Noise.</title>
-<meta name="description" content="Every number published before the outcome is known, and scored in public afterwards. Hits and misses both.">
-<meta property="og:title" content="OddsEngine · Precision Signals. Zero Noise.">
-<meta property="og:description" content="Published before. Scored after. In public.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OddsEngine · Beat the Engine</title>
+<meta name="description" content="An engine that forecasts the daily high in 50 cities and trades it on Polymarket. Every call posted before the station reports. Every miss stays up. $ODDS is your key.">
+<meta property="og:title" content="OddsEngine · Beat the Engine">
+<meta property="og:description" content="Every call posted before the station reports. Every miss stays up.">
 <meta property="og:image" content="https://oddsengine.live/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="https://oddsengine.live">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="OddsEngine">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OddsEngine · Precision Signals. Zero Noise.">
-<meta name="twitter:description" content="Published before. Scored after. In public.">
-<meta name="twitter:image" content="https://oddsengine.live/og-image.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="OddsEngine">
+<meta name="theme-color" content="#05070b">
+<link rel="icon" href="ring.png">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<meta name="theme-color" content="#1e90ff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="robot-hero.webp">
+<script>
+  window.ODDSENGINE_API = "https://web-production-6b61c.up.railway.app";
+  // After launch: paste the $ODDS contract address here. Empty = "launching soon".
+  window.ODDS_CA = "";
+  window.RULES_SINCE = "2026-09-25";
+</script>
 <style>
 :root{
-  --bg:#000000; --bg-elevated:#0a0a0a; --bg-card:#111111; --bg-card-hover:#161616;
-  --border:#1a1a1a; --border-hover:#2a2a2a;
-  --text:#f5f5f7; --text-secondary:#86868b; --text-tertiary:#48484a;
-  --blue:#2997ff; --blue-bright:#64b5ff;
-  --blue-glow:rgba(41,151,255,0.15); --blue-subtle:rgba(41,151,255,0.08);
-  --green:#30d158; --red:#ff453a; --amber:#f59e0b;
-  --font-body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  --font-mono:'DM Mono','SF Mono',monospace;
+  --bg:#05070b; --bg2:#0a0e15; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.10);
+  --tx:#eef2f7; --dim:#a3adbb; --dim2:#6f7a89;
+  --blue:#0878f0; --blue2:#4aa3ff; --mint:#5ee0c3; --red:#ff6b6b; --amber:#ffb547;
+  --disp:'Unbounded',system-ui,sans-serif; --body:'Instrument Sans',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);
-  font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--blue2);text-decoration:none}
+a:hover{color:#8cc4ff}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ── Rain + aurora ─────────────────────────────────── */
+#rain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+.aurora{position:fixed;inset:-20vh -20vw auto;height:90vh;z-index:0;pointer-events:none;filter:blur(60px);opacity:.75;
+  background:radial-gradient(35% 45% at 20% 30%,rgba(8,120,240,.35),transparent 70%),
+             radial-gradient(30% 40% at 80% 20%,rgba(94,224,195,.16),transparent 70%),
+             radial-gradient(30% 35% at 55% 60%,rgba(120,80,255,.16),transparent 70%);
+  animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-3vw,0,0) scale(1)}to{transform:translate3d(3vw,2vh,0) scale(1.08)}}
+main,header,footer,.ticker{position:relative;z-index:2}
+
+/* ── Glass pill nav ────────────────────────────────── */
+.nav{position:fixed;top:46px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;
+  padding:6px 6px 6px 14px;border-radius:999px;background:rgba(10,14,21,.62);border:1px solid var(--line);
+  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 10px 40px rgba(0,0,0,.35);
+  width:max-content;max-width:calc(100vw - 20px)}
+.nav .brand{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--tx);margin-right:6px}
+.nav .brand img{width:22px;height:22px}
+.nav a.l{color:var(--dim);font-size:14px;padding:9px 12px;border-radius:999px;transition:background .2s,color .2s}
+.nav a.l:hover{color:var(--tx);background:rgba(255,255,255,.07)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.03em;text-decoration:none;transition:transform .15s ease,box-shadow .25s ease,background .2s}
+.btn:active{transform:scale(.96)}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 0 0 0 rgba(8,120,240,.5)}
+.btn-blue:hover{color:#fff;box-shadow:0 0 0 7px rgba(8,120,240,.18),0 10px 40px rgba(8,120,240,.45)}
+.btn-ghost{background:rgba(255,255,255,.07);color:var(--tx);border:1px solid var(--line)}
+.btn-ghost:hover{color:var(--tx);background:rgba(255,255,255,.12)}
+.btn[aria-disabled="true"]{opacity:.55;cursor:default}
+.nav .btn{min-height:40px;padding:0 16px;font-size:12px}
+@media (max-width:760px){.dive .cities{padding:14vh 4vw 26vh;gap:8px}.dive .cities span:nth-child(n+25){display:none}.dive .cap{bottom:9vh}}
+@media (max-width:760px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat{min-width:0;padding:12px}.stat .v{font-size:20px}.stat .k{font-size:10.5px}.nav a.l{display:none}.nav{padding-left:12px}
+  .hero{align-items:flex-end;padding-top:140px}.herobot{right:auto;left:50%;translate:-50% 0;height:92%;top:0}.hero .bgimg{-webkit-mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 75%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 75%,transparent 100%)}
+  .hero .shade{background:linear-gradient(180deg,rgba(5,7,11,.1) 0%,rgba(5,7,11,.55) 45%,var(--bg) 85%)}}
+
+/* ── Ticker ────────────────────────────────────────── */
+.ticker{margin-top:0;border-bottom:1px solid var(--line);background:rgba(5,7,11,.7);overflow:hidden;white-space:nowrap;height:34px;display:flex;align-items:center}
+.ticker .track{display:inline-flex;gap:34px;padding-left:34px;animation:tick 60s linear infinite;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.ticker b{color:var(--tx);font-weight:700}
+.ticker .h{color:var(--mint)} .ticker .m{color:var(--red)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── Hero ──────────────────────────────────────────── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 60px}
+.hero .bgimg{position:absolute;inset:0;z-index:0;opacity:.95;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.5) 42%,#000 62%);mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.5) 42%,#000 62%);will-change:transform}
+.herobot{position:absolute;top:9%;right:4%;height:104%;aspect-ratio:1122/1402;perspective:1200px}
+.tilt{width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.3,1);transform-style:preserve-3d}
+.bob{position:relative;width:100%;height:100%;animation:breathe 8s ease-in-out infinite alternate}
+.bob img{width:100%;height:100%;display:block;transition:filter .12s;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 45%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 45%,#000 58%,transparent 100%)}
+.bob.lit img,.bob.lit video{filter:brightness(1.8) contrast(1.1)}
+.bob video{width:100%;height:100%;display:block;object-fit:cover;transition:filter .12s;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 45%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 45%,#000 58%,transparent 100%)}
+.bob.playing .eye{opacity:0;transition:opacity .4s}
+@keyframes breathe{to{transform:scale(1.035) translateY(-1%)}}
+.flash{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 72% 8%,rgba(190,220,255,.65),rgba(120,170,255,.12) 45%,transparent 70%)}
+.hero .shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(5,7,11,0) 55%,var(--bg) 100%)}
+.hero .ringglow{position:absolute;z-index:1;right:18%;top:22%;width:220px;height:220px;border-radius:50%;box-shadow:0 0 120px 40px rgba(8,120,240,.35);opacity:.6;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25;transform:scale(1.15)}}
+.hero .copy{position:relative;z-index:2;max-width:640px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+  padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(46px,8.4vw,112px);line-height:.95;letter-spacing:-.02em;margin:22px 0 18px}
+.shiny{background:linear-gradient(100deg,#eef2f7 25%,#9ccaff 42%,#ffffff 50%,#9ccaff 58%,#eef2f7 75%);background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{from{background-position:130% 0}to{background-position:-130% 0}}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--dim);max-width:560px;margin:0 0 28px}
+.lead b{color:var(--tx);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.stat{padding:14px 18px;flex:1 1 0;border-radius:18px;background:rgba(10,14,21,.55);border:1px solid var(--line);backdrop-filter:blur(10px);min-width:140px}
+.stat .v{font-family:var(--mono);font-weight:700;font-size:26px}
+.stat .k{font-size:12.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.08em}
+
+/* ── Chapters ──────────────────────────────────────── */
+section.ch{position:relative;padding:120px 0}
+.chnum{font-family:var(--mono);font-size:13px;color:var(--blue2);letter-spacing:.14em}
+h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line-height:1.02;letter-spacing:-.015em;margin:12px 0 18px}
+.split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}
+.split.rev{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
+@media (max-width:900px){.split,.split.rev{grid-template-columns:1fr;gap:28px}.split.rev .art{order:-1}.flo img{max-height:420px}.flo video.clip{height:420px}section.ch{padding:80px 0}}
+.art{position:relative;display:flex;justify-content:center}
+.bot{position:relative;display:inline-block;will-change:transform}
+.flo{position:relative;display:inline-block;line-height:0;animation:float 6s ease-in-out infinite;transition:translate 1.1s cubic-bezier(.16,1,.3,1),scale 1.1s cubic-bezier(.16,1,.3,1),rotate 1.1s cubic-bezier(.16,1,.3,1),opacity .8s}
+.flo img{max-height:640px;width:auto;filter:drop-shadow(0 30px 60px rgba(8,120,240,.35))}
+.flo video.clip{height:640px;width:auto;aspect-ratio:2/3;display:block;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.from-right .flo{translate:180px 40px;rotate:10deg;scale:.75;opacity:0}
+.from-left .flo{translate:-180px 40px;rotate:-10deg;scale:.75;opacity:0}
+.from-below .flo{translate:0 160px;scale:.85;opacity:0}
+.art.in .flo{translate:0 0;rotate:0deg;scale:1;opacity:1}
+.eye{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;animation:flick 7s infinite}
+.eye .glow{position:absolute;inset:-40%;border-radius:50%;background:radial-gradient(circle,transparent 36%,rgba(74,163,255,.6) 44%,rgba(8,120,240,.2) 55%,transparent 68%);animation:eyepulse 3.2s ease-in-out infinite}
+.eye svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:spin 2.8s linear infinite;filter:drop-shadow(0 0 5px #8cc8ff)}
+.eye circle{fill:none;stroke:#e2f1ff;stroke-width:3.2;stroke-linecap:round;stroke-dasharray:38 258}
+.bot:hover .eye svg{animation-duration:.9s}
+@keyframes eyepulse{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes flick{0%,88%,100%{opacity:1}90%{opacity:.15}92%{opacity:1}94%{opacity:.35}96%{opacity:1}}
+.art::before{content:"";position:absolute;inset:12% 12%;border-radius:50%;background:radial-gradient(circle,rgba(8,120,240,.28),transparent 65%);filter:blur(20px)}
+.p{color:var(--dim);font-size:18px;max-width:560px}
+.p b{color:var(--tx)}
+
+/* Billboards */
+.boards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:34px}
+@media (max-width:900px){.boards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.board{position:relative;padding:16px;border-radius:14px;background:linear-gradient(180deg,rgba(8,120,240,.10),rgba(8,120,240,.02));border:1px solid rgba(74,163,255,.35);
+  box-shadow:inset 0 0 30px rgba(8,120,240,.12),0 0 24px rgba(8,120,240,.10);overflow:hidden}
+.board::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);pointer-events:none}
+.board .c{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2)}
+.board .t{font-family:var(--disp);font-weight:800;font-size:28px;margin-top:6px;text-shadow:0 0 18px rgba(74,163,255,.55)}
+.board .s{font-size:12.5px;color:var(--dim2);margin-top:2px}
+
+/* Phone */
+.phone{position:relative;width:min(340px,100%);margin:0 auto;border-radius:44px;padding:14px;background:#0c1017;border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.6) inset}
+.phone .scr{border-radius:32px;background:#070a10;padding:22px 18px;min-height:520px;border:1px solid rgba(255,255,255,.06)}
+.phone .notch{width:110px;height:26px;border-radius:20px;background:#000;margin:-8px auto 16px}
+.sig{border-radius:18px;padding:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);animation:slidein .7s cubic-bezier(.2,1.2,.3,1) both}
+@keyframes slidein{from{transform:translateY(20px) scale(.96);opacity:0}}
+.sig .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--dim2)}
+.sig .city{font-family:var(--disp);font-weight:800;font-size:22px;margin:8px 0 2px}
+.legs{display:flex;gap:6px;margin:12px 0}
+.leg{flex:1;text-align:center;padding:10px 0;border-radius:10px;background:rgba(8,120,240,.18);border:1px solid rgba(74,163,255,.5);font-family:var(--mono);font-weight:700;font-size:15px}
+.kv{display:flex;justify-content:space-between;font-size:13.5px;color:var(--dim);padding:5px 0;border-top:1px solid rgba(255,255,255,.06)}
+.kv b{color:var(--tx);font-family:var(--mono)}
+.holder{margin-top:12px;font-size:12px;color:var(--amber);display:flex;gap:8px;align-items:center}
+
+/* Record */
+.phases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:36px}
+@media (max-width:760px){.phases{grid-template-columns:1fr}}
+.phase{position:relative;padding:26px;border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.phase.live{border-color:rgba(94,224,195,.45);background:linear-gradient(180deg,rgba(94,224,195,.08),rgba(94,224,195,.015))}
+.phase .tag{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--dim)}
+.phase.live .tag{background:rgba(94,224,195,.14);color:var(--mint)}
+.phase h3{font-family:var(--disp);font-size:22px;margin:14px 0 4px}
+.phase .when{font-size:14px;color:var(--dim2)}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:20px}
+@media (max-width:460px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.nums .v{font-family:var(--mono);font-weight:700;font-size:24px}
+.nums .k{font-size:12px;color:var(--dim2);text-transform:uppercase;letter-spacing:.06em}
+.pos{color:var(--mint)} .neg{color:var(--red)}
+.note{margin-top:18px;font-size:14px;color:var(--dim2);max-width:760px}
+
+/* Spotlight cards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
+@media (max-width:900px){.cards{grid-template-columns:1fr}}
+.spot{position:relative;padding:24px;border-radius:22px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .25s ease,border-color .25s}
+.spot:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.45)}
+.spot::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(8,120,240,.22),transparent 45%)}
+.spot:hover::before{opacity:1}
+.spot .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(8,120,240,.16);border:1px solid rgba(74,163,255,.4);margin-bottom:14px}
+.spot h3{font-family:var(--disp);font-size:19px;margin:0 0 8px}
+.spot ul{margin:0;padding-left:18px;color:var(--dim);font-size:15.5px}
+.spot li{margin:4px 0}
+
+/* Contract */
+.ca{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:26px;padding:14px 14px 14px 18px;border-radius:18px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2)}
+.ca code{font-family:var(--mono);font-size:13.5px;color:var(--dim);word-break:break-all;flex:1;min-width:200px}
+.fine{font-size:13.5px;color:var(--dim2);margin-top:14px}
+
+/* Final CTA */
+.final{text-align:center;padding:120px 0 90px}
+.final h2{max-width:900px;margin-left:auto;margin-right:auto}
+
+footer{border-top:1px solid var(--line);padding:34px 0 50px;color:var(--dim2);font-size:13.5px}
+footer .row{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+footer a{color:var(--dim)}
+
+/* Scroll dive */
+.dive .dvid{position:absolute;left:50%;top:50%;height:100%;aspect-ratio:1288/1608;transform:translate(-50%,-50%);object-fit:cover;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 60%,transparent 100%)}
+@media (max-aspect-ratio:4/5){.dive .dvid{height:auto;width:130%}}
+.dive{position:relative;height:340vh;z-index:2}
+.dive .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--bg)}
+.dive .cam{position:absolute;left:50%;top:50%;will-change:transform}
+.dive .cam img{position:absolute;inset:0;width:100%;height:100%;display:block;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 42%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 42%,#000 55%,transparent 100%)}
+.dive .ring{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  box-shadow:0 0 0 2px rgba(200,230,255,.9),0 0 30px 8px rgba(74,163,255,.8),inset 0 0 30px 6px rgba(74,163,255,.6)}
+.dive .light{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,rgba(170,215,255,1) 0%,rgba(8,120,240,.9) 30%,rgba(5,7,11,1) 75%)}
+.dive .grid{position:absolute;inset:0;opacity:0;pointer-events:none;
+  background-image:linear-gradient(rgba(74,163,255,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(74,163,255,.28) 1px,transparent 1px);background-size:60px 60px;
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 20%,transparent 70%);mask-image:radial-gradient(circle at 50% 50%,#000 20%,transparent 70%)}
+.dive .cap{position:absolute;left:0;right:0;bottom:12vh;text-align:center;padding:0 20px;opacity:0;transform:translateY(24px);pointer-events:none}
+.dive .cap .k{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--blue2)}
+.dive .cap .t{font-family:var(--disp);font-weight:800;font-size:clamp(28px,5vw,58px);line-height:1.05;margin-top:10px;text-shadow:0 4px 40px rgba(0,0,0,.8)}
+.dive .cities{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:10px 14px;padding:12vh 6vw;opacity:0;pointer-events:none}
+.dive .cities span{font-family:var(--mono);font-weight:700;font-size:clamp(12px,1.5vw,17px);letter-spacing:.08em;color:#cfe6ff;padding:8px 12px;border-radius:10px;
+  border:1px solid rgba(74,163,255,.45);background:rgba(8,120,240,.12);box-shadow:0 0 18px rgba(8,120,240,.25);transform:scale(var(--s,0));opacity:var(--o,0)}
+.dive .bar{position:absolute;left:50%;bottom:4vh;width:160px;height:3px;margin-left:-80px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+.dive .bar i{display:block;height:100%;width:0;background:var(--blue2)}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.3,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* Click spark */
+.spark{position:fixed;z-index:999;pointer-events:none;width:6px;height:6px;border-radius:2px;background:var(--blue2);box-shadow:0 0 10px var(--blue2)}
+
+@media (max-width:760px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none !important;transition:none !important}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  #rain{display:none}
+  .flo video.clip{animation:none}
 }
-.container{max-width:1080px;margin:0 auto;padding:0 24px}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
-
-/* Nav */
-nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 0;
-  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  background:rgba(0,0,0,0.72);border-bottom:1px solid rgba(255,255,255,0.08)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;
-  font-family:var(--font-mono);font-size:.95rem;font-weight:500;color:var(--text);letter-spacing:-.3px}
-.logo img{width:26px;height:26px;border-radius:6px}
-.nav-right{display:flex;align-items:center;gap:26px}
-.nav-right a.link{font-size:.82rem;color:var(--text-secondary);text-decoration:none;transition:color .2s}
-.nav-right a.link:hover{color:var(--text)}
-@media (max-width:860px){.nav-right a.link{display:none}}
-.langbox{position:relative}
-.lang{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border-hover);
-  color:var(--text-secondary);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;
-  padding:6px 10px;border-radius:980px;cursor:pointer;transition:all .2s}
-.lang:hover{border-color:var(--text-secondary);color:var(--text)}
-.lang>span:first-child{font-size:.95rem;line-height:1}
-.langmenu{position:absolute;top:calc(100% + 8px);right:0;min-width:150px;background:var(--bg-card);
-  border:1px solid var(--border-hover);border-radius:12px;padding:5px;display:none;
-  flex-direction:column;z-index:60;box-shadow:0 12px 34px rgba(0,0,0,.6)}
-.langmenu.open{display:flex}
-.langmenu button{display:flex;align-items:center;gap:9px;background:none;border:0;
-  color:var(--text-secondary);font-family:var(--font-body);font-size:.85rem;padding:9px 11px;
-  border-radius:8px;cursor:pointer;text-align:left;transition:all .15s}
-.langmenu button:hover{background:var(--bg-card-hover);color:var(--text)}
-.langmenu button[aria-current="true"]{color:var(--blue)}
-
-.btn{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;
-  padding:10px 20px;border-radius:980px;text-decoration:none;transition:all .2s;
-  border:1px solid transparent;white-space:nowrap}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-primary:hover{background:var(--blue-bright);box-shadow:0 0 24px var(--blue-glow)}
-.btn-secondary{border-color:var(--border-hover);color:var(--text)}
-.btn-secondary:hover{border-color:var(--text-secondary);background:rgba(255,255,255,.04)}
-
-/* Type */
-h1{font-size:clamp(2.4rem,5.2vw,4.1rem);font-weight:700;line-height:1.06;letter-spacing:-.038em;
-  /* Die Breite gehoert AUF die Ueberschrift: ch rechnet mit der Schriftgroesse
-     des eigenen Elements. Stand sie auf dem Container (16px), waren 20ch nur
-     176px breit und jedes Wort bekam eine eigene Zeile. */
-  max-width:15ch;
-  background:linear-gradient(180deg,#fff 30%,#86868b 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
-h3{font-size:1.05rem;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
-p{color:var(--text-secondary);font-size:.98rem;line-height:1.65;max-width:62ch}
-.section-label{font-family:var(--font-mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--blue);margin-bottom:18px}
-
-/* Hero */
-header{padding:170px 0 40px;position:relative}
-header::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:1100px;height:620px;pointer-events:none;
-  background:radial-gradient(ellipse at center,var(--blue-glow) 0%,transparent 60%)}
-.hero{position:relative}
-.hero-wide{position:relative;max-width:none}
-.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.7rem;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);
-  border:1px solid var(--border);border-radius:980px;padding:6px 14px;margin-bottom:26px;background:var(--bg-card)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-sub{margin:26px 0 34px;font-size:1.1rem;max-width:52ch}
-.hero-sub strong{color:var(--text);font-weight:500}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-
-/* ── SIGNATURE: the public ledger ── */
-.karte-box{margin-top:64px;border:1px solid var(--border);border-radius:18px;overflow:hidden}
-.karte-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  padding:18px 22px;border-bottom:1px solid var(--border)}
-.karte-kopf .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--dim)}
-.karte-zahl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--dim)}
-.karte-zahl b{color:var(--fg);font-weight:500;font-size:.95rem;margin-right:6px}
-#karte{padding:8px 12px 0}
-.karte-tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;
-  background:#0f1319;border:1px solid var(--border);border-radius:7px;
-  padding:5px 10px;font-family:var(--font-mono);font-size:.66rem;color:var(--fg);
-  white-space:nowrap;z-index:5}
-.karte-legende{display:flex;gap:20px;flex-wrap:wrap;padding:8px 22px 18px;
-  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;color:var(--dim)}
-.karte-legende i{display:inline-block;width:8px;height:8px;border-radius:50%;
-  margin-right:7px;vertical-align:middle}
-.ledger{margin-top:64px;border:1px solid var(--border);border-radius:18px;
-  background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-elevated) 100%);overflow:hidden}
-.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:16px 22px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.ledger-head .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text-secondary)}
-.ledger-key{display:flex;gap:18px;font-family:var(--font-mono);font-size:.62rem;
-  letter-spacing:.09em;text-transform:uppercase;color:var(--text-tertiary)}
-.ledger-key i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
-.ledger-body{padding:30px 22px 24px;display:flex;align-items:flex-end;gap:14px;height:190px}
-.tag{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  height:100%;animation:auf .5s ease both}
-.tag b{font-family:var(--font-mono);font-size:.95rem;font-weight:500;margin-bottom:8px;
-  color:var(--fg)}
-.tag em{font-style:normal;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;
-  color:var(--dim);margin-top:10px}
-.saeule{width:100%;max-width:54px;border-radius:5px 5px 0 0;display:block}
-.saeule.hit{background:linear-gradient(180deg,var(--accent),rgba(60,130,246,.35))}
-.saeule.miss{background:rgba(255,255,255,.14)}
-@keyframes auf{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.marks{display:flex;align-items:flex-end;gap:3px;height:96px;overflow:hidden}
-.mark{flex:1 1 0;min-width:2px;border-radius:2px;transform-origin:bottom;
-  animation:markin .5s cubic-bezier(.2,.8,.3,1) backwards}
-.mark.hit{background:var(--blue);box-shadow:0 0 10px var(--blue-glow)}
-.mark.miss{background:#26262a}
-.mark.pend{background:#151518}
-@keyframes markin{from{transform:scaleY(.04);opacity:0}to{transform:scaleY(1);opacity:1}}
-.ledger-axis{display:flex;justify-content:space-between;margin-top:14px;
-  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--text-tertiary)}
-.ledger-foot{border-top:1px solid var(--border);padding:20px 22px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.lf{display:flex;flex-direction:column;gap:6px}
-.lf .v{font-size:2.3rem;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--text)}
-.lf .v small{font-size:1.05rem;font-weight:500;color:var(--text-tertiary);margin-left:3px}
-.lf .l{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--text-tertiary)}
-@media (max-width:700px){
-  .ledger-foot{grid-template-columns:1fr;gap:22px}
-  .lf .v{font-size:2rem}
-  .marks{height:70px}
-}
-
-/* Sections */
-.feature-section{padding:120px 0;border-top:1px solid var(--border)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-@media (max-width:940px){.two{grid-template-columns:1fr;gap:36px}.feature-section{padding:84px 0}}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:44px}
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .2s}
-.card:hover{background:var(--bg-card-hover);border-color:var(--border-hover)}
-.card .k{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--blue);margin-bottom:14px}
-.card p{font-size:.88rem}
-.note{border-left:2px solid var(--blue);background:var(--blue-subtle);border-radius:0 10px 10px 0;
-  padding:16px 20px;margin-top:26px}
-.note p{font-size:.9rem;max-width:none}
-.note b{color:var(--text);font-weight:600}
-
-/* Panel */
-.panel{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.panel-bar{display:flex;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);
-  background:var(--bg-elevated)}
-.dots{display:flex;gap:6px}
-.dots i{width:10px;height:10px;border-radius:50%;display:block}
-.panel-title{font-family:var(--font-mono);font-size:.65rem;color:var(--text-tertiary);
-  margin-left:12px;letter-spacing:.06em}
-.signal{font-family:var(--font-mono);font-size:.76rem;line-height:1.95;white-space:pre-wrap;
-  color:var(--text-secondary);padding:22px;overflow-x:auto}
-.signal b{color:var(--text);font-weight:500}
-.signal .hi{color:var(--blue)}
-.signal .g{color:var(--green)}
-.signal .d{color:var(--text-tertiary)}
-
-/* Pricing */
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-.tier{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:30px;
-  display:flex;flex-direction:column}
-.tier.now{border-color:var(--blue);box-shadow:0 0 40px var(--blue-glow)}
-.tier .name{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--blue);margin-bottom:14px}
-.tier .price{font-size:2.1rem;font-weight:700;letter-spacing:-.03em}
-.tier .per{font-family:var(--font-mono);font-size:.68rem;color:var(--text-tertiary);margin-bottom:20px}
-.tier ul{list-style:none;flex:1;margin-bottom:24px}
-.tier li{font-size:.86rem;color:var(--text-secondary);padding:7px 0 7px 20px;position:relative}
-.tier li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1px;background:var(--text-tertiary)}
-.tier .btn{width:100%;justify-content:center}
-@media (max-width:860px){.tiers{grid-template-columns:1fr}}
-
-/* Footer */
-footer{padding:64px 0 72px;border-top:1px solid var(--border)}
-.disc{font-size:.78rem;color:var(--text-tertiary);line-height:1.75;max-width:76ch}
-.footer-bot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:34px;
-  padding-top:26px;border-top:1px solid var(--border);flex-wrap:wrap}
-.footer-bot span{font-family:var(--font-mono);font-size:.68rem;color:var(--text-tertiary)}
-.footer-links{display:flex;gap:24px}
-.footer-links a{font-size:.75rem;color:var(--text-tertiary);text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:var(--text-secondary)}
-
-@media (max-width:640px){
-  .container{padding:0 18px}
-  header{padding:112px 0 30px}
-  h1{font-size:2.05rem;letter-spacing:-.03em;max-width:none}
-  h2{font-size:1.7rem}
-  .hero{max-width:none}
-  .hero-sub{font-size:1rem;max-width:none}
-  .hero-btns .btn{flex:1;justify-content:center;padding:12px 14px}
-  .feature-section{padding:64px 0}
-  .ledger{margin-top:44px}
-}
-  .ledger-fehler{font-family:var(--mono,monospace);font-size:12px;
-    color:#e8b33c;margin:12px 0 0;line-height:1.6;max-width:60ch}
 </style>
 </head>
 <body>
 
-<nav><div class="container nav-inner">
-  <a href="https://public.oddsengine.live/app.html" class="logo"><img src="logo.png" alt=""> ODDSENGINE</a>
-  <div class="nav-right">
-    <a href="#record" class="link" data-de="Bilanz" data-tr="Sicil">Record</a>
-    <a href="#signal" class="link" data-de="Signal" data-tr="Sinyal">Signal</a>
-    <a href="#access" class="link" data-de="Zugang" data-tr="Erişim">Access</a>
-    <div class="langbox">
-      <button id="lang" class="lang" aria-haspopup="true" aria-expanded="false">
-        <span id="langFlag">&#127468;&#127463;</span><span id="langCode">EN</span>
-      </button>
-      <div class="langmenu" id="langMenu">
-        <button data-lang="en">&#127468;&#127463; English</button>
-        <button data-lang="de">&#127465;&#127466; Deutsch</button>
-        <button data-lang="tr">&#127481;&#127479; Türkçe</button>
+<canvas id="rain" aria-hidden="true"></canvas>
+<div class="aurora" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="#top"><img src="ring.png" alt="" width="22" height="22">OddsEngine</a>
+  <a class="l" href="#record">Record</a>
+  <a class="l" href="#game">Game</a>
+  <a class="l" href="#odds">$ODDS</a>
+  <a class="l" href="https://public.oddsengine.live">Live board</a>
+  <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
+</nav>
+
+<div class="ticker" aria-label="Latest results"><div class="track" id="ticker"><span>Loading the latest results</span></div></div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bgimg" id="heroimg"><div class="herobot"><div class="tilt" id="tilt"><div class="bob" id="bob"><video id="hvid" poster="robot-hero.webp" muted playsinline preload="auto" aria-label="The Engine, a black robot with a glowing blue ring for a face, wakes up in the rain"><source src="hero.mp4" type="video/mp4"><source src="hero.webm" type="video/webm"></video><div class="eye" style="left:53.0%;top:13.4%;width:14.6%" aria-hidden="true"><div class="glow"></div><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47"></circle></svg></div></div></div></div></div>
+  <div class="flash" id="flash" aria-hidden="true"></div>
+  <div class="shade"></div>
+  <div class="wrap" style="width:100%">
+    <div class="copy">
+      <span class="eyebrow rv"><span class="dot"></span>Live on Polymarket weather markets</span>
+      <h1 class="rv d1"><span class="shiny">Beat the<br>Engine.</span></h1>
+      <p class="lead rv d2">It forecasts the daily high in <b>50 cities</b> and trades it on Polymarket. Every call is posted <b>before</b> the station reports. Every miss stays up.</p>
+      <div class="ctas rv d3">
+        <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
+        <a class="btn btn-ghost" href="#game">Play free</a>
+      </div>
+      <div class="stats rv d4">
+        <div class="stat"><div class="v" data-count="50">0</div><div class="k">Cities</div></div>
+        <div class="stat"><div class="v" id="sScored">0</div><div class="k">Signals scored</div></div>
+        <div class="stat"><div class="v" id="sHit">0%</div><div class="k">Hit rate, fixed rules</div></div>
       </div>
     </div>
-    <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Bilanz ansehen" data-tr="Sicili gör">See the record</a>
   </div>
-</div></nav>
+</section>
 
-<header><div class="container">
-  <div class="hero-wide">
-    <div class="badge"><span class="dot"></span><span id="badgeN"></span><span id="badgeTxt" data-de="Öffentlich gescort, laufend" data-tr="Açıkta puanlanıyor, sürekli">Scored in public, continuously</span></div>
-    <div class="hero">
-      <h1 data-de="Die Zahl steht fest, bevor der Tag es tut." data-tr="Sayı, gün belli olmadan önce belli.">The number is fixed before the day is.</h1>
-    </div>
-    <p class="hero-sub" data-de="Wir veröffentlichen eine Wahrscheinlichkeit, solange der Ausgang noch offen ist. Danach wird sie gegen das gemessen, was tatsächlich passiert ist. &lt;strong&gt;Jedes Ergebnis kommt in dieselbe öffentliche Liste, Treffer wie Niete.&lt;/strong&gt;" data-tr="Sonuç henüz belli değilken bir olasılık yayınlıyoruz. Sonra bu, gerçekte olanla ölçülüyor. &lt;strong&gt;Her sonuç aynı açık listeye giriyor, tutan da tutmayan da.&lt;/strong&gt;">We publish a probability while the outcome is still open. Afterwards it gets measured against what actually happened. <strong>Every result joins the same public list, hits and misses alike.</strong></p>
-    <div class="hero-btns">
-      <a href="https://t.me/OddsEngine" class="btn btn-primary" data-de="Öffentlichen Kanal ansehen" data-tr="Açık kanalı gör">Open the public channel</a>
-      <a href="#access" class="btn btn-secondary" data-de="Signale abonnieren" data-tr="Sinyallere abone ol">Subscribe to signals</a>
-    </div>
+<!-- DIVE -->
+<section class="dive" id="dive" aria-label="Into the engine">
+  <div class="stage">
+    <video class="dvid" id="dvid" poster="robot-hero.webp" muted playsinline preload="auto" aria-hidden="true"><source src="dive.mp4" type="video/mp4"><source src="dive.webm" type="video/webm"></video>
+    <div class="grid" id="dgrid"></div>
+    <div class="light" id="dlight"></div>
+    <div class="cities" id="dcities"><span>NYC</span><span>LONDON</span><span>SEOUL</span><span>TOKYO</span><span>PARIS</span><span>DALLAS</span><span>MIAMI</span><span>MADRID</span><span>MUNICH</span><span>BEIJING</span><span>SHANGHAI</span><span>TORONTO</span><span>CHICAGO</span><span>SINGAPORE</span><span>BUSAN</span><span>WARSAW</span><span>MILAN</span><span>DENVER</span><span>ATLANTA</span><span>HOUSTON</span><span>AUSTIN</span><span>SEATTLE</span><span>LOS ANGELES</span><span>SAN FRANCISCO</span><span>MEXICO CITY</span><span>SAO PAULO</span><span>BUENOS AIRES</span><span>CAPE TOWN</span><span>ISTANBUL</span><span>ANKARA</span><span>TEL AVIV</span><span>JEDDAH</span><span>KARACHI</span><span>LUCKNOW</span><span>MANILA</span><span>TAIPEI</span><span>KUALA LUMPUR</span><span>WELLINGTON</span><span>HELSINKI</span><span>MOSCOW</span><span>AMSTERDAM</span><span>SHENZHEN</span><span>GUANGZHOU</span><span>CHENGDU</span><span>CHONGQING</span><span>WUHAN</span><span>QINGDAO</span><span>ZHENGZHOU</span><span>PANAMA CITY</span><span>JINAN</span></div>
+    <div class="cap" data-a="0.04" data-b="0.30"><div class="k">INSIDE THE ENGINE</div><div class="t">It never sleeps.</div></div>
+    <div class="cap" data-a="0.32" data-b="0.56"><div class="k">GLOBAL WEATHER MODELS</div><div class="t">It reads the sky over the whole planet.</div></div>
+    <div class="cap" data-a="0.62" data-b="0.98"><div class="k">50 CITIES · ONE NUMBER EACH</div><div class="t">Then it makes the call.</div></div>
+    <div class="bar" aria-hidden="true"><i id="dbar"></i></div>
   </div>
+</section>
 
-  <!-- SIGNATURE ELEMENT: the ledger -->
-  <!-- Weltkarte: zeigt die Reichweite, verraet keine einzige Zahl. -->
-  <div class="karte-box">
-    <div class="karte-kopf">
-      <span class="t" data-de="Das Netz" data-tr="Ağ">The network</span>
-      <span class="karte-zahl"><b>50</b>
-        <span data-de="Stationen · rund um die Uhr" data-tr="istasyon · 7/24">stations · around the clock</span></span>
-    </div>
-    <div id="karte"></div>
-    <div class="karte-legende">
-      <span><i style="background:#45b37a"></i><span data-de="Tropen" data-tr="Tropikler">Tropics</span></span>
-      <span><i style="background:#e8b33c"></i><span data-de="Subtropen" data-tr="Subtropikler">Subtropics</span></span>
-      <span><i style="background:#5da9d6"></i><span data-de="Gemäßigt" data-tr="Ilıman">Temperate</span></span>
-      <span><i style="background:#e8eef4"></i><span data-de="Kalt" data-tr="Soğuk">Cold</span></span>
-    </div>
+<!-- 01 -->
+<section class="ch" id="cities">
+  <div class="wrap">
+    <div class="chnum rv">01</div>
+    <h2 class="rv d1">50 cities.<br>One number each.</h2>
+    <p class="p rv d2">Every day Polymarket asks the same question for 50 cities: <b>what will the highest temperature be?</b> Eleven brackets, one wins. The engine reads the weather models, prices every bracket and picks the three it trusts.</p>
+    <div class="boards" id="boards" aria-live="polite"></div>
   </div>
+</section>
 
-  <div class="ledger">
-    <div class="ledger-head">
-      <span class="t" data-de="Die Liste" data-tr="Liste">The list</span>
-
-    </div>
-    <!-- Balkenkasten am 30.07. auf Wunsch entfernt. Er blieb leer, weil in
-         der Abbildung der Datensaetze das Feld `date` fehlte, und ein leerer
-         Kasten ist schlechter als keiner. Die drei Zahlen darunter bleiben,
-         die stimmen. -->
-    <div class="ledger-foot">
-      <div class="lf"><span class="v" id="mScored">, </span>
-        <span class="l" data-de="Aufgelöst und gescort" data-tr="Kapandı ve puanlandı">Settled and scored</span></div>
-      <div class="lf"><span class="v" id="mHit">, <small>%</small></span>
-        <span class="l" data-de="Trefferquote" data-tr="İsabet oranı">Hit rate</span></div>
-      <div class="lf"><span class="v" id="mStreak">, </span>
-        <span class="l" data-de="Längste Fehlschlagserie" data-tr="En uzun ıska serisi">Longest run of misses</span></div>
-    </div>
-  </div>
-</div></header>
-
-<section class="feature-section" id="record"><div class="container">
-  <div class="section-label" data-de="Warum diese Liste" data-tr="Neden bu liste">Why this list</div>
-  <h2 data-de="Die einzige Aussage, die zählt" data-tr="Önemli olan tek iddia">The only claim worth making</h2>
-  <p data-de="Jeder kann eine Trefferquote behaupten. Der Unterschied liegt darin, was danach mit den Fehlschlägen passiert. Die Frage ist deshalb nicht, wie gut wir sind:" data-tr="Herkes bir isabet oranı iddia edebilir. Fark, ıskalara sonradan ne olduğudur. Yani soru ne kadar iyi olduğumuz değil:">Anyone can claim a hit rate. The difference is what happens to the misses afterwards. So the question is not how good we are:</p>
-  <p style="color:var(--text);font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:24px 0;line-height:1.3" data-de="Steht jedes Signal noch da, auch das, das danebenging?" data-tr="Yayınladığımız her sinyal hâlâ orada mı, ıskalayan da dahil?">Is every signal still there, including the one that missed?</p>
-  <p data-de="Ein Signal, das vorher veröffentlicht wurde, lässt sich hinterher nicht mehr zurechtbiegen. Deshalb steht es oben in der Liste, bevor irgendetwas entschieden ist, und das Ergebnis daneben, sobald es entschieden ist. Nichts wird nachträglich entfernt, auch nicht die längste Pechsträhne. Wer uns nicht glaubt, zählt selbst nach." data-tr="Önceden sabitlenmiş bir olasılık sonradan eğilip bükülemez. Bu yüzden hiçbir şey belli değilken listeye giriyor, ve belli olur olmaz sonucu yanına yazılıyor. İnanmayan kendi sayar.">A signal published in advance cannot be bent afterwards. That is why it goes into the list before anything is decided, with the result beside it as soon as it is. Nothing is removed later, not even the longest losing streak. Anyone who doubts us can count it themselves.</p>
-
-  <div class="cards">
-    <div class="card"><div class="k" data-de="Vorher" data-tr="Önce">Before</div>
-      <h3 data-de="Zeitstempel, nicht Erinnerung" data-tr="Zaman damgası, hafıza değil">Timestamped, not remembered</h3>
-      <p data-de="Jedes Signal wird veröffentlicht, solange noch offen ist, was passiert. Der Zeitstempel steht im Kanal, und er lässt sich nachträglich nicht ändern." data-tr="Her sinyal, ne olacağı henüz belli değilken yayınlanıyor. Zaman damgası kanalda duruyor ve sonradan değiştirilemiyor.">Every signal is published while the outcome is still open. The timestamp sits in the channel and cannot be changed later.</p></div>
-    <div class="card"><div class="k" data-de="Nachher" data-tr="Sonra">After</div>
-      <h3 data-de="Nieten stehen genauso drin" data-tr="Tutmayanlar da yazılıyor">Misses are posted too</h3>
-      <p data-de="Wir sortieren nicht aus. Ein Kanal, der nur seine guten Tage zeigt, zeigt gar nichts. Der Anteil daneben steht direkt neben dem Anteil getroffen." data-tr="Ayıklama yapmıyoruz. Sadece iyi günlerini gösteren bir kanal hiçbir şey göstermiyordur. Tutmayanların oranı, tutanların oranının hemen yanında.">We do not curate. A channel that shows only its good days shows nothing. The miss rate sits right next to the hit rate.</p></div>
-    <div class="card"><div class="k" data-de="Meistens" data-tr="Çoğu zaman">Most days</div>
-      <h3 data-de="Stille ist das Normale" data-tr="Sessizlik normaldir">Silence is the default</h3>
-      <p data-de="An den meisten Tagen ist nichts den Preis wert, dann kommt nichts. Ein Kanal mit zwanzig Signalen am Tag postet fünfzehn schlechte." data-tr="Çoğu gün hiçbir şey fiyatına değmez, o zaman hiçbir şey gelmez. Günde yirmi sinyal atan bir kanal on beşini kötü atıyordur.">On most days nothing is worth the price, so nothing comes. A channel with twenty signals a day is posting fifteen bad ones.</p></div>
-    <div class="card"><div class="k" data-de="Immer" data-tr="Her zaman">Always</div>
-      <h3 data-de="Dein Geld bleibt bei dir" data-tr="Paran sende kalır">Your money stays yours</h3>
-      <p data-de="Wir halten keine Einlagen und keine Schlüssel. Du siehst die Zahl und entscheidest selbst, was du damit machst." data-tr="Ne mevduat ne anahtar tutuyoruz. Sayıyı görüyorsun ve onunla ne yapacağına kendin karar veriyorsun.">We hold no deposits and no keys. You see the number and decide for yourself what to do with it.</p></div>
-  </div>
-
-  <div class="note"><p data-de="Was noch offen ist, steht auch da. Solange die Liste dünn ist, ist sie dünn, und wir schreiben keine Zahl daneben, die sie nicht trägt. Deshalb ist der öffentliche Kanal gratis." data-tr="Henüz açık olan da orada duruyor. Liste inceyken incedir, ve taşımadığı bir rakamı yanına yazmıyoruz. Açık kanalın ücretsiz olmasının sebebi bu."><b>What is still open is shown as open.</b> While the list is thin, it is thin, and we do not put a number next to it that it cannot carry. That is why the public channel is free.</p></div>
-</div></section>
-
-<section class="feature-section" id="signal"><div class="container">
-  <div class="two">
+<!-- 02 -->
+<section class="ch">
+  <div class="wrap split">
     <div>
-      <div class="section-label" data-de="Telegram · vor der Auflösung" data-tr="Telegram · kapanıştan önce">Telegram · before resolution</div>
-      <h2 data-de="So sieht ein Signal aus" data-tr="Bir sinyal böyle görünür">What a signal looks like</h2>
-      <p data-de="Eine Wahrscheinlichkeit je Ausgang, der Preis, der dafür wirklich verlangt wird, und die Differenz zwischen beiden. Mehr braucht eine Entscheidung nicht." data-tr="Her sonuç için bir olasılık, bunun için gerçekte istenen fiyat, ve ikisi arasındaki fark. Bir karar için fazlası gerekmez.">A probability per outcome, the price actually being charged for it, and the difference between the two. A decision needs nothing more.</p>
-      <div class="note"><p data-de="Zwei Zeilen, die andere Kanäle weglassen: was das Ganze im Markt kostet und wie groß der Vorsprung ist. Ohne sie ist eine Wahrscheinlichkeit nur eine Behauptung. Mit ihnen kannst du vor dem Klick selbst nachrechnen. Jede Zeile ist ein Link direkt dorthin, wo du kaufst, mit deiner eigenen Wallet." data-tr="Diğer kanalların atladığı iki satır: bunun piyasada kaça mal olduğu ve avantajın büyüklüğü. Onlar olmadan bir olasılık yalnızca bir iddiadır. Onlarla, tıklamadan önce kendin hesaplarsın. Her satır, kendi cüzdanınla alacağın yere doğrudan bir bağlantı.">Two lines other channels leave out: <b>what the whole thing costs in the market</b>, and <b>how large the edge is</b>. Without them a probability is only a claim. With them you can check it yourself before you click. Every line is a link straight to where you buy, with your own wallet.</p></div>
+      <div class="chnum rv">02</div>
+      <h2 class="rv d1">The engine<br>calls it first.</h2>
+      <p class="p rv d2">A signal is three temperatures, a price and a probability. Here is the last one that settled. <b>Holders get it in private, 90 minutes before it hits X.</b> By the time the public sees it, the price has often moved. That gap is what $ODDS is for.</p>
+      <div style="margin-top:30px" class="rv d3"><div class="phone"><div class="scr"><div class="notch"></div><div id="sigcard"></div></div></div></div>
     </div>
-    <div class="panel">
-      <div class="panel-bar">
-        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
-        <span class="panel-title">t.me/OddsEngine</span>
+    <div class="art from-right rv d2"><div class="bot" data-par="0.12"><div class="flo"><video id="fvid" class="clip" poster="robot-fist.webp" muted playsinline preload="auto" width="600" height="900" aria-label="The Engine punching toward the viewer"><source src="fist.mp4" type="video/mp4"><source src="fist.webm" type="video/webm"></video></div></div></div>
+  </div>
+</section>
+
+<!-- 03 RECORD -->
+<section class="ch" id="record">
+  <div class="wrap">
+    <div class="chnum rv">03</div>
+    <h2 class="rv d1">The record.<br>Misses included.</h2>
+    <p class="p rv d2">We built this engine live, with real markets, and changed it about twenty times along the way. Every change is in the first number. On Sept 25 the rules were fixed. <b>From then on, nothing gets tuned.</b></p>
+    <div class="phases">
+      <div class="phase rv d2">
+        <span class="tag">Build phase</span>
+        <h3>Learning in public</h3>
+        <div class="when" id="p1when">Jul 21 to Aug 31</div>
+        <div class="nums">
+          <div><div class="v" id="p1n">0</div><div class="k">Signals</div></div>
+          <div><div class="v" id="p1h">0%</div><div class="k">Hit rate</div></div>
+          <div><div class="v" id="p1c">0c</div><div class="k">Avg entry</div></div>
+          <div><div class="v" id="p1r">0%</div><div class="k">Net</div></div>
+        </div>
       </div>
-      <div class="signal"><b>ODDSENGINE</b>
-<span class="d">
-Published before resolution
-Reference example
+      <div class="phase live rv d3">
+        <span class="tag">Fixed rules · live</span>
+        <h3>No more tuning</h3>
+        <div class="when" id="p2when">Since Sep 25</div>
+        <div class="nums">
+          <div><div class="v" id="p2n">0</div><div class="k">Signals</div></div>
+          <div><div class="v" id="p2h">0%</div><div class="k">Hit rate</div></div>
+          <div><div class="v" id="p2c">0c</div><div class="k">Avg entry</div></div>
+          <div><div class="v" id="p2r">0%</div><div class="k">Net</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="note rv">A hit rate means nothing without the price. A block bought at 70c has to land 70% of the time just to break even, so every result shows both. Net assumes the same stake on every signal, no fees. Pulled live from our public API.</p>
+  </div>
+</section>
 
-─────────────
-</span>
-🎯 <b>Selected range</b>
-A · B · C
-
-🔢 <b>Engine probabilities</b>
-A, 26%
-B, 38%
-C, 20%
-
-✅ <b>Combined coverage</b> <span class="hi">· 84%</span>
-
-🏷 <b>Current prices</b>
-A, 35.0¢
-B, 20.0¢
-C, 3.0¢
-
-  <span class="d">Market price of block ·</span> <b>58.0¢</b>
-📈 <b>Edge</b> <span class="g">· +26.0%</span>
-<span class="d">
-─────────────
-</span>
-💰 <b>Suggested split of your stake</b>
-A, 60.3%
-B, 34.5%
-C, 5.2%
-
-🧮 <b>Example, $10.00 staked:</b>
-  A, $6.03 <span class="d">→</span> $17.24 back
-  B, $3.45 <span class="d">→</span> $17.24 back
-  C, $1.00 <span class="d">→</span> <span class="g">$33.33 back</span>
-<span class="d">
-  Total $10.48. Legs under $1 were raised to the $1
-  minimum, so the payouts above are uneven.
-
-If ANY of A or B or C is the day's high, you get
-the amount shown next to that leg above.
-
-If it lands outside that range:
-the stake is gone.
-</span>
-On the $10.48 above:
-  best case <span class="d">→</span> <span class="g">$33.33</span>
-  worst case <span class="d">→</span> <span class="g">$17.24</span>
-  miss <span class="d">→ $0.00</span>
-
-A hit returns <span class="g">+64% to +218%</span> on the $10.48
-above, depending on which leg lands.
-To break even the block has to land 31% to 61%
-of the time.
-<span class="d">
-─────────────
-</span>
-Expected value <span class="g">· +69%</span>
-Outside-range risk <span class="d">· 13%</span>
-Lead time <span class="d">· 21h</span>
-<span class="d">
-─────────────
-Scored against the outcome
-either way.</span></div>
+<!-- 04 GAME -->
+<section class="ch" id="game">
+  <div class="wrap split rev">
+    <div class="art from-left rv"><div class="bot" data-par="0.1"><div class="flo"><img src="robot-point.webp" alt="The Engine pointing at the viewer" loading="lazy" width="820" height="1230"><div class="eye" style="left:72.8%;top:15.85%;width:19.3%" aria-hidden="true"><div class="glow"></div><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47"></circle></svg></div></div></div></div>
+    <div>
+      <div class="chnum rv">04</div>
+      <h2 class="rv d1">Think you<br>can beat it?</h2>
+      <p class="p rv d2">Every day the engine's cities become game rounds. Pick up to three temperatures before the market closes. <b>Cheap and right pays big, the favourite pays little.</b> Tonight you see who was closer: you or the machine.</p>
+      <p class="p rv d3">Streaks, weekly and season leaderboards, a card to post your win on X. <b>Free to play.</b> In your browser and inside Telegram.</p>
+      <div class="ctas rv d4" style="margin-top:26px"><a class="btn btn-blue" aria-disabled="true" href="#game">Season 1 soon</a><a class="btn btn-ghost" href="https://t.me/OddsEngine">Get notified</a></div>
     </div>
   </div>
-</div></section>
+</section>
 
-<section class="feature-section" id="access"><div class="container">
-  <div class="section-label" data-de="Zugang" data-tr="Erişim">Access</div>
-  <h2 data-de="Was du bekommst" data-tr="Ne alıyorsun">What you get</h2>
-  <p data-de="Der öffentliche Kanal zeigt jedes Signal, nachdem es entschieden ist. Bezahlt wird für das Einzige, was tatsächlich etwas kostet: es vorher zu sehen." data-tr="Açık kanal her sinyali karara bağlandıktan sonra gösteriyor. Ödeme, gerçekten bir bedeli olan tek şey için: onu önceden görmek.">The public channel shows every signal after it has been decided. What you pay for is the only thing that genuinely costs something: seeing it beforehand.</p>
-
-  <div class="tiers">
-    <div class="tier now">
-      <div class="name" data-de="Signale" data-tr="Sinyaller">Signals</div>
-      <div class="price">$8<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/week</span></div>
-      <div class="per" data-de="pro Woche, in USDC auf Polygon" data-tr="haftalık, Polygon üzerinde USDC">per week, in USDC on Polygon</div>
-      <ul>
-        <li data-de="Jedes Signal, sobald es steht" data-tr="Her sinyal, oluşur oluşmaz">Every signal the moment it exists</li>
-        <li data-de="Volle Verteilung und echte Preise" data-tr="Tam dağılım ve gerçek fiyatlar">Full distribution and real prices</li>
-        <li data-de="Ein Klick pro Zeile in den Markt" data-tr="Her satır için piyasaya tek tık">One tap per line into the market</li>
-        <li data-de="Jederzeit kündbar" data-tr="İstediğin zaman iptal">Cancel any time</li>
-      </ul>
-      <a href="https://public.oddsengine.live/app.html" class="btn btn-primary" data-de="Wallet verbinden" data-tr="Cüzdanı bağla">Connect your wallet</a>
+<!-- 05 TOKEN -->
+<section class="ch" id="odds">
+  <div class="wrap split">
+    <div>
+      <div class="chnum rv">05</div>
+      <h2 class="rv d1"><span class="shiny">$ODDS</span><br>is your key.</h2>
+      <p class="p rv d2">Hold it and you get the signals first, the app for free and the full game. Burn it for the season pass. That is all it does, and it says so.</p>
     </div>
-
-    <div class="tier">
-      <div class="name" data-de="Kaufen über uns" data-tr="Bizim üzerimizden alım">Buying through us</div>
-      <div class="price">5<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">%</span></div>
-      <div class="per" data-de="vom Einsatz, freiwillig" data-tr="tutardan, isteğe bağlı">of your stake, optional</div>
-      <ul>
-        <li data-de="Drei Käufe in einer Unterschrift" data-tr="Tek imzayla üç alım">Three buys in one signature</li>
-        <li data-de="Dein Einsatz geht direkt an den Markt" data-tr="Tutarın doğrudan piyasaya gider">Your stake goes straight to the market</li>
-        <li data-de="Wir halten dein Geld nie" data-tr="Paranı asla tutmayız">We never hold your money</li>
-        <li data-de="Oder du setzt selbst, der Link steht dabei" data-tr="Ya da kendin oyna, bağlantı orada">Or place it yourself, the link is right there</li>
-      </ul>
-      <a href="https://public.oddsengine.live/app.html" class="btn btn-secondary" data-de="Ansehen" data-tr="Gör">See how</a>
+    <div class="art from-below rv d2"><div class="bot" data-par="0.08"><div class="flo"><video class="clip" poster="robot-sit.webp" muted playsinline loop autoplay preload="metadata" width="600" height="900" aria-label="The Engine sitting on a giant glowing thermometer"><source src="sit.mp4" type="video/mp4"><source src="sit.webm" type="video/webm"></video></div></div></div>
+  </div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="spot rv">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
+        <h3>Hold</h3>
+        <ul><li>Signals 90 minutes before X</li><li>The app with one tap buying on Polymarket</li><li>All game rounds and the holder league</li></ul>
+      </div>
+      <div class="spot rv d1">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1 1 2 2 3 3 0-2 0-4 0-6z"></path></svg></div>
+        <h3>Burn</h3>
+        <ul><li>Season pass: frames, titles, badges</li><li>API access for builders, cheaper than USDC</li><li>Every burn is on chain and public</li></ul>
+      </div>
+      <div class="spot rv d2">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"></path><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path></svg></div>
+        <h3>Vote</h3>
+        <ul><li>Which cities join next season</li><li>Which markets become game rounds</li><li>One wallet, one vote</li></ul>
+      </div>
     </div>
-
-    <div class="tier">
-      <div class="name" data-de="Der Record" data-tr="Sicil">The record</div>
-      <div class="price" data-de="Gratis" data-tr="Ücretsiz">Free</div>
-      <div class="per" data-de="öffentlicher Kanal" data-tr="açık kanal">public channel</div>
-      <ul>
-        <li data-de="Jedes Signal, nachdem es aufgelöst ist" data-tr="Her sinyal, kapandıktan sonra">Every signal, once it has settled</li>
-        <li data-de="Was wir sagten, was passierte" data-tr="Ne dedik, ne oldu">What we said, what happened</li>
-        <li data-de="Nieten genauso wie Treffer" data-tr="Tutmayanlar da tutanlar gibi">Misses exactly like hits</li>
-        <li data-de="Genug, um uns selbst nachzurechnen" data-tr="Bizi kendin puanlamana yetecek kadar">Enough to score us yourself</li>
-      </ul>
-      <a href="https://t.me/OddsEngine" class="btn btn-secondary" data-de="Kanal ansehen" data-tr="Kanalı gör">See the channel</a>
+    <div class="ca rv">
+      <span class="mono" style="font-size:12px;color:var(--dim2);letter-spacing:.1em">CONTRACT</span>
+      <code id="ca">Launching soon on Pump.fun</code>
+      <button class="btn btn-ghost" id="copyca" type="button" style="min-height:40px;font-size:12px">Copy</button>
+      <a class="btn btn-blue buy" id="buybtn" href="#odds" aria-disabled="true">Buy $ODDS</a>
     </div>
+    <p class="fine rv">No revenue share, no staking yield, no promises about price. $ODDS is access to a product. The signals are information, not financial advice. Polymarket is not available in every country.</p>
+  </div>
+</section>
 
-    <div class="tier">
-      <div class="name">API</div>
-      <div class="price">€499<span style="font-size:1rem;color:var(--text-tertiary);font-weight:400">/mo</span></div>
-      <div class="per" data-de="pro Monat" data-tr="aylık">per month</div>
-      <ul>
-        <li data-de="JSON, jeder Markt" data-tr="JSON, her piyasa">JSON, every market</li>
-        <li data-de="Volle Verteilung, nicht nur der Tipp" data-tr="Tam dağılım, sadece seçim değil">Full distribution, not just the pick</li>
-        <li data-de="Historische Snapshots" data-tr="Geçmiş kayıtlar">Historical snapshots</li>
-        <li data-de="Für Bots und Analyseplattformen" data-tr="Botlar ve analiz platformları için">For bots and analytics platforms</li>
-      </ul>
-      <a href="https://t.me/OddsEnginePublicBot" class="btn btn-secondary" data-de="Zugang anfragen" data-tr="Erişim iste">Request access</a>
+<section class="final">
+  <div class="wrap">
+    <h2 class="rv"><span class="shiny">The machine is waiting.</span></h2>
+    <div class="ctas rv d1" style="justify-content:center;margin-top:26px">
+      <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
+      <a class="btn btn-ghost" href="https://public.oddsengine.live">Watch it live</a>
     </div>
   </div>
-</div></section>
+</section>
 
-<footer><div class="container">
-  <div class="section-label" data-de="Haftungsausschluss" data-tr="Sorumluluk reddi">Disclaimer</div>
-  <p class="disc" data-de="OddsEngine veröffentlicht Wahrscheinlichkeitsschätzungen und Marktdaten. Das ist Information, keine Anlageberatung und kein Angebot zum Kauf oder Verkauf. Wahrscheinlichkeiten und Preise geben die Daten wieder, die bei Veröffentlichung eines Signals vorlagen; Marktpreise und Liquidität ändern sich danach. Prognosemärkte bergen das Risiko des Totalverlusts des eingesetzten Betrags. Nichts hier ist ein Gewinnversprechen, und auf dieser Seite steht keine Kennzahl, die nicht gegen einen bereits entschiedenen Markt gemessen wurde. Die Verfügbarkeit von Prognosemärkten hängt von deiner Jurisdiktion ab, prüfe das, bevor du teilnimmst." data-tr="OddsEngine olasılık tahminleri ve piyasa verisi yayınlar. Bu bilgidir; yatırım tavsiyesi değildir ve alım satım teklifi değildir. Olasılıklar ve fiyatlar, bir sinyal yayınlandığında mevcut olan veriyi yansıtır; piyasa fiyatları ve likidite sonrasında değişir. Tahmin piyasaları, yatırılan tutarın tamamının kaybedilmesi riskini taşır. Burada hiçbir şey kazanç vaadi değildir ve bu sayfada, karara bağlanmış bir piyasaya karşı ölçülmemiş hiçbir rakam yoktur. Tahmin piyasalarının erişilebilirliği bulunduğun ülkeye bağlıdır, katılmadan önce bunu kontrol et.">OddsEngine publishes probability estimates and market data. It is information, not financial advice, and not an offer to buy or sell anything. Probabilities and prices reflect the data available when a signal is published; market prices and liquidity change afterwards. Prediction markets carry the risk of total loss of the amount committed. Nothing here is a promise of profit, and no figure appears on this page that has not been scored against a market that has already been decided. Availability of prediction markets depends on your jurisdiction, check before participating.</p>
-  <div class="footer-bot">
-    <span>ODDSENGINE · PRECISION SIGNALS. ZERO NOISE.</span>
-    <div class="footer-links">
-      <a href="#record" data-de="Bilanz" data-tr="Sicil">Record</a>
-      <a href="#signal" data-de="Signal" data-tr="Sinyal">Signal</a>
-      <a href="#access" data-de="Zugang" data-tr="Erişim">Access</a>
-      <a href="https://t.me/OddsEngine">Telegram</a>
-    </div>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div style="display:flex;align-items:center;gap:10px"><img src="ring.png" alt="" width="20" height="20">OddsEngine · Forecasts from ECMWF, GFS and ICON via Open-Meteo</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://public.oddsengine.live">Live board</a><a href="https://t.me/OddsEngine">Telegram</a><a href="#record">Record</a></div>
   </div>
-</div></footer>
+</footer>
 
 <script>
-/* ── Language. One attribute per node, no second file to drift. ── */
 (function(){
-  var LANGS={en:['\uD83C\uDDEC\uD83C\uDDE7','EN'],de:['\uD83C\uDDE9\uD83C\uDDEA','DE'],tr:['\uD83C\uDDF9\uD83C\uDDF7','TR']};
-  var btn=document.getElementById('lang'),menu=document.getElementById('langMenu');
-  if(!btn||!menu)return;
-  var nodes=document.querySelectorAll('[data-de],[data-tr]');
-  nodes.forEach(function(n){n.dataset.en=n.innerHTML;});
-  function set(lang){
-    if(!LANGS[lang])lang='en';
-    nodes.forEach(function(n){
-      var v=lang==='en'?n.dataset.en:n.dataset[lang];
-      n.innerHTML=v||n.dataset.en;
-    });
-    document.documentElement.lang=lang;
-    document.getElementById('langFlag').textContent=LANGS[lang][0];
-    document.getElementById('langCode').textContent=LANGS[lang][1];
-    menu.querySelectorAll('button').forEach(function(b){
-      b.setAttribute('aria-current',b.dataset.lang===lang?'true':'false');
-    });
-    try{localStorage.setItem('oe_lang',lang);}catch(e){}
+  var API = window.ODDSENGINE_API, SINCE = window.RULES_SINCE;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dm(d){ try{ var p=String(d).split('-'); return MON[+p[1]-1]+' '+(+p[2]); }catch(e){ return d; } }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function up(s){ return esc(String(s||'').toUpperCase()); }
+
+  /* Reveal */
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* Count up */
+  function countTo(el, to, fmt){
+    if(!el) return;
+    if(reduce){ el.textContent = fmt(to); return; }
+    var t0=null, dur=1400;
+    function step(t){ if(!t0)t0=t; var k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=fmt(to*e); if(k<1) requestAnimationFrame(step); }
+    var ob = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ requestAnimationFrame(step); ob.disconnect(); } },{threshold:.3});
+    ob.observe(el);
   }
-  var saved=null;
-  try{saved=localStorage.getItem('oe_lang');}catch(e){}
-  if(!saved){var nv=(navigator.language||'').slice(0,2);if(LANGS[nv])saved=nv;}
-  set(saved||'en');
-  btn.addEventListener('click',function(e){
-    e.stopPropagation();
-    var open=menu.classList.toggle('open');
-    btn.setAttribute('aria-expanded',open?'true':'false');
-  });
-  menu.querySelectorAll('button').forEach(function(b){
-    b.addEventListener('click',function(){
-      set(b.dataset.lang);menu.classList.remove('open');btn.setAttribute('aria-expanded','false');
-    });
-  });
-  document.addEventListener('click',function(){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');});
-})();
+  document.querySelectorAll('[data-count]').forEach(function(el){ countTo(el, +el.dataset.count, function(v){return Math.round(v);}); });
 
-/* ── The ledger. Live only. Nothing is drawn that was not scored. ── */
-(function(){
-  var API=window.ODDSENGINE_API;
-  var wrap=document.getElementById('marks');
-  var MAX=140;
+  /* Spotlight */
+  document.querySelectorAll('.spot').forEach(function(c){
+    c.addEventListener('pointermove',function(e){ var r=c.getBoundingClientRect(); c.style.setProperty('--mx',(e.clientX-r.left)+'px'); c.style.setProperty('--my',(e.clientY-r.top)+'px'); });
+  });
 
-  function skeleton(){
-    var h='';
-    for(var i=0;i<MAX;i++){
-      h+='<span class="mark pend" style="height:22%;animation-delay:'+(i*4)+'ms"></span>';
+  /* Click spark */
+  if(!reduce) document.addEventListener('click',function(e){
+    var b = e.target.closest('.btn'); if(!b) return;
+    for(var i=0;i<10;i++){
+      var s=document.createElement('span'); s.className='spark'; document.body.appendChild(s);
+      var a=(Math.PI*2)*i/10, d=34+Math.random()*18;
+      s.style.left=e.clientX+'px'; s.style.top=e.clientY+'px';
+      s.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:'translate('+(Math.cos(a)*d-3)+'px,'+(Math.sin(a)*d-3)+'px) scale(.3)',opacity:0}],{duration:520,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=(function(n){return function(){n.remove();};})(s);
     }
-    wrap.innerHTML=h;
-  }
-  skeleton();
-
-  function draw(rows){
-    /* Der Balkenkasten ist entfernt. Ohne diese Wache wuerde
-       wrap.innerHTML auf null zugreifen und den ganzen Block abbrechen,
-       samt der drei Zahlen darunter. */
-    if(!wrap) return;
-    if(!rows.length)return;
-    /* Festes SVG statt Prozenthoehen: die loesen in einem Flex-Container
-       nicht auf, deshalb blieb der Kasten leer. */
-    var tage={}, folge=[];
-    rows.forEach(function(r){
-      if(r.open||!r.date) return;
-      if(!tage[r.date]){ tage[r.date]={n:0,h:0}; folge.push(r.date); }
-      tage[r.date].n++; if(r.hit) tage[r.date].h++;
-    });
-    folge=folge.filter(function(d){return tage[d].n>=3;}).slice(-8);
-    if(folge.length<2){ wrap.innerHTML=''; return; }
-    var W=880,H=210,oben=36,unten=36,n=folge.length;
-    var bw=Math.min(70,(W-40)/n-18), luecke=((W-40)-bw*n)/(n+1);
-    var sv='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">';
-    folge.forEach(function(d,i){
-      var q=Math.round(tage[d].h*100/tage[d].n);
-      var hoehe=Math.max(5,Math.round((H-oben-unten)*q/100));
-      var x=Math.round(20+luecke+i*(bw+luecke)), y=H-unten-hoehe;
-      sv+='<rect x="'+x+'" y="'+y+'" width="'+Math.round(bw)+'" height="'+hoehe+
-          '" rx="5" fill="'+(q>=60?'#3c82f6':'#39414f')+'"/>'+
-          '<text x="'+Math.round(x+bw/2)+'" y="'+(y-12)+'" text-anchor="middle" '+
-          'fill="#e9edf2" font-size="16" font-family="ui-monospace,monospace">'+q+'</text>'+
-          '<text x="'+Math.round(x+bw/2)+'" y="'+(H-12)+'" text-anchor="middle" '+
-          'fill="#6b7280" font-size="11" font-family="ui-monospace,monospace">'+
-          d.slice(8)+'.'+d.slice(5,7)+'.</text>';
-    });
-    wrap.innerHTML=sv+'</svg>';
-  }
-
-  function pct(x){return Math.round(x*100);}
-
-  // Settled signals, oldest first. The API hands them back newest first.
-  fetch(API+'/v1/record?limit=1000')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var list=(d.signals||[]).slice().reverse();
-      if(!list.length){
-        /* Antwort da, aber leer. Auch das war bisher ein stilles return. */
-        console.error('Bilanz leer:', d);
-        throw new Error('Die Bilanz kam leer zurueck.');
-      }
-      var done=list.map(function(s){
-        /* date FEHLTE hier. draw() beginnt mit `if(r.open||!r.date) return;`
-           und verwarf damit jede Zeile; danach griff `if(folge.length<2)
-           wrap.innerHTML=''` und leerte den Kasten vollstaendig. Die Zahlen
-           daneben stimmten trotzdem, weil sie nur `hit` benutzen. */
-        return {said:s.said_coverage,hit:!!s.outcome_hit,open:false,
-                slug:s.slug,date:s.date,city:s.city};
-      });
-
-      function render(open){
-        draw(done.concat(open||[]));
-      }
-      render([]);
-
-      var hits=done.filter(function(r){return r.hit;}).length;
-      var claimed=done.filter(function(r){return r.said!=null;});
-      var avg=claimed.length?claimed.reduce(function(a,r){return a+r.said;},0)/claimed.length:null;
-      document.getElementById('mScored').textContent=done.length;
-      document.getElementById('mHit').innerHTML=pct(hits/done.length)+'<small>%</small>';
-      // Laengste Kette ohne Treffer. Die Zahl, die sonst niemand zeigt --
-      // und die im Gegensatz zur Rendite nicht taeglich um zehn Punkte springt.
-      /* Eine Fehlschlagserie haengt vollstaendig von der Reihenfolge ab.
-         Die Landing rechnete in API-Reihenfolge, das Portal sortiert nach
-         Datum: dieselbe Quelle ergab 4 hier und 2 dort. Bei mehreren
-         Signalen am selben Tag gibt es keine natuerliche Ordnung, deshalb
-         hier ausdruecklich Tag, dann Stadt. Beide Seiten benutzen jetzt
-         denselben Schluessel und muessen dieselbe Zahl zeigen. */
-      var serie=0,lauf=0;
-      done.slice().sort(function(a,b){
-        var d=String(a.date||'').localeCompare(String(b.date||''));
-        return d!==0?d:String(a.city||'').localeCompare(String(b.city||''));
-      }).forEach(function(r){
-        if(r.hit){lauf=0;}else{lauf++;if(lauf>serie)serie=lauf;}
-      });
-      document.getElementById('mStreak').textContent=serie;
-      var b=document.getElementById('badgeTxt');
-      var bn=document.getElementById('badgeN');
-      if(b&&bn){
-        // The count lives in its own node, so switching language never wipes it.
-        // The label is rewritten in all three, so switching keeps it correct.
-        bn.textContent=done.length+' ';
-        b.dataset.en='signals scored';
-        b.dataset.de='Signale gescort';
-        b.dataset.tr='sinyal puanlandı';
-        b.innerHTML=b.dataset[document.documentElement.lang]||b.dataset.en;
-      }
-
-      // Anything published but not yet decided sits at the right end, open.
-      var settled={};
-      done.forEach(function(r){if(r.slug)settled[r.slug]=1;});
-      fetch(API+'/v1/signals?hours=72')
-        .then(function(r){return r.json();})
-        .then(function(o){
-          var open=(o.signals||[])
-            .filter(function(s){return s.slug && !settled[s.slug];})
-            .map(function(s){return {said:s.coverage,hit:false,open:true};});
-          if(open.length)render(open);
-        })
-        .catch(function(e){ console.error('Offene Signale:', e); });
-    })
-    .catch(function(e){
-      /* ⚠ 03.08.: hier stand ein leeres catch. Die Seite zeigte still drei
-         Kommas, und niemand konnte sehen, woran es lag. Genau der Fehlertyp,
-         der uns hier schon mehrfach Stunden gekostet hat: etwas scheitert,
-         und das Geruest bleibt stehen.
-
-         Jetzt steht der Grund in der Konsole UND unter den Zahlen. Erfunden
-         wird weiterhin nichts. */
-      console.error('Bilanz nicht ladbar:', e);
-      var f=document.querySelector('.ledger-foot');
-      if(f){
-        var p=document.createElement('p');
-        p.className='ledger-fehler';
-        p.textContent = (String(e && e.message || e).indexOf('Failed to fetch')>=0
-          || String(e).indexOf('NetworkError')>=0)
-          ? 'Die Bilanz ist gerade nicht erreichbar. Wenn das bleibt, muss '
-            + 'CORS_ORIGINS auf dem web-Dienst diese Domain erlauben.'
-          : 'Die Bilanz ist gerade nicht erreichbar: ' + (e && e.message || e);
-        f.parentNode.insertBefore(p, f.nextSibling);
-      }
-    });
-})();
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
-<script>
-(function(){
-  var S=[[40.777,-73.872],[41.979,-87.904],[33.64,-84.427],[25.795,-80.29],
-  [32.847,-96.852],[29.645,-95.279],[30.194,-97.67],[39.702,-104.751],
-  [33.942,-118.408],[37.619,-122.375],[47.449,-122.309],[43.677,-79.631],
-  [19.436,-99.072],[8.973,-79.556],[-34.822,-58.536],[-23.432,-46.47],
-  [51.505,0.055],[48.969,2.441],[52.309,4.764],[48.354,11.786],[45.63,8.723],
-  [40.472,-3.561],[52.166,20.967],[60.317,24.963],[55.599,37.261],
-  [41.262,28.742],[40.128,32.995],[37.469,126.451],[35.18,128.938],
-  [35.553,139.781],[25.069,121.552],[40.08,116.585],[31.143,121.805],
-  [23.392,113.299],[22.639,113.811],[29.719,106.642],[30.578,103.947],
-  [30.784,114.208],[36.362,120.375],[36.857,117.216],[34.52,113.841],
-  [1.359,103.989],[2.746,101.71],[14.509,121.02],[26.761,80.889],
-  [24.894,66.939],[21.68,39.157],[32.011,34.887],[-33.965,18.602],
-  [-41.327,174.805]];
-  var N=['New York','Chicago','Atlanta','Miami','Dallas','Houston','Austin',
-  'Denver','Los Angeles','San Francisco','Seattle','Toronto','Mexico City',
-  'Panama City','Buenos Aires','São Paulo','London','Paris','Amsterdam',
-  'München','Milano','Madrid','Warschau','Helsinki','Moskau','Istanbul',
-  'Ankara','Seoul','Busan','Tokio','Taipei','Peking','Shanghai','Guangzhou',
-  'Shenzhen','Chongqing','Chengdu','Wuhan','Qingdao','Jinan','Zhengzhou',
-  'Singapur','Kuala Lumpur','Manila','Lucknow','Karachi','Jeddah','Tel Aviv',
-  'Kapstadt','Wellington'];
-  var el=document.getElementById('karte'); if(!el||!window.d3) return;
-  el.style.position='relative';
-  var svg=d3.select(el).append('svg').attr('viewBox','0 0 660 320').attr('width','100%');
-  var proj=d3.geoNaturalEarth1().scale(122).translate([320,165]);
-  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(w){
-    var tip=d3.select(el).append('div').attr('class','karte-tip');
-    svg.append('g').selectAll('path')
-      .data(topojson.feature(w,w.objects.countries).features).join('path')
-      .attr('d',d3.geoPath(proj)).attr('fill','#171c24')
-      .attr('stroke','#2b3543').attr('stroke-width',.5)
-      .style('cursor','default')
-      .on('mouseenter',function(e,d){
-        d3.select(this).attr('fill','#212936');
-        tip.text((d.properties&&d.properties.name)||'').style('opacity',1);})
-      .on('mousemove',function(e){
-        var r=el.getBoundingClientRect();
-        tip.style('left',(e.clientX-r.left+14)+'px')
-           .style('top',(e.clientY-r.top-8)+'px');})
-      .on('mouseleave',function(){
-        d3.select(this).attr('fill','#171c24'); tip.style('opacity',0);});
-    var g=svg.append('g');
-    S.forEach(function(c,i){
-      var p=proj([c[1],c[0]]); if(!p) return;
-      var b=Math.abs(c[0]);
-      // Vier Baender, an den echten Klimazonen ausgerichtet:
-      // Wendekreis bei 23.5 Grad, Subtropen bis 35, gemaessigt bis 55.
-      var f=b<23.5?'#45b37a':b<35?'#e8b33c':b<55?'#5da9d6':'#e8eef4';
-      g.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',0)
-        .attr('fill',f).attr('fill-opacity',.92)
-        .style('cursor','default')
-        .on('mouseenter',function(e){
-          d3.select(this).attr('r',5);
-          tip.text(N[i]).style('opacity',1);})
-        .on('mousemove',function(e){
-          var r=el.getBoundingClientRect();
-          tip.style('left',(e.clientX-r.left+14)+'px')
-             .style('top',(e.clientY-r.top-8)+'px');})
-        .on('mouseleave',function(){
-          d3.select(this).attr('r',2.7); tip.style('opacity',0);})
-        .transition().delay(i*20).duration(380).attr('r',2.7);
-    });
   });
+
+  /* Scroll dive */
+  (function(){
+    var sec=document.getElementById('dive'); if(!sec) return;
+    var v=document.getElementById('dvid'), grid=document.getElementById('dgrid'), light=document.getElementById('dlight'),
+        cities=[].slice.call(document.querySelectorAll('#dcities span')), cwrap=document.getElementById('dcities'),
+        caps=[].slice.call(sec.querySelectorAll('.cap')), bar=document.getElementById('dbar');
+    function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+    function seg(p,a,b){return clamp((p-a)/(b-a),0,1);}
+    var order=cities.map(function(_,i){return i;}).sort(function(){return Math.random()-.5;});
+    var want=0;
+    function seek(){ if(!v.duration) return; var t=want*(v.duration-0.05); if(!v.seeking && Math.abs(v.currentTime-t)>0.02) v.currentTime=t; }
+    v.addEventListener('seeked',seek); v.addEventListener('loadedmetadata',seek);
+    function draw(){
+      var r=sec.getBoundingClientRect(), total=sec.offsetHeight-innerHeight;
+      var p=clamp(-r.top/total,0,1);
+      bar.style.width=(p*100)+'%';
+      want=seg(p,.02,.7); seek();
+      v.style.opacity=String(1-.55*seg(p,.8,1));
+      light.style.opacity='0';
+      grid.style.opacity=String(.6*seg(p,.62,.75));
+      grid.style.transform='perspective(600px) rotateX('+(60-30*seg(p,.6,1))+'deg) translateY('+(-p*240)+'px) scale(2)';
+      cwrap.style.opacity=String(seg(p,.7,.76));
+      var cp=seg(p,.72,.97);
+      order.forEach(function(ci,k){ var t=clamp(cp*cities.length-k,0,1); cities[ci].style.setProperty('--s',(.6+.4*t).toFixed(3)); cities[ci].style.setProperty('--o',t.toFixed(3)); });
+      caps.forEach(function(c){ var a=+c.dataset.a, b=+c.dataset.b, i=seg(p,a,a+.05)*(1-seg(p,b-.05,b)); c.style.opacity=i; c.style.transform='translateY('+((1-i)*24)+'px)'; });
+    }
+    var tk=false; addEventListener('scroll',function(){ if(tk) return; tk=true; requestAnimationFrame(function(){draw();tk=false;}); },{passive:true});
+    addEventListener('resize',draw); draw();
+  })();
+
+  /* Hero video: plays once, then holds the last frame */
+  (function(){
+    var v=document.getElementById('hvid'), bob=document.getElementById('bob'); if(!v) return;
+    if(reduce){ v.innerHTML=''; v.load(); return; }
+    v.addEventListener('playing',function(){ bob.classList.add('playing'); });
+    var p=v.play(); if(p&&p.catch) p.catch(function(){});
+  })();
+
+  /* Fist: scrubbed by scroll */
+  (function(){
+    var v=document.getElementById('fvid'); if(!v) return;
+    var box=v.closest('.art'), want=0;
+    function seek(){ if(!v.duration) return; var t=want*(v.duration-0.05); if(!v.seeking && Math.abs(v.currentTime-t)>0.02) v.currentTime=t; }
+    v.addEventListener('seeked',seek); v.addEventListener('loadedmetadata',seek);
+    function draw(){ var r=box.getBoundingClientRect(), vh=innerHeight; want=Math.max(0,Math.min(1,(vh*0.95-r.top)/(vh*0.95))); seek(); }
+    var tk=false; addEventListener('scroll',function(){ if(tk) return; tk=true; requestAnimationFrame(function(){draw();tk=false;}); },{passive:true});
+    draw();
+  })();
+
+  /* Parallax */
+  var par = [].slice.call(document.querySelectorAll('[data-par]')), hero=document.getElementById('heroimg');
+  if(!reduce){
+    var ticking=false;
+    window.addEventListener('scroll',function(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){
+      var y=window.scrollY, vh=window.innerHeight;
+      if(hero) hero.style.transform='translate3d(0,'+(y*0.22)+'px,0)';
+      if(innerWidth>900) par.forEach(function(el){ var r=el.getBoundingClientRect(), c=(r.top+r.height/2-vh/2), o=Math.max(-60,Math.min(60,-c*(+el.dataset.par))); el.style.transform='translate3d(0,'+o+'px,0)'; });
+      ticking=false; }); },{passive:true});
+  }
+
+  /* Hero tilt */
+  var tilt=document.getElementById('tilt');
+  if(!reduce && tilt && matchMedia('(pointer:fine)').matches){
+    var heroEl=document.querySelector('.hero');
+    heroEl.addEventListener('pointermove',function(e){
+      var x=e.clientX/innerWidth-.5, y=e.clientY/innerHeight-.5;
+      tilt.style.transform='rotateY('+(x*8)+'deg) rotateX('+(-y*6)+'deg) translate3d('+(x*-18)+'px,'+(y*-12)+'px,0)';
+    });
+    heroEl.addEventListener('pointerleave',function(){ tilt.style.transform=''; });
+  }
+
+  /* Lightning */
+  (function(){
+    var fl=document.getElementById('flash'), bob=document.getElementById('bob'); if(!fl||!bob||reduce) return;
+    function strike(){
+      fl.animate([{opacity:0},{opacity:1,offset:.08},{opacity:.15,offset:.2},{opacity:.85,offset:.3},{opacity:0}],{duration:700,easing:'ease-out'});
+      bob.classList.add('lit'); setTimeout(function(){bob.classList.remove('lit');},90);
+      setTimeout(function(){bob.classList.add('lit');},210); setTimeout(function(){bob.classList.remove('lit');},320);
+      setTimeout(strike, 6000+Math.random()*9000);
+    }
+    setTimeout(strike, 2200);
+  })();
+
+  /* Rain */
+  (function(){
+    var cv=document.getElementById('rain'); if(!cv||reduce) return;
+    var cx=cv.getContext('2d'), W, H, drops=[], dpr=Math.min(2,window.devicePixelRatio||1);
+    function size(){ W=cv.width=innerWidth*dpr; H=cv.height=innerHeight*dpr; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';
+      var n=Math.round((innerWidth<700?70:160)); drops=[]; for(var i=0;i<n;i++) drops.push({x:Math.random()*W,y:Math.random()*H,l:(8+Math.random()*18)*dpr,v:(7+Math.random()*9)*dpr,a:.08+Math.random()*.22}); }
+    size(); addEventListener('resize',size);
+    (function f(){ cx.clearRect(0,0,W,H); cx.lineWidth=1*dpr;
+      for(var i=0;i<drops.length;i++){ var d=drops[i]; cx.strokeStyle='rgba(150,195,255,'+d.a+')'; cx.beginPath(); cx.moveTo(d.x,d.y); cx.lineTo(d.x-d.l*.18,d.y+d.l); cx.stroke();
+        d.y+=d.v; d.x-=d.v*.18; if(d.y>H){ d.y=-20; d.x=Math.random()*W*1.1; } }
+      requestAnimationFrame(f); })();
+  })();
+
+  /* Contract */
+  var CA = (window.ODDS_CA||'').trim();
+  if(CA){
+    document.getElementById('ca').textContent = CA;
+    var link = 'https://pump.fun/coin/' + CA;
+    document.querySelectorAll('.buy').forEach(function(b){ b.href=link; b.target='_blank'; b.rel='noopener'; b.removeAttribute('aria-disabled'); });
+  } else {
+    document.getElementById('copyca').style.display='none';
+  }
+  document.getElementById('copyca').addEventListener('click',function(){
+    var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){b.textContent='Copy';},1600); }); }catch(e){}
+  });
+
+  /* Data */
+  function roi(g){ if(!g.length) return null; var s=0; g.forEach(function(x){ s += x.hit ? (1/x.cost-1) : -1; }); return s/g.length; }
+  function stats(g){ var n=g.length; return { n:n, hit: n? g.filter(function(x){return x.hit;}).length/n : null,
+    cost: n? g.reduce(function(a,x){return a+x.cost;},0)/n : null, roi: roi(g) }; }
+  function setPhase(p, s){
+    if(!s.n){ document.getElementById(p+'n').textContent='0'; ['h','c','r'].forEach(function(k){ var e=document.getElementById(p+k); e.textContent='soon'; e.style.color='var(--dim2)'; }); return; }
+    countTo(document.getElementById(p+'n'), s.n, function(v){return Math.round(v);});
+    if(s.hit!=null) countTo(document.getElementById(p+'h'), s.hit*100, function(v){return Math.round(v)+'%';});
+    if(s.cost!=null) countTo(document.getElementById(p+'c'), s.cost*100, function(v){return Math.round(v)+'c';});
+    var r=document.getElementById(p+'r');
+    if(s.roi!=null){ r.className='v '+(s.roi>=0?'pos':'neg'); countTo(r, s.roi*100, function(v){ return (v>=0?'+':'')+v.toFixed(1)+'%'; }); }
+    else r.textContent='n/a';
+  }
+
+  fetch(API+'/v1/record?limit=20000').then(function(r){return r.json();}).then(function(d){
+    var seen={}, rows=[];
+    (d.signals||[]).slice().sort(function(a,b){return String(b.ts||'').localeCompare(String(a.ts||''));}).forEach(function(r){
+      if(!r.slug||seen[r.slug]||!r.outcome_known) return; seen[r.slug]=1;
+      if(typeof r.cost!=='number'||r.cost<=0||r.cost>=1.5) return;
+      rows.push({hit:!!r.outcome_hit,cost:r.cost,city:r.city,date:r.date,label:r.outcome_label,legs:r.said_legs||[],coverage:r.said_coverage,pub:String(r.published_ts||'').slice(0,10)});
+    });
+    var p1=rows.filter(function(x){return x.pub<SINCE;}), p2=rows.filter(function(x){return x.pub>=SINCE;});
+    setPhase('p1',stats(p1)); setPhase('p2',stats(p2));
+    if(p1.length){ var ds=p1.map(function(x){return x.date;}).sort(); document.getElementById('p1when').textContent=dm(ds[0])+' to '+dm(ds[ds.length-1]); }
+    countTo(document.getElementById('sScored'), rows.length, function(v){return Math.round(v);});
+    var s2=stats(p2); if(s2.hit!=null) countTo(document.getElementById('sHit'), s2.hit*100, function(v){return Math.round(v)+'%';}); else document.getElementById('sHit').textContent='new';
+    var last = rows.slice(0,24);
+    if(last.length){
+      var html = last.map(function(x){ return '<span><b class="'+(x.hit?'h':'m')+'">'+(x.hit?'HIT':'MISS')+'</b> '+up(x.city)+' '+esc(x.label||'')+' · '+esc(dm(x.date))+'</span>'; }).join('');
+      document.getElementById('ticker').innerHTML = html + html;
+    }
+    if(window.__settled) window.__settled(rows);
+  }).catch(function(){ document.getElementById('ticker').innerHTML='<span>Record temporarily unavailable</span>'; });
+
+  var LOCK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>';
+  function lockedBoards(list){
+    document.getElementById('boards').innerHTML = list.slice(0,8).map(function(s){
+      return '<div class="board"><div class="c">'+up(s.city)+' · '+esc(dm(s.date))+'</div><div class="t" style="display:flex;align-items:center;gap:10px">'+LOCK+'<span>live</span></div><div class="s">open call, holders only</div></div>';
+    }).join('');
+  }
+  function settledBoards(list){
+    document.getElementById('boards').innerHTML = list.slice(0,8).map(function(x){
+      return '<div class="board"><div class="c">'+up(x.city)+' · '+esc(dm(x.date))+'</div><div class="t">'+esc(x.label||'?')+'</div><div class="s" style="color:'+(x.hit?'var(--mint)':'var(--red)')+'">'+(x.hit?'HIT':'MISS')+' · entry '+Math.round(x.cost*100)+'c</div></div>';
+    }).join('');
+  }
+  function sigCard(x){
+    var legs=(x.legs||[]).map(String);
+    document.getElementById('sigcard').innerHTML =
+      '<div class="sig"><div class="top"><span>LAST SETTLED SIGNAL</span><span>'+esc(dm(x.date))+'</span></div>'+
+      '<div class="city">'+up(x.city)+'</div><div style="font-size:13px;color:var(--dim2)">Highest temperature</div>'+
+      '<div class="legs">'+legs.map(function(l){return '<div class="leg"'+(l===x.label?' style="background:rgba(94,224,195,.2);border-color:var(--mint)"':'')+'>'+esc(l)+'</div>';}).join('')+'</div>'+
+      '<div class="kv"><span>Block price</span><b>'+Math.round((x.cost||0)*100)+'c</b></div>'+
+      (x.coverage!=null?'<div class="kv"><span>Engine said</span><b>'+Math.round(x.coverage*100)+'%</b></div>':'')+
+      '<div class="kv"><span>Came in at</span><b>'+esc(x.label||'?')+'</b></div>'+
+      '<div class="kv"><span>Result</span><b style="color:'+(x.hit?'var(--mint)':'var(--red)')+'">'+(x.hit?'HIT · paid '+(1/x.cost).toFixed(2)+'x':'MISS · stake lost')+'</b></div>'+
+      '<div class="holder">'+LOCK+'Holders saw it 90 minutes before X</div></div>';
+  }
+  var settled=[];
+  window.__settled=function(rows){ settled=rows; var withLegs=rows.filter(function(x){return x.legs&&x.legs.length;}); if(withLegs.length) sigCard(withLegs[0]); };
+  fetch(API+'/v1/signals?hours=48').then(function(r){return r.json();}).then(function(d){
+    var list=(d.signals||[]);
+    if(list.length) lockedBoards(list); else setTimeout(function(){ settledBoards(settled); },1500);
+  }).catch(function(){ setTimeout(function(){ settledBoards(settled); },1500); });
 })();
 </script>
 </body>

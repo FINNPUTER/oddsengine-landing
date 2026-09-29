@@ -1,48 +1,18 @@
-# OddsEngine — Landing Page
+# OddsEngine: Landing Page
 
-Landing page for [oddsengine.live](https://oddsengine.live)
+oddsengine.live, hosted on GitHub Pages (custom domain in CNAME).
 
-## Deployment
+## Files
+- index.html: the scroll page (hero, cities, signal, record, game, $ODDS)
+- robot-hero.webp, robot-fist.webp, robot-point.webp, robot-sit.webp: The Engine, the mascot
+- ring.png: logo ring, used as favicon and in the nav
+- og-image.png: preview image for X, Telegram and others
+- onboarding.html, logo.png, icon-180.png, icon-192.png: unchanged
 
-Hosted via GitHub Pages.
+## Live data
+The page reads the public API (record and open signals). Open signals only show
+city and date; the paid fields stay locked.
 
-**Custom domain:** `oddsengine.live`
-
-## Setup
-
-1. Push this repo to GitHub
-2. Settings → Pages → Source: Deploy from branch → `main` / `/ (root)`
-3. Custom domain: `oddsengine.live`
-4. DNS records at your registrar:
-   - `A` → `185.199.108.153`
-   - `A` → `185.199.109.153`
-   - `A` → `185.199.110.153`
-   - `A` → `185.199.111.153`
-5. Enable "Enforce HTTPS"
-
-## Links
-
-- Landing: `oddsengine.live`
-- Public Dashboard: `public.oddsengine.live`
-- Telegram: update the three `t.me/oddsengine` links in `index.html`
-
-## Positioning
-
-Prediction Market Intelligence — weather only. Crypto and sports are gone.
-
-## The rule this page is built around
-
-Spec §13: no invented performance figures, no unprovable hit rates, no
-unsupported ROI claims.
-
-The Track Record section therefore ships with an **empty reliability diagram**
-and the status "In calibration". That is deliberate, not a placeholder to fill
-with optimistic numbers. It gets filled in from `tools/calibration.py` in
-`oddsengine-platform` once signals have actually resolved — whatever the number
-turns out to be.
-
-Pricing follows the same rule: free while the chart is empty.
-
-## Assets (unchanged)
-
-`logo.png` · `og-image.png` · `icon-180.png` · `icon-192.png` · `CNAME`
+## After the token launch
+The contract address goes into window.ODDS_CA at the top of index.html.
+Until then every buy button says the token is launching soon.
