@@ -188,6 +188,32 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line
 .pos{color:var(--mint)} .neg{color:var(--red)}
 .note{margin-top:18px;font-size:14px;color:var(--dim2);max-width:760px}
 
+
+/* Track record */
+.trk{position:relative;display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px 36px;margin-top:36px;padding:30px;border-radius:28px;
+  background:linear-gradient(180deg,rgba(94,224,195,.07),rgba(8,120,240,.03));border:1px solid rgba(94,224,195,.35);box-shadow:0 0 60px rgba(94,224,195,.06),inset 0 0 40px rgba(94,224,195,.04)}
+.gauge{position:relative;width:200px;height:200px;grid-row:span 2;align-self:center;border-radius:50%;box-shadow:0 0 50px rgba(94,224,195,.12)}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:9;stroke-linecap:round}
+.gauge .bg{stroke:rgba(255,255,255,.08)}
+.gauge .fg{stroke:url(#none);stroke:var(--mint);stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.6s cubic-bezier(.2,1,.3,1)}
+.gv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gv b{font-family:var(--mono);font-size:44px;font-weight:700}
+.gv span{font-size:12.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.1em}
+.tstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tstats div{padding:16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tstats b{display:block;font-family:var(--mono);font-size:28px;font-weight:700}
+.tstats span{font-size:12px;color:var(--dim2);text-transform:uppercase;letter-spacing:.06em}
+.tl{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.dots i{width:22px;height:22px;border-radius:7px;background:rgba(94,224,195,.85);box-shadow:0 0 10px rgba(94,224,195,.35);opacity:0;transform:scale(.4);transition:opacity .4s,transform .4s cubic-bezier(.2,1.4,.4,1)}
+.dots i.m{background:rgba(255,107,107,.75);box-shadow:none}
+.dots.in i{opacity:1;transform:none}
+.tfoot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:var(--dim)}
+.tfoot b{color:var(--tx)}
+.tfoot .btn{min-height:42px;font-size:12px}
+@media (max-width:900px){.trk{grid-template-columns:1fr;padding:22px}.gauge{margin:0 auto;grid-row:auto;width:170px;height:170px}.gv b{font-size:38px}.tstats{grid-template-columns:repeat(2,minmax(0,1fr))}.tstats b{font-size:22px}.dots i{width:18px;height:18px}}
+
 /* Spotlight cards */
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
 @media (max-width:900px){.cards{grid-template-columns:1fr}}
@@ -337,33 +363,26 @@ footer a{color:var(--dim)}
 <section class="ch" id="record">
   <div class="wrap">
     <div class="chnum rv">03</div>
-    <h2 class="rv d1">The record.<br>Misses included.</h2>
-    <p class="p rv d2">We built this engine live, with real markets, and changed it about twenty times along the way. Every change is in the first number. On Sept 25 the rules were fixed. <b>From then on, nothing gets tuned.</b></p>
-    <div class="phases">
-      <div class="phase rv d2">
-        <span class="tag">Build phase</span>
-        <h3>Learning in public</h3>
-        <div class="when" id="p1when">Jul 21 to Aug 31</div>
-        <div class="nums">
-          <div><div class="v" id="p1n">0</div><div class="k">Signals</div></div>
-          <div><div class="v" id="p1h">0%</div><div class="k">Hit rate</div></div>
-          <div><div class="v" id="p1c">0c</div><div class="k">Avg entry</div></div>
-          <div><div class="v" id="p1r">0x</div><div class="k">Pays per hit</div></div>
-        </div>
+    <h2 class="rv d1">Called before.<br><span class="shiny">Scored after.</span></h2>
+    <p class="p rv d2">Every signal goes out while the market is still open and is scored against the official weather station once the day ends. Hits and misses stay on the record. Since Sept 25 the engine runs on fixed rules, and every call since then is counted here.</p>
+    <div class="trk rv d2">
+      <div class="gauge">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"></circle><circle class="fg" id="gArc" cx="60" cy="60" r="52"></circle></svg>
+        <div class="gv"><b id="gHit">0%</b><span>hit rate</span></div>
       </div>
-      <div class="phase live rv d3">
-        <span class="tag">Fixed rules · live</span>
-        <h3>No more tuning</h3>
-        <div class="when" id="p2when">Since Sep 25</div>
-        <div class="nums">
-          <div><div class="v" id="p2n">0</div><div class="k">Signals</div></div>
-          <div><div class="v" id="p2h">0%</div><div class="k">Hit rate</div></div>
-          <div><div class="v" id="p2c">0c</div><div class="k">Avg entry</div></div>
-          <div><div class="v" id="p2r">0x</div><div class="k">Pays per hit</div></div>
-        </div>
+      <div class="tstats">
+        <div><b id="tN">0</b><span>Signals scored</span></div>
+        <div><b id="tC">0</b><span>Best hit streak</span></div>
+        <div><b id="tX">0x</b><span>Paid per hit</span></div>
+        <div><b id="tD">0</b><span>Days live</span></div>
+      </div>
+      <div class="tlast">
+        <div class="tl">Last <span id="tLn">20</span> calls</div>
+        <div class="dots" id="tDots"></div>
+        <div class="tfoot"><span>Rules fixed since <b>Sep 25</b>. Nothing deleted.</span><a class="btn btn-ghost" href="https://public.oddsengine.live/#record">Every call in the app &rarr;</a></div>
       </div>
     </div>
-    <p class="note rv">A hit rate means nothing without the price. A block bought at 70c pays 1.43x and has to land 70% of the time to break even, so every result shows both. Pulled live from our public API, every single call is in the app.</p>
+    <p class="note rv">Every call with its price, payout and result is in the app. Nothing is removed afterwards.</p>
   </div>
 </section>
 
@@ -591,6 +610,31 @@ footer a{color:var(--dim)}
   function roi(g){ if(!g.length) return null; var s=0; g.forEach(function(x){ s += x.hit ? (1/x.cost-1) : -1; }); return s/g.length; }
   function stats(g){ var n=g.length; return { n:n, hit: n? g.filter(function(x){return x.hit;}).length/n : null,
     cost: n? g.reduce(function(a,x){return a+x.cost;},0)/n : null, roi: roi(g) }; }
+  function trackRecord(g){
+    var s=stats(g);
+    if(!s.n) return;
+    var go=function(){
+      countTo(document.getElementById('gHit'), s.hit*100, function(v){return Math.round(v)+'%';});
+      document.getElementById('gArc').style.strokeDashoffset = String(326.7*(1-s.hit));
+      countTo(document.getElementById('tN'), s.n, function(v){return Math.round(v);});
+      var best=0,run=0; g.slice().reverse().forEach(function(x){ if(x.hit){ run++; if(run>best) best=run; } else run=0; });
+      countTo(document.getElementById('tC'), best, function(v){return Math.round(v);});
+      var hits=g.filter(function(x){return x.hit;});
+      var pay=hits.length? hits.reduce(function(a,x){return a+1/x.cost;},0)/hits.length : 1/s.cost;
+      countTo(document.getElementById('tX'), pay, function(v){return v.toFixed(2)+'x';});
+      var days=Math.max(1, Math.round((Date.now()-Date.parse(SINCE+'T00:00:00Z'))/86400000));
+      countTo(document.getElementById('tD'), days, function(v){return Math.round(v);});
+      var last=g.slice(0,20);
+      document.getElementById('tLn').textContent=last.length;
+      var box=document.getElementById('tDots');
+      box.innerHTML=last.slice().reverse().map(function(x,i){ return '<i class="'+(x.hit?'':'m')+'" style="transition-delay:'+(i*45)+'ms" title="'+(x.hit?'HIT':'MISS')+' · '+up(x.city)+' · '+esc(dm(x.date))+' · '+Math.round(x.cost*100)+'c"></i>'; }).join('');
+      setTimeout(function(){ box.classList.add('in'); }, 60);
+    };
+    var el=document.querySelector('.trk');
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ io.disconnect(); go(); } },{threshold:.25}); io.observe(el);
+    } else go();
+  }
   function setPhase(p, s){
     if(!s.n){ document.getElementById(p+'n').textContent='0'; ['h','c','r'].forEach(function(k){ var e=document.getElementById(p+k); e.textContent='soon'; e.style.color='var(--dim2)'; }); return; }
     countTo(document.getElementById(p+'n'), s.n, function(v){return Math.round(v);});
@@ -608,9 +652,8 @@ footer a{color:var(--dim)}
       if(typeof r.cost!=='number'||r.cost<=0||r.cost>=1.5) return;
       rows.push({hit:!!r.outcome_hit,cost:r.cost,city:r.city,date:r.date,label:r.outcome_label,legs:r.said_legs||[],coverage:r.said_coverage,pub:String(r.published_ts||'').slice(0,10)});
     });
-    var p1=rows.filter(function(x){return x.pub<SINCE;}), p2=rows.filter(function(x){return x.pub>=SINCE;});
-    setPhase('p1',stats(p1)); setPhase('p2',stats(p2));
-    if(p1.length){ var ds=p1.map(function(x){return x.date;}).sort(); document.getElementById('p1when').textContent=dm(ds[0])+' to '+dm(ds[ds.length-1]); }
+    var p2=rows.filter(function(x){return x.pub>=SINCE;});
+    trackRecord(p2);
     countTo(document.getElementById('sScored'), rows.length, function(v){return Math.round(v);});
     var s2=stats(p2); if(s2.hit!=null) countTo(document.getElementById('sHit'), s2.hit*100, function(v){return Math.round(v)+'%';}); else document.getElementById('sHit').textContent='new';
     var last = rows.slice(0,24);
