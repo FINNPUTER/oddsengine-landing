@@ -48,13 +48,17 @@ img{max-width:100%;display:block}
              radial-gradient(30% 35% at 55% 60%,rgba(120,80,255,.16),transparent 70%);
   animation:drift 18s ease-in-out infinite alternate}
 @keyframes drift{from{transform:translate3d(-3vw,0,0) scale(1)}to{transform:translate3d(3vw,2vh,0) scale(1.08)}}
-main,header,footer,.ticker{position:relative;z-index:2}
+main,footer{position:relative;z-index:2}
 
 /* ── Glass pill nav ────────────────────────────────── */
-.nav{position:fixed;top:46px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;
-  padding:6px 6px 6px 14px;border-radius:999px;background:rgba(10,14,21,.62);border:1px solid var(--line);
-  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 10px 40px rgba(0,0,0,.35);
-  width:max-content;max-width:calc(100vw - 20px)}
+/* Kleber oben: eine volle Leiste statt der schwebenden Pille. Die Pille
+   hing mitten im Bild, und beim Scrollen lief der Roboter zwischen Leiste
+   und Seitenrand durch. */
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(5,7,11,.82);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.nav{display:flex;align-items:center;gap:6px;max-width:1180px;margin:0 auto;padding:10px 20px}
+.nav .sp{flex:1}
+section[id],main[id]{scroll-margin-top:110px}
 .nav .brand{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--tx);margin-right:6px}
 .nav .brand img{width:22px;height:22px}
 .nav a.l{color:var(--dim);font-size:14px;padding:9px 12px;border-radius:999px;transition:background .2s,color .2s}
@@ -68,20 +72,21 @@ main,header,footer,.ticker{position:relative;z-index:2}
 .btn-ghost:hover{color:var(--tx);background:rgba(255,255,255,.12)}
 .btn[aria-disabled="true"]{opacity:.55;cursor:default}
 .nav .btn{min-height:40px;padding:0 16px;font-size:12px}
+.nav .app{margin-left:6px}
 @media (max-width:760px){.dive .cities{padding:14vh 4vw 26vh;gap:8px}.dive .cities span:nth-child(n+25){display:none}.dive .cap{bottom:9vh}}
-@media (max-width:760px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat{min-width:0;padding:12px}.stat .v{font-size:20px}.stat .k{font-size:10.5px}.nav a.l{display:none}.nav{padding-left:12px}
+@media (max-width:760px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stat{min-width:0;padding:12px}.stat .v{font-size:20px}.stat .k{font-size:10.5px}.nav a.l{display:none}.nav{padding:8px 12px}.nav .btn{padding:0 12px;font-size:11px}
   .hero{align-items:flex-end;padding-top:140px}.herobot{right:auto;left:50%;translate:-50% 0;height:92%;top:0}.hero .bgimg{-webkit-mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 75%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,rgba(0,0,0,.35) 75%,transparent 100%)}
   .hero .shade{background:linear-gradient(180deg,rgba(5,7,11,.1) 0%,rgba(5,7,11,.55) 45%,var(--bg) 85%)}}
 
 /* ── Ticker ────────────────────────────────────────── */
-.ticker{margin-top:0;border-bottom:1px solid var(--line);background:rgba(5,7,11,.7);overflow:hidden;white-space:nowrap;height:34px;display:flex;align-items:center}
+.ticker{margin-top:0;border-top:1px solid rgba(255,255,255,.06);background:rgba(5,7,11,.35);overflow:hidden;white-space:nowrap;height:34px;display:flex;align-items:center}
 .ticker .track{display:inline-flex;gap:34px;padding-left:34px;animation:tick 60s linear infinite;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
 .ticker b{color:var(--tx);font-weight:700}
 .ticker .h{color:var(--mint)} .ticker .m{color:var(--red)}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── Hero ──────────────────────────────────────────── */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 60px}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:130px 0 60px}
 .hero .bgimg{position:absolute;inset:0;z-index:0;opacity:.95;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.5) 42%,#000 62%);mask-image:linear-gradient(90deg,transparent 18%,rgba(0,0,0,.5) 42%,#000 62%);will-change:transform}
 .herobot{position:absolute;top:9%;right:4%;height:104%;aspect-ratio:1122/1402;perspective:1200px}
@@ -253,16 +258,18 @@ footer a{color:var(--dim)}
 <canvas id="rain" aria-hidden="true"></canvas>
 <div class="aurora" aria-hidden="true"></div>
 
+<header class="bar">
 <nav class="nav" aria-label="Main">
   <a class="brand" href="#top"><img src="ring.png" alt="" width="22" height="22">OddsEngine</a>
+  <span class="sp"></span>
   <a class="l" href="#record">Record</a>
   <a class="l" href="#game">Game</a>
   <a class="l" href="#odds">$ODDS</a>
-  <a class="l" href="https://public.oddsengine.live">Live board</a>
+  <a class="btn btn-ghost app" href="https://public.oddsengine.live">Open app</a>
   <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
 </nav>
-
 <div class="ticker" aria-label="Latest results"><div class="track" id="ticker"><span>Loading the latest results</span></div></div>
+</header>
 
 <main id="top">
 
@@ -341,7 +348,7 @@ footer a{color:var(--dim)}
           <div><div class="v" id="p1n">0</div><div class="k">Signals</div></div>
           <div><div class="v" id="p1h">0%</div><div class="k">Hit rate</div></div>
           <div><div class="v" id="p1c">0c</div><div class="k">Avg entry</div></div>
-          <div><div class="v" id="p1r">0%</div><div class="k">Net</div></div>
+          <div><div class="v" id="p1r">0x</div><div class="k">Pays per hit</div></div>
         </div>
       </div>
       <div class="phase live rv d3">
@@ -352,11 +359,11 @@ footer a{color:var(--dim)}
           <div><div class="v" id="p2n">0</div><div class="k">Signals</div></div>
           <div><div class="v" id="p2h">0%</div><div class="k">Hit rate</div></div>
           <div><div class="v" id="p2c">0c</div><div class="k">Avg entry</div></div>
-          <div><div class="v" id="p2r">0%</div><div class="k">Net</div></div>
+          <div><div class="v" id="p2r">0x</div><div class="k">Pays per hit</div></div>
         </div>
       </div>
     </div>
-    <p class="note rv">A hit rate means nothing without the price. A block bought at 70c has to land 70% of the time just to break even, so every result shows both. Net assumes the same stake on every signal, no fees. Pulled live from our public API.</p>
+    <p class="note rv">A hit rate means nothing without the price. A block bought at 70c pays 1.43x and has to land 70% of the time to break even, so every result shows both. Pulled live from our public API, every single call is in the app.</p>
   </div>
 </section>
 
@@ -380,7 +387,7 @@ footer a{color:var(--dim)}
     <div>
       <div class="chnum rv">05</div>
       <h2 class="rv d1"><span class="shiny">$ODDS</span><br>is your key.</h2>
-      <p class="p rv d2">Hold it and you get the signals first, the app for free and the full game. Burn it for the season pass. That is all it does, and it says so.</p>
+      <p class="p rv d2">Hold it and you see every signal before X and Telegram. The more you hold, the earlier: Holder from $20 sees it 1 hour early, Pro from $250 90 minutes early plus the engine board, Whale from $1,000 the moment it fires. Burn it for the season pass. That is all it does, and it says so.</p>
     </div>
     <div class="art from-below rv d2"><div class="bot" data-par="0.08"><div class="flo"><video class="clip" poster="robot-sit.webp" muted playsinline loop autoplay preload="metadata" width="600" height="900" aria-label="The Engine sitting on a giant glowing thermometer"><source src="sit.mp4" type="video/mp4"><source src="sit.webm" type="video/webm"></video></div></div></div>
   </div>
@@ -389,7 +396,7 @@ footer a{color:var(--dim)}
       <div class="spot rv">
         <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
         <h3>Hold</h3>
-        <ul><li>Signals 90 minutes before X</li><li>The app with one tap buying on Polymarket</li><li>All game rounds and the holder league</li></ul>
+        <ul><li>Signals up to 2 hours before X, by tier</li><li>The engine board: engine vs market, every city (Pro)</li><li>The app with one tap buying on Polymarket</li><li>All game rounds and the holder league</li></ul>
       </div>
       <div class="spot rv d1">
         <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1 1 2 2 3 3 0-2 0-4 0-6z"></path></svg></div>
@@ -427,7 +434,7 @@ footer a{color:var(--dim)}
 <footer>
   <div class="wrap row">
     <div style="display:flex;align-items:center;gap:10px"><img src="ring.png" alt="" width="20" height="20">OddsEngine · Forecasts from ECMWF, GFS and ICON via Open-Meteo</div>
-    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://public.oddsengine.live">Live board</a><a href="https://t.me/OddsEngine">Telegram</a><a href="#record">Record</a></div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://public.oddsengine.live">App</a><a href="https://t.me/OddsEngine">Telegram</a><a href="#record">Record</a></div>
   </div>
 </footer>
 
@@ -590,7 +597,7 @@ footer a{color:var(--dim)}
     if(s.hit!=null) countTo(document.getElementById(p+'h'), s.hit*100, function(v){return Math.round(v)+'%';});
     if(s.cost!=null) countTo(document.getElementById(p+'c'), s.cost*100, function(v){return Math.round(v)+'c';});
     var r=document.getElementById(p+'r');
-    if(s.roi!=null){ r.className='v '+(s.roi>=0?'pos':'neg'); countTo(r, s.roi*100, function(v){ return (v>=0?'+':'')+v.toFixed(1)+'%'; }); }
+    if(s.cost){ countTo(r, 1/s.cost, function(v){ return v.toFixed(2)+'x'; }); }
     else r.textContent='n/a';
   }
 
