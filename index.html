@@ -214,6 +214,7 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line
 .gv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .gv b{font-family:var(--mono);font-size:44px;font-weight:700}
 .gv span{font-size:12.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.1em}
+.gv em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--mint);letter-spacing:.08em;margin-top:4px;text-transform:uppercase}
 .tstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .tstats div{padding:16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
 .tstats b{display:block;font-family:var(--mono);font-size:28px;font-weight:700}
@@ -382,10 +383,10 @@ footer a{color:var(--dim)}
     <div class="trk rv d2">
       <div class="gauge">
         <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"></circle><circle class="fg" id="gArc" cx="60" cy="60" r="52"></circle></svg>
-        <div class="gv"><b id="gHit">0%</b><span>hit rate</span></div>
+        <div class="gv"><b id="gHit">0%</b><span>hit rate</span><em>fixed rules</em></div>
       </div>
       <div class="tstats">
-        <div><b id="tN">0</b><span>Signals scored</span></div>
+        <div><b id="tN">0</b><span id="tNl">Signals scored</span></div>
         <div><b id="tC">0</b><span>Best hit streak</span></div>
         <div><b id="tX">0x</b><span>Paid per hit</span></div>
         <div><b id="tD">0</b><span>Days live</span></div>
@@ -393,10 +394,10 @@ footer a{color:var(--dim)}
       <div class="tlast">
         <div class="tl">Last <span id="tLn">20</span> calls</div>
         <div class="dots" id="tDots"></div>
-        <div class="tfoot"><span>Rules fixed since <b>Sep 25</b>. Nothing deleted.</span><a class="btn btn-ghost" href="https://public.oddsengine.live/#record">Every call in the app &rarr;</a></div>
+        <div class="tfoot"><span>Live since <b id="tSince">July</b>. Rules fixed since <b>Sep 25</b>. Nothing deleted.</span><a class="btn btn-ghost" href="https://public.oddsengine.live/#record">Every call in the app &rarr;</a></div>
       </div>
     </div>
-    <p class="note rv">Every call with its price, payout and result is in the app. Nothing is removed afterwards.</p>
+    <p class="note rv">Hit rate, streak and payout count the fixed rules since Sep 25. Every call since day one, with its price and result, is in the app.</p>
   </div>
 </section>
 
@@ -641,19 +642,23 @@ footer a{color:var(--dim)}
   function roi(g){ if(!g.length) return null; var s=0; g.forEach(function(x){ s += x.hit ? (1/x.cost-1) : -1; }); return s/g.length; }
   function stats(g){ var n=g.length; return { n:n, hit: n? g.filter(function(x){return x.hit;}).length/n : null,
     cost: n? g.reduce(function(a,x){return a+x.cost;},0)/n : null, roi: roi(g) }; }
-  function trackRecord(g){
+  function trackRecord(g, all){
+    all=all||g;
     var s=stats(g);
     if(!s.n) return;
     var go=function(){
       countTo(document.getElementById('gHit'), s.hit*100, function(v){return Math.round(v)+'%';});
       document.getElementById('gArc').style.strokeDashoffset = String(326.7*(1-s.hit));
-      countTo(document.getElementById('tN'), s.n, function(v){return Math.round(v);});
+      countTo(document.getElementById('tN'), all.length, function(v){return Math.round(v);});
+      var first=all.map(function(x){return x.date;}).filter(Boolean).sort()[0]||SINCE;
+      document.getElementById('tNl').textContent='Signals scored since '+dm(first);
+      document.getElementById('tSince').textContent=dm(first);
       var best=0,run=0; g.slice().reverse().forEach(function(x){ if(x.hit){ run++; if(run>best) best=run; } else run=0; });
       countTo(document.getElementById('tC'), best, function(v){return Math.round(v);});
       var hits=g.filter(function(x){return x.hit;});
       var pay=hits.length? hits.reduce(function(a,x){return a+1/x.cost;},0)/hits.length : 1/s.cost;
       countTo(document.getElementById('tX'), pay, function(v){return v.toFixed(2)+'x';});
-      var days=Math.max(1, Math.round((Date.now()-Date.parse(SINCE+'T00:00:00Z'))/86400000));
+      var days=Math.max(1, Math.round((Date.now()-Date.parse(first+'T00:00:00Z'))/86400000));
       countTo(document.getElementById('tD'), days, function(v){return Math.round(v);});
       var last=g.slice(0,20);
       document.getElementById('tLn').textContent=last.length;
@@ -684,7 +689,7 @@ footer a{color:var(--dim)}
       rows.push({hit:!!r.outcome_hit,cost:r.cost,city:r.city,date:r.date,label:r.outcome_label,legs:r.said_legs||[],coverage:r.said_coverage,pub:String(r.published_ts||'').slice(0,10)});
     });
     var p2=rows.filter(function(x){return x.pub>=SINCE;});
-    trackRecord(p2);
+    trackRecord(p2, rows);
     countTo(document.getElementById('sScored'), rows.length, function(v){return Math.round(v);});
     var s2=stats(p2); if(s2.hit!=null) countTo(document.getElementById('sHit'), s2.hit*100, function(v){return Math.round(v)+'%';}); else document.getElementById('sHit').textContent='new';
     var last = rows.slice(0,24);
