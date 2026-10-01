@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>OddsEngine · Beat the Engine</title>
-<meta name="description" content="An engine that forecasts the daily high in 50 cities and trades it on Polymarket. Every call posted before the station reports. Every miss stays up. $ODDS is your key.">
+<meta name="description" content="An engine that forecasts the daily high in 50 cities and trades it on Polymarket. Every call posted before the station reports. Every miss stays up. Hold $ODDS and see every call live.">
 <meta name="theme-color" content="#05070b">
 <link rel="canonical" href="https://oddsengine.live/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OddsEngine">
 <meta property="og:url" content="https://oddsengine.live/">
 <meta property="og:title" content="OddsEngine · Beat the Engine">
-<meta property="og:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call first.">
+<meta property="og:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call live.">
 <meta property="og:image" content="https://oddsengine.live/og-image.jpg">
 <meta property="og:image:secure_url" content="https://oddsengine.live/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="The Engine, a black robot with a glowing blue ring for a face">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="OddsEngine · Beat the Engine">
-<meta name="twitter:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call first.">
+<meta name="twitter:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call live.">
 <meta name="twitter:image" content="https://oddsengine.live/og-image.jpg">
 <meta name="twitter:image:alt" content="The Engine, a black robot with a glowing blue ring for a face">
 <link rel="icon" href="ring.png">
@@ -231,6 +231,11 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line
 
 /* Spotlight cards */
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
+.tiers .tp{font-family:var(--mono);font-size:12px;color:var(--dim2);letter-spacing:.04em;margin:-4px 0 10px}
+.tiers .tp b{color:#fff}
+.tiers .hot{border-color:rgba(74,163,255,.55);box-shadow:0 0 40px rgba(8,120,240,.18)}
+a.board{display:block;color:inherit;text-decoration:none;transition:transform .2s,border-color .2s}
+a.board:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.6)}
 @media (max-width:900px){.cards{grid-template-columns:1fr}}
 .spot{position:relative;padding:24px;border-radius:22px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .25s ease,border-color .25s}
 .spot:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.45)}
@@ -367,7 +372,7 @@ footer a{color:var(--dim)}
     <div>
       <div class="chnum rv">02</div>
       <h2 class="rv d1">The engine<br>calls it first.</h2>
-      <p class="p rv d2">A signal is three temperatures, a price and a probability. Here is the last one that settled. <b>Holders see it in the app first, up to 2 hours before it hits X.</b> By the time the public sees it, the price has often moved. That gap is what $ODDS is for.</p>
+      <p class="p rv d2">A signal is three temperatures, a price and a probability. Here is the last one that settled. <b>Holders get every call live in the app, the moment it fires.</b> Without $ODDS you see one free call a day and every result. The price moves once the call is out. That is what $ODDS is for.</p>
       <div style="margin-top:30px" class="rv d3"><div class="phone"><div class="scr"><div class="notch"></div><div id="sigcard"></div></div></div></div>
     </div>
     <div class="art from-right rv d2"><div class="bot" data-par="0.12"><div class="flo"><video id="fvid" class="clip" poster="robot-fist.webp" muted playsinline preload="auto" width="600" height="900" aria-label="The Engine punching toward the viewer"><source src="fist.mp4" type="video/mp4"><source src="fist.webm" type="video/webm"></video></div></div></div>
@@ -421,26 +426,26 @@ footer a{color:var(--dim)}
     <div>
       <div class="chnum rv">05</div>
       <h2 class="rv d1"><span class="shiny">$ODDS</span><br>is your key.</h2>
-      <p class="p rv d2">Hold it and you see every signal before X and Telegram. The more you hold, the earlier: Holder from $20 sees it 1 hour early, Pro from $250 90 minutes early plus the engine board, Whale from $1,000 the moment it fires. Burn it for the season pass. That is all it does, and it says so.</p>
+      <p class="p rv d2">Hold it and you see every call live in the app, with the split for your stake. No token, one free call a day. Your wallet is checked every few minutes. Sell below the line and the calls lock again. That is all it does, and it says so.</p>
     </div>
     <div class="art from-below rv d2"><div class="bot" data-par="0.08"><div class="flo"><video class="clip" poster="robot-sit.webp" muted playsinline loop autoplay preload="metadata" width="600" height="900" aria-label="The Engine sitting on a giant glowing thermometer"><source src="sit.mp4" type="video/mp4"><source src="sit.webm" type="video/webm"></video></div></div></div>
   </div>
   <div class="wrap">
-    <div class="cards">
+    <div class="cards tiers">
       <div class="spot rv">
-        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
-        <h3>Hold</h3>
-        <ul><li>Signals up to 2 hours before X, by tier</li><li>The engine board: engine vs market, every city (Pro)</li><li>The app with one tap buying on Polymarket</li><li>All game rounds and the holder league</li></ul>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg></div>
+        <h3>No token</h3><div class="tp">free</div>
+        <ul><li>1 free call a day on X and Telegram</li><li>Every result, hit or miss</li><li>The full public record</li></ul>
       </div>
-      <div class="spot rv d1">
-        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1 1 2 2 3 3 0-2 0-4 0-6z"></path></svg></div>
-        <h3>Burn</h3>
-        <ul><li>Season pass: frames, titles, badges</li><li>API access for builders, cheaper than USDC</li><li>Every burn is on chain and public</li></ul>
+      <div class="spot rv d1 hot">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0"></path></svg></div>
+        <h3>Holder</h3><div class="tp">hold <b id="tHold">$100</b> in $ODDS</div>
+        <ul><li>Every call, live, the moment it fires</li><li>The split for your stake on every block</li><li>Straight to the market on Polymarket</li></ul>
       </div>
       <div class="spot rv d2">
-        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"></path><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path></svg></div>
-        <h3>Vote</h3>
-        <ul><li>Which cities join next season</li><li>Which markets become game rounds</li><li>One wallet, one vote</li></ul>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15v-4"></path><path d="M12 15V8"></path><path d="M16 15v-6"></path></svg></div>
+        <h3>Pro</h3><div class="tp">hold <b id="tPro">$1,000</b> · pass soon</div>
+        <ul><li>Everything in Holder</li><li>The engine board: engine vs market, every city</li><li>Monthly pass by burning $ODDS, coming soon</li></ul>
       </div>
     </div>
     <div class="ca rv">
@@ -701,10 +706,13 @@ footer a{color:var(--dim)}
   }).catch(function(){ document.getElementById('ticker').innerHTML='<span>Record temporarily unavailable</span>'; });
 
   var LOCK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>';
+  function restH(s){ var t=Date.parse(String(s.ts||'')), l=parseFloat(s.lead_h); if(!isFinite(t)||!isFinite(l)) return null; return l-(Date.now()-t)/3600000; }
+  function openSig(s){ var r=restH(s); if(r!=null) return r>0; var today=new Date().toISOString().slice(0,10); return String(s.date||'')>=today; }
+  function sigLink(s){ return 'https://public.oddsengine.live/?sig='+encodeURIComponent(String(s.city||'').toLowerCase().replace(/\s+/g,'-')+'_'+(s.date||''))+'#signals'; }
   function lockedBoards(list){
-    var seen={}; list=list.filter(function(s){ var k=(s.city||'')+'|'+(s.date||''); if(seen[k]) return false; seen[k]=1; return true; });
+    var seen={}; list=list.filter(openSig).filter(function(s){ var k=(s.city||'')+'|'+(s.date||''); if(seen[k]) return false; seen[k]=1; return true; });
     document.getElementById('boards').innerHTML = list.slice(0,8).map(function(s){
-      return '<div class="board"><div class="c">'+up(s.city)+' · '+esc(dm(s.date))+'</div><div class="t" style="display:flex;align-items:center;gap:10px">'+LOCK+'<span>live</span></div><div class="s">open call, holders only</div></div>';
+      return '<a class="board" href="'+sigLink(s)+'"><div class="c">'+up(s.city)+' · '+esc(dm(s.date))+'</div><div class="t" style="display:flex;align-items:center;gap:10px">'+LOCK+'<span>live</span></div><div class="s">'+(s.locked?'open call, holders only':'free call of the day')+'</div></a>';
     }).join('');
   }
   function settledBoards(list){
@@ -722,13 +730,16 @@ footer a{color:var(--dim)}
       (x.coverage!=null?'<div class="kv"><span>Engine said</span><b>'+Math.round(x.coverage*100)+'%</b></div>':'')+
       '<div class="kv"><span>Came in at</span><b>'+esc(x.label||'?')+'</b></div>'+
       '<div class="kv"><span>Result</span><b style="color:'+(x.hit?'var(--mint)':'var(--red)')+'">'+(x.hit?'HIT · paid '+(1/x.cost).toFixed(2)+'x':'MISS · stake lost')+'</b></div>'+
-      '<div class="holder">'+LOCK+'Holders saw it up to 2 hours before X</div></div>';
+      '<div class="holder">'+LOCK+'Holders had it live in the app</div></div>';
   }
   var settled=[];
   window.__settled=function(rows){ settled=rows; var withLegs=rows.filter(function(x){return x.legs&&x.legs.length;}); if(withLegs.length) sigCard(withLegs[0]); };
+  fetch(API+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
+    (d.tiers||[]).forEach(function(t){ var id=t.tier==='holder'?'tHold':t.tier==='pro'?'tPro':null; if(id&&t.min_usd) document.getElementById(id).textContent='$'+Math.round(t.min_usd).toLocaleString('en-US'); });
+  }).catch(function(){});
   fetch(API+'/v1/signals?hours=48').then(function(r){return r.json();}).then(function(d){
     var list=(d.signals||[]);
-    if(list.length) lockedBoards(list); else setTimeout(function(){ settledBoards(settled); },1500);
+    if(list.filter(openSig).length) lockedBoards(list); else setTimeout(function(){ settledBoards(settled); },1500);
   }).catch(function(){ setTimeout(function(){ settledBoards(settled); },1500); });
 })();
 </script>
