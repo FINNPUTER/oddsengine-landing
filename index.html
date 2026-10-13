@@ -310,7 +310,7 @@ footer a{color:var(--dim)}
   <span class="sp"></span>
   <a class="l" href="#record">Record</a>
   <a class="l" href="#game">Game</a>
-  <a class="l" href="#odds">$ODDS</a>
+  <a class="l" href="#odds">$ODDS</a><a class="l" href="https://docs.oddsengine.live">Docs</a>
   <a class="btn btn-ghost app" href="https://public.oddsengine.live">Open app</a>
   <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
 </nav>
@@ -426,7 +426,7 @@ footer a{color:var(--dim)}
     <div>
       <div class="chnum rv">05</div>
       <h2 class="rv d1"><span class="shiny">$ODDS</span><br>is your key.</h2>
-      <p class="p rv d2">Hold it and you see every call live in the app, with the split for your stake. No token, one free call a day. Your wallet is checked every few minutes. Sell below the line and the calls lock again. That is all it does, and it says so.</p>
+      <p class="p rv d2">Hold it and you see every call live in the app, with the split for your stake. No token, one free call a day. $ODDS lives on Robinhood Chain, so any EVM wallet works: MetaMask, Rabby, the same one you use on Polymarket. Your wallet is checked every few minutes. Sell below the line and the calls lock again. That is all it does, and it says so.</p>
     </div>
     <div class="art from-below rv d2"><div class="bot" data-par="0.08"><div class="flo"><video class="clip" poster="robot-sit.webp" muted playsinline loop autoplay preload="metadata" width="600" height="900" aria-label="The Engine sitting on a giant glowing thermometer"><source src="sit.mp4" type="video/mp4"><source src="sit.webm" type="video/webm"></video></div></div></div>
   </div>
@@ -450,7 +450,7 @@ footer a{color:var(--dim)}
     </div>
     <div class="ca rv">
       <span class="mono" style="font-size:12px;color:var(--dim2);letter-spacing:.1em">CONTRACT</span>
-      <code id="ca">Launching soon on Pump.fun</code>
+      <code id="ca">Launching soon on Torch · Robinhood Chain</code>
       <button class="btn btn-ghost" id="copyca" type="button" style="min-height:40px;font-size:12px">Copy</button>
       <a class="btn btn-blue buy" id="buybtn" href="#odds" aria-disabled="true">Buy $ODDS</a>
     </div>
@@ -473,7 +473,7 @@ footer a{color:var(--dim)}
 <footer>
   <div class="wrap row">
     <div style="display:flex;align-items:center;gap:10px"><img src="ring.png" alt="" width="20" height="20">OddsEngine · Forecasts from ECMWF, GFS and ICON via Open-Meteo</div>
-    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://public.oddsengine.live">App</a><a href="https://t.me/OddsEngine">Telegram</a><a href="#record">Record</a></div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://public.oddsengine.live">App</a><a href="https://t.me/OddsEngine">Telegram</a><a href="https://x.com/OddsEngine">X</a><a href="https://docs.oddsengine.live">Docs</a><a href="#record">Record</a></div>
   </div>
 </footer>
 
@@ -634,7 +634,7 @@ footer a{color:var(--dim)}
   var CA = (window.ODDS_CA||'').trim();
   if(CA){
     document.getElementById('ca').textContent = CA;
-    var link = 'https://pump.fun/coin/' + CA;
+    var link = 'https://app.torchpad.fun/trade/robinhood/' + CA;
     document.querySelectorAll('.buy').forEach(function(b){ b.href=link; b.target='_blank'; b.rel='noopener'; b.removeAttribute('aria-disabled'); });
   } else {
     document.getElementById('copyca').style.display='none';
