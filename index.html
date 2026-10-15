@@ -19,6 +19,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Engine, a black robot with a glowing blue ring for a face">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@OddsEngine">
 <meta name="twitter:title" content="OddsEngine · Beat the Engine">
 <meta name="twitter:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call live.">
 <meta name="twitter:image" content="https://oddsengine.live/og-image.jpg">
@@ -239,6 +240,10 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line
 a.board{display:block;color:inherit;text-decoration:none;transition:transform .2s,border-color .2s}
 a.board:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.6)}
 @media (max-width:900px){.cards{grid-template-columns:1fr}}
+.nextc{grid-template-columns:repeat(4,minmax(0,1fr))}.nextc .tp{font-size:11.5px;letter-spacing:.1em;color:var(--blue2,#4aa3ff);margin-bottom:10px}.nextc .sp-p{margin:0;color:var(--dim);font-size:15px;line-height:1.5}
+@media (max-width:1000px){.nextc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.nextc{grid-template-columns:1fr}}
+
 .spot{position:relative;padding:24px;border-radius:22px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .25s ease,border-color .25s}
 .spot:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.45)}
 .spot::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
@@ -455,8 +460,25 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
       <code id="ca">Launching soon on Torch · Robinhood Chain</code>
       <button class="btn btn-ghost" id="copyca" type="button" style="min-height:40px;font-size:12px">Copy</button>
       <a class="btn btn-blue buy" id="buybtn" href="#odds" aria-disabled="true">Buy $ODDS</a>
+      <a class="btn btn-ghost" id="howbuy" href="https://docs.oddsengine.live/#buy" style="min-height:40px;font-size:12px">How to buy</a>
     </div>
+    <p class="fine rv">The contract address is posted first on <a href="https://x.com/OddsEngine" target="_blank" rel="noopener">@OddsEngine</a> and shown right here. Trust no other address.</p>
     <p class="fine rv">No revenue share, no staking yield, no promises about price. $ODDS is access to a product. The signals are information, not financial advice. Polymarket is not available in every country.</p>
+  </div>
+</section>
+
+<section class="ch" id="next">
+  <div class="wrap">
+    <div class="chnum rv">06</div>
+    <h2 class="rv d1">Launch is<br><span class="shiny">day one.</span></h2>
+    <p class="p rv d2">Here is what we build next for holders, in this order. Each one ships before the next gets announced.</p>
+    <div class="cards nextc">
+      <div class="spot rv"><div class="tp mono">01 · live at launch</div><h3>Holder Telegram</h3><p class="sp-p">Every call live on your phone. Verify once, the bot lets you in.</p></div>
+      <div class="spot rv d1 hot"><div class="tp mono">02 · live at launch</div><h3>Your own Engine</h3><p class="sp-p">A personal agent. Your cities, your stake, your risk. It picks the calls that fit you and keeps score. Your money never leaves your wallet.</p></div>
+      <div class="spot rv d2"><div class="tp mono">03 · next up</div><h3>It learns in public</h3><p class="sp-p">Every day the engine checks where it was wrong, fixes itself and posts what it changed.</p></div>
+      <div class="spot rv d3"><div class="tp mono">04</div><h3>Beat the Engine</h3><p class="sp-p">Season 1. You against the machine and every other holder.</p></div>
+    </div>
+    <p class="fine rv" style="margin-top:18px">And a second market after that. 👀</p>
   </div>
 </section>
 
@@ -634,13 +656,15 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
 
   /* Contract */
   var CA = (window.ODDS_CA||'').trim();
-  if(CA){
+  function setCA(c){
+    CA = c;
     document.getElementById('ca').textContent = CA;
+    document.getElementById('copyca').style.display='';
     var link = 'https://app.torchpad.fun/trade/robinhood/' + CA;
     document.querySelectorAll('.buy').forEach(function(b){ b.href=link; b.target='_blank'; b.rel='noopener'; b.removeAttribute('aria-disabled'); });
-  } else {
-    document.getElementById('copyca').style.display='none';
+    var h=document.getElementById('howbuy'); if(h) h.style.display='';
   }
+  if(CA){ setCA(CA); } else { document.getElementById('copyca').style.display='none'; }
   document.getElementById('copyca').addEventListener('click',function(){
     var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){b.textContent='Copy';},1600); }); }catch(e){}
   });
@@ -737,6 +761,7 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
   var settled=[];
   window.__settled=function(rows){ settled=rows; var withLegs=rows.filter(function(x){return x.legs&&x.legs.length;}); if(withLegs.length) sigCard(withLegs[0]); };
   fetch(API+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
+    if(!CA && /^0x[0-9a-fA-F]{40}$/.test(String(d.mint||''))) setCA(d.mint);
     (d.tiers||[]).forEach(function(t){ var id=t.tier==='holder'?'tHold':t.tier==='pro'?'tPro':null; if(id&&t.min_usd) document.getElementById(id).textContent='$'+Math.round(t.min_usd).toLocaleString('en-US'); });
   }).catch(function(){});
   fetch(API+'/v1/signals?hours=48').then(function(r){return r.json();}).then(function(d){
