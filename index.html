@@ -99,6 +99,52 @@ section[id],main[id]{scroll-margin-top:110px}
 .ticker .track{display:inline-flex;gap:34px;padding-left:34px;animation:tick 60s linear infinite;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
 .ticker b{color:var(--tx);font-weight:700}
 .ticker .h{color:var(--mint)} .ticker .m{color:var(--red)}
+/* Karte (seit v22) */
+.emap{padding:20px 0 80px}
+.emap h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,56px);line-height:1.04;margin:10px 0 12px}
+.emap .lead2{color:var(--dim);max-width:640px;margin:0 0 22px;font-size:17px}
+.emap .nums{display:flex;gap:26px;flex-wrap:wrap;margin:0 0 18px}
+.emap .nums div{display:flex;flex-direction:column}
+.emap .nums b{font-family:var(--mono);font-size:30px;color:var(--tx)}
+.emap .nums span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2)}
+.mapbox{position:relative;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:radial-gradient(120% 90% at 50% 40%,#0a1424 0%,#05070b 70%)}
+.mapbox svg{display:block;width:100%;height:auto}
+.mapbox .grat{stroke:rgba(120,170,255,.07);stroke-width:1;fill:none}
+.mapbox .sweep{fill:url(#sw);animation:sweep 7s linear infinite}
+@keyframes sweep{from{transform:translateX(-160px)}to{transform:translateX(1060px)}}
+.mapbox .c{cursor:pointer}
+.mapbox .c .d{fill:#7fbaff;filter:url(#gl)}
+.mapbox .c .h{fill:transparent}
+.mapbox .c .p{fill:none;stroke:#4aa3ff;stroke-width:1.4;opacity:0;transform-box:fill-box;transform-origin:center}
+.mapbox .c.rep .p{animation:mping 2.6s ease-out infinite}
+.mapbox .c.call .d{fill:#5ee0c3}
+.mapbox .c.call .p{stroke:#5ee0c3;animation:mping 1.8s ease-out infinite}
+.mapbox .c.on .d{fill:#fff}
+@keyframes mping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+.mapbox text{font-family:var(--mono);font-size:10px;fill:rgba(207,230,255,.55);letter-spacing:.06em;pointer-events:none}
+.mapbox .c.on text{fill:#fff}
+.mapcard{position:absolute;left:16px;bottom:16px;max-width:min(360px,calc(100% - 32px));padding:14px 16px;border-radius:16px;background:rgba(5,8,13,.88);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:14px;transition:opacity .3s}
+.mapcard b.c1{font-family:var(--disp);font-size:17px;display:block}
+.mapcard .s{color:var(--dim2);font-size:12.5px;margin:2px 0 8px}
+.mapcard .r{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:12.5px;color:var(--dim);padding:2px 0}
+.mapcard .r b{color:var(--tx);font-weight:500}
+.mapcard .tag{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:3px 8px;border-radius:99px;color:#04110d;background:var(--mint)}
+@media(max-width:640px){.mapbox text{display:none}.mapbox .c.on text{display:block;font-size:11px}.mapcard{position:relative;left:auto;bottom:auto;max-width:none;margin:10px;}}
+/* Torch: die Engine faehrt hoch (seit v22). Ab CA oder mit ?torch=1 */
+body.torch{--blue:#12b76a;--blue2:#3ef0a0}
+body.torch .bob video,body.torch .bob img,body.torch .flo img,body.torch .flo video,body.torch .dvid{filter:hue-rotate(-78deg) saturate(1.25) brightness(1.05);transition:filter 2.2s ease}
+body.torch .eye .glow{background:radial-gradient(circle,transparent 36%,rgba(62,240,160,.6) 44%,rgba(18,183,106,.25) 55%,transparent 68%)}
+body.torch .eye svg{filter:drop-shadow(0 0 6px #8affc8)}
+body.torch .btn-blue{box-shadow:0 0 0 0 rgba(18,183,106,.5)}
+body.torch .btn-blue:hover{box-shadow:0 0 0 7px rgba(18,183,106,.2),0 10px 40px rgba(18,183,106,.5)}
+body.torch .shiny{background-image:linear-gradient(100deg,#eef7f2 25%,#7dffc4 42%,#ffffff 50%,#7dffc4 58%,#eef7f2 75%)}
+body.torch .nav .brand img{filter:hue-rotate(-78deg) saturate(1.3)}
+body.torch .hero .ringglow{box-shadow:0 0 120px 40px rgba(18,183,106,.4)}
+.torchpill{display:none;align-items:center;gap:8px;margin:0 0 14px;padding:7px 14px;border-radius:99px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:#04110d;background:#3ef0a0;box-shadow:0 0 30px rgba(62,240,160,.55);width:max-content;max-width:100%}
+body.torch .torchpill{display:flex;animation:pillin .8s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes pillin{from{transform:scale(.6);opacity:0}}
+.powerflash{position:fixed;inset:0;z-index:999;pointer-events:none;background:radial-gradient(circle at 60% 35%,rgba(160,255,210,.95),rgba(18,183,106,.55) 35%,rgba(5,7,11,0) 70%);animation:pflash 1.6s ease-out forwards}
+@keyframes pflash{0%{opacity:0}12%{opacity:1}100%{opacity:0}}
 /* Engine Live (seit v20) */
 .elive{padding:10px 0 70px}
 .elive .frame{position:relative;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(74,163,255,.6),rgba(94,224,195,.25) 40%,rgba(167,139,250,.4) 80%,rgba(74,163,255,.55));background-size:300% 300%;animation:edge 9s linear infinite}
@@ -168,11 +214,11 @@ section.ch{position:relative;padding:120px 0}
 h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line-height:1.02;letter-spacing:-.015em;margin:12px 0 18px}
 .split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}
 .split.rev{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
-@media (max-width:900px){.split,.split.rev{grid-template-columns:minmax(0,1fr);gap:28px}.flo video.clip{width:min(300px,72vw)!important;height:calc(min(300px,72vw) * 1.5)!important;max-width:100%}.flo img{max-height:none!important;width:min(300px,72vw)!important}.from-right .flo,.from-left .flo{translate:0 60px!important}.art.in .flo{translate:0 0!important}.split.rev .art{order:-1}.flo img{max-height:420px}.flo video.clip{height:420px}section.ch{padding:80px 0}}
+@media (max-width:900px){.split,.split.rev{grid-template-columns:minmax(0,1fr);gap:28px}.flo video.clip{width:min(300px,72vw)!important;height:calc(min(300px,72vw) * 1.5)!important;max-width:100%}.flo img{max-height:none!important;width:min(300px,72vw)!important;height:auto!important}.from-right .flo,.from-left .flo{translate:0 60px!important}.art.in .flo{translate:0 0!important}.split.rev .art{order:-1}.flo img{max-height:420px}.flo video.clip{height:420px}section.ch{padding:80px 0}}
 .art{position:relative;display:flex;justify-content:center}
 .bot{position:relative;display:inline-block;will-change:transform}
 .flo{position:relative;display:inline-block;line-height:0;animation:float 6s ease-in-out infinite;transition:translate 1.1s cubic-bezier(.16,1,.3,1),scale 1.1s cubic-bezier(.16,1,.3,1),rotate 1.1s cubic-bezier(.16,1,.3,1),opacity .8s}
-.flo img{max-height:640px;width:auto;filter:drop-shadow(0 30px 60px rgba(8,120,240,.35))}
+.flo img{max-height:640px;width:auto;height:auto;filter:drop-shadow(0 30px 60px rgba(8,120,240,.35))}
 .flo video.clip{height:640px;width:427px;display:block;object-fit:cover;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 .from-right .flo{translate:180px 40px;rotate:10deg;scale:.75;opacity:0}
@@ -362,6 +408,7 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
   <div class="shade"></div>
   <div class="wrap" style="width:100%">
     <div class="copy">
+      <span class="torchpill" id="torchpill">● $ODDS IS LIVE ON TORCH</span>
       <span class="eyebrow rv"><span class="dot"></span>Live on Polymarket weather markets</span>
       <h1 class="rv d1"><span class="shiny">Beat the<br>Engine.</span></h1>
       <p class="lead rv d2">It forecasts the daily high in <b>50 cities</b> and trades it on Polymarket. Every call is posted <b>before</b> the station reports. Every miss stays up.</p>
@@ -388,6 +435,17 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
       <div class="term" id="eterm"></div>
       <div class="ft"><span>Stations, prices and its own record, around the clock. Holders see the numbers behind every call.</span><a class="btn btn-ghost" href="https://public.oddsengine.live">Open the app &rarr;</a></div>
     </div></div>
+  </div>
+</section>
+
+<!-- KARTE -->
+<section class="emap" id="map" aria-label="Engine map" hidden>
+  <div class="wrap">
+    <div class="chnum rv">LIVE MAP</div>
+    <h2 class="rv d1">Every city is a signal.</h2>
+    <p class="lead2 rv d2">Each dot is an official weather station the engine reads. It pulses when the station is reporting today. Green means a call is open for holders. Tap a city.</p>
+    <div class="nums rv d2"><div><b id="mCities">0</b><span>Cities live</span></div><div><b id="mRep">0</b><span>Stations reporting</span></div><div><b id="mCalls">0</b><span>Calls open</span></div></div>
+    <div class="mapbox rv d3" id="mapbox"></div>
   </div>
 </section>
 
@@ -705,7 +763,15 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     var link = 'https://app.torchpad.fun/trade/robinhood/' + CA;
     document.querySelectorAll('.buy').forEach(function(b){ b.href=link; b.target='_blank'; b.rel='noopener'; b.removeAttribute('aria-disabled'); });
     var h=document.getElementById('howbuy'); if(h) h.style.display='';
+    powerUp();
   }
+  function powerUp(){
+    if(document.body.classList.contains('torch')) return;
+    var f=document.createElement('div'); f.className='powerflash'; document.body.appendChild(f);
+    setTimeout(function(){ document.body.classList.add('torch'); },180);
+    setTimeout(function(){ f.remove(); },1800);
+  }
+  if(/[?&]torch=1/.test(location.search)) setTimeout(powerUp,900);
   if(CA){ setCA(CA); } else { document.getElementById('copyca').style.display='none'; }
   document.getElementById('copyca').addEventListener('click',function(){
     var b=this; try{ navigator.clipboard.writeText(CA).then(function(){ b.textContent='Copied'; setTimeout(function(){b.textContent='Copy';},1600); }); }catch(e){}
@@ -810,6 +876,62 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     var list=(d.signals||[]);
     if(list.filter(openSig).length) lockedBoards(list); else setTimeout(function(){ settledBoards(settled); },1500);
   }).catch(function(){ setTimeout(function(){ settledBoards(settled); },1500); });
+})();
+/* Karte: jede Stadt ein Punkt, aus /v1/map. */
+(function(){
+  var API=window.ODDSENGINE_API, sec=document.getElementById('map'), box=document.getElementById('mapbox');
+  if(!API||!sec||!box) return;
+  var W=1000, H=440, LAT0=72, LAT1=-48, S=1, MOB=false;
+  function mass(){ MOB=(box.clientWidth||1000)<640; H=MOB?680:440; S=MOB?2.6:1; }
+  function px(lon){ return (lon+180)/360*W; } function py(lat){ return (LAT0-lat)/(LAT0-LAT1)*H; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function gross(s){ var k=String(s||'').toLowerCase(); return k==='nyc'?'NYC':String(s||'').replace(/\b\w/g,function(c){return c.toUpperCase();}); }
+  function tag(d){ var p=String(d||'').split('-'); var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return p.length===3? M[+p[1]-1]+' '+(+p[2]) : d; }
+  function zaehle(el,to){ var t0=performance.now(); (function f(t){ var k=Math.min(1,(t-t0)/900); el.textContent=Math.round(to*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(f); })(t0); }
+  var D=[], aktiv=-1, timer=null;
+  function karte(i){
+    var z=D[i]; if(!z) return '';
+    var r='<b class="c1">'+esc(gross(z.city))+'</b><div class="s">'+esc(z.station||z.icao||'')+' · '+esc(tag(z.date))+'</div>';
+    if(z.high_so_far!=null) r+='<div class="r"><span>High so far</span><b>'+z.high_so_far+'°'+z.unit+'</b></div><div class="r"><span>Last reading</span><b>'+(z.last!=null?z.last+'°'+z.unit:'-')+(z.last_at?' · '+esc(z.last_at):'')+'</b></div>';
+    else r+='<div class="r"><span>Station</span><b>reports on the day</b></div>';
+    if(z.favourite) r+='<div class="r"><span>Market favourite</span><b>'+esc(z.favourite.legs.join(' · '))+'</b></div><div class="r"><span>Price</span><b>'+Math.round(z.favourite.cost*100)+'c</b></div>';
+    if(z.call) r+='<span class="tag">CALL OPEN FOR HOLDERS</span>';
+    return r;
+  }
+  function zeige(i){
+    aktiv=i; var cs=box.querySelectorAll('.c'); cs.forEach(function(c,j){ c.classList.toggle('on',j===i); });
+    var k=document.getElementById('mapcard'); if(k) k.innerHTML=karte(i);
+  }
+  function malen(){
+    var g='';
+    for(var lo=-150;lo<=180;lo+=30) g+='<line class="grat" x1="'+px(lo)+'" y1="0" x2="'+px(lo)+'" y2="'+H+'"/>';
+    for(var la=60;la>=-40;la-=20) g+='<line class="grat" x1="0" y1="'+py(la)+'" x2="'+W+'" y2="'+py(la)+'"/>';
+    mass();
+    var pos=D.map(function(z){ return [px(z.lon),py(z.lat)]; });
+    var c=D.map(function(z,i){ var x=pos[i][0], y=pos[i][1];
+      var rechts=x>W-140, unten=false;
+      for(var j=0;j<i;j++){ if(Math.abs(pos[j][0]-x)<70*S && Math.abs(pos[j][1]-y)<16*S){ unten=true; break; } }
+      var t='<text x="'+(rechts?-7:7)+'" y="'+(unten?14:-6)+'"'+(rechts?' text-anchor="end"':'')+'>'+esc(gross(z.city).toUpperCase())+'</text>';
+      return '<g class="c'+(z.high_so_far!=null?' rep':'')+(z.call?' call':'')+'" data-i="'+i+'" transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+S+')">'+
+        '<circle class="h" r="14"/><circle class="p" r="4"/><circle class="d" r="3.4"/>'+t+'</g>'; }).join('');
+    box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Map of the cities the engine reads"><defs>'+
+      '<filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
+      '<linearGradient id="sw" x1="0" x2="1"><stop offset="0" stop-color="#4aa3ff" stop-opacity="0"/><stop offset=".85" stop-color="#4aa3ff" stop-opacity=".10"/><stop offset="1" stop-color="#8cc4ff" stop-opacity=".35"/></linearGradient></defs>'+
+      g+'<rect class="sweep" x="0" y="0" width="160" height="'+H+'"/>'+c+'</svg><div class="mapcard" id="mapcard"></div>';
+    box.querySelectorAll('.c').forEach(function(el){ el.addEventListener('click',function(){ clearInterval(timer); zeige(+el.getAttribute('data-i')); }); });
+    var start=D.findIndex(function(z){return z.call;}); if(start<0) start=D.findIndex(function(z){return z.high_so_far!=null;}); zeige(start<0?0:start);
+    clearInterval(timer); timer=setInterval(function(){ zeige((aktiv+1)%D.length); },3200);
+  }
+  function laden(){
+    fetch(API+'/v1/map').then(function(r){return r.json();}).then(function(d){
+      if(!d||!d.cities||!d.cities.length) return;
+      var erst=!D.length; D=d.cities; sec.hidden=false;
+      if(erst){ zaehle(document.getElementById('mCities'),D.length); zaehle(document.getElementById('mRep'),d.reporting||0); zaehle(document.getElementById('mCalls'),d.calls||0); malen(); }
+      else { document.getElementById('mCities').textContent=D.length; document.getElementById('mRep').textContent=d.reporting||0; document.getElementById('mCalls').textContent=d.calls||0; var a=aktiv; malen(); zeige(Math.min(a,D.length-1)); }
+    }).catch(function(){});
+  }
+  laden(); setInterval(laden,120000);
+  window.addEventListener('resize',function(){ var m=MOB; mass(); if(m!==MOB&&D.length){ var a=aktiv; malen(); zeige(Math.max(0,a)); } });
 })();
 /* Engine Live: echte Zeilen aus /v1/feed, neue werden eingetippt. */
 (function(){
