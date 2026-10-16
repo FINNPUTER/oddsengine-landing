@@ -99,6 +99,34 @@ section[id],main[id]{scroll-margin-top:110px}
 .ticker .track{display:inline-flex;gap:34px;padding-left:34px;animation:tick 60s linear infinite;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
 .ticker b{color:var(--tx);font-weight:700}
 .ticker .h{color:var(--mint)} .ticker .m{color:var(--red)}
+/* Engine Live (seit v20) */
+.elive{padding:10px 0 70px}
+.elive .frame{position:relative;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(74,163,255,.6),rgba(94,224,195,.25) 40%,rgba(167,139,250,.4) 80%,rgba(74,163,255,.55));background-size:300% 300%;animation:edge 9s linear infinite}
+@keyframes edge{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.elive .in{border-radius:23px;background:rgba(4,7,12,.95);overflow:hidden}
+.elive .top{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.elive .orb{position:relative;width:38px;height:38px;flex:none}
+.elive .orb i{position:absolute;inset:0;border-radius:50%;border:3px solid var(--blue2);box-shadow:0 0 20px rgba(74,163,255,.6);animation:breathe 2.4s ease-in-out infinite}
+.elive .orb i+i{inset:-7px;border:1px solid rgba(74,163,255,.35);box-shadow:none;animation:ping 2.4s ease-out infinite}
+@keyframes breathe{50%{transform:scale(.88);box-shadow:0 0 34px rgba(74,163,255,.9)}}
+@keyframes ping{0%{transform:scale(.8);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.elive .tt{flex:1;min-width:0}
+.elive .tt b{display:block;font-family:var(--disp);font-size:19px}
+.elive .tt span{font-size:14px;color:var(--dim)}
+.elive .lv{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mint);display:flex;align-items:center;gap:6px}
+.elive .lv::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:lvb 1.4s infinite}
+@keyframes lvb{50%{opacity:.3}}
+.elive .term{font-family:var(--mono);font-size:13.5px;line-height:1.6;padding:14px 18px 18px;min-height:230px}
+.elive .ln{display:grid;grid-template-columns:46px 70px 1fr;gap:10px;padding:3px 0;align-items:baseline;animation:lnin .35s ease both}
+@keyframes lnin{from{opacity:0;transform:translateY(6px)}}
+.elive .t{color:var(--dim2)} .elive .x{color:var(--tx);word-break:break-word}
+.elive .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:1px 6px;border-radius:6px;text-align:center;color:var(--dim);background:rgba(255,255,255,.06)}
+.elive .call .k{color:#04110d;background:var(--mint)} .elive .station .k{color:var(--blue2);background:rgba(74,163,255,.14)}
+.elive .learn .k{color:#a78bfa;background:rgba(167,139,250,.16)} .elive .result .k{color:var(--amber);background:rgba(255,181,71,.14)}
+.elive .agent .k{color:#fff;background:var(--blue)} .elive .kalshi .k,.elive .crowd .k{color:var(--mint);background:rgba(94,224,195,.12)}
+.elive .cur{display:inline-block;width:8px;height:15px;background:var(--blue2);margin-left:2px;vertical-align:-2px;animation:lvb 1s steps(1) infinite}
+.elive .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:0 18px 18px;font-size:13px;color:var(--dim2)}
+@media(max-width:560px){.elive .ln{grid-template-columns:40px 1fr}.elive .k{grid-column:2;justify-self:start}.elive .x{grid-column:1/-1}.elive .term{font-size:12.5px}}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── Hero ──────────────────────────────────────────── */
@@ -346,6 +374,19 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
         <div class="stat"><div class="v" id="sHit">0%</div><div class="k">Hit rate, fixed rules</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ENGINE LIVE -->
+<section class="elive" id="live" aria-label="Engine Live" hidden>
+  <div class="wrap">
+    <div class="frame rv"><div class="in">
+      <div class="top"><div class="orb"><i></i><i></i></div>
+        <div class="tt"><b>Engine Live</b><span>The engine at work, right now. Every line is something it actually did.</span></div>
+        <div class="lv">LIVE</div></div>
+      <div class="term" id="eterm"></div>
+      <div class="ft"><span>Stations, prices and its own record, around the clock. Holders see the numbers behind every call.</span><a class="btn btn-ghost" href="https://public.oddsengine.live">Open the app &rarr;</a></div>
+    </div></div>
   </div>
 </section>
 
@@ -768,6 +809,31 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     var list=(d.signals||[]);
     if(list.filter(openSig).length) lockedBoards(list); else setTimeout(function(){ settledBoards(settled); },1500);
   }).catch(function(){ setTimeout(function(){ settledBoards(settled); },1500); });
+})();
+/* Engine Live: echte Zeilen aus /v1/feed, neue werden eingetippt. */
+(function(){
+  var API=window.ODDSENGINE_API, sec=document.getElementById('live'), term=document.getElementById('eterm');
+  if(!API||!sec||!term) return;
+  var gesehen={}, erst=true, K={scan:'scan',station:'station',call:'call',learn:'learned',result:'result',agent:'agent',crowd:'crowd',kalshi:'kalshi'};
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function zeit(ts){ var t=new Date(ts); return isFinite(t)? ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2) : ''; }
+  function zeile(z){ var r=document.createElement('div'); r.className='ln '+(K[z.kind]?z.kind:'');
+    r.innerHTML='<span class="t">'+esc(zeit(z.ts))+'</span><span class="k">'+esc(K[z.kind]||'info')+'</span><span class="x"></span>'; return r; }
+  function tippe(el,text,done){ var i=0,cur=document.createElement('span'); cur.className='cur'; el.appendChild(cur); var n=document.createTextNode(''); el.insertBefore(n,cur);
+    (function f(){ i+=Math.max(1,Math.round(text.length/60)); n.data=text.slice(0,i); if(i<text.length) setTimeout(f,18); else { cur.remove(); if(done) done(); } })(); }
+  function reihe(liste){ var i=0; (function next(){ if(i>=liste.length) return; var z=liste[i++]; var r=zeile(z); term.insertBefore(r,term.firstChild);
+    tippe(r.querySelector('.x'),z.text,function(){ setTimeout(next,450); }); while(term.children.length>9) term.removeChild(term.lastChild); })(); }
+  function laden(){
+    fetch(API+'/v1/feed?n=40').then(function(r){return r.json();}).then(function(d){
+      var l=(d&&d.lines||[]).filter(function(z){return z&&z.text;}); if(!l.length) return;
+      sec.hidden=false;
+      var neu=l.filter(function(z){ return !gesehen[z.ts+'|'+z.text]; });
+      l.forEach(function(z){ gesehen[z.ts+'|'+z.text]=1; });
+      if(erst){ erst=false; l.slice(-9,-3).forEach(function(z){ var r=zeile(z); r.querySelector('.x').textContent=z.text; term.insertBefore(r,term.firstChild); }); reihe(l.slice(-3)); }
+      else reihe(neu);
+    }).catch(function(){});
+  }
+  laden(); setInterval(laden,45000);
 })();
 </script>
 </body>
