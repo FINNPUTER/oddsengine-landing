@@ -123,6 +123,8 @@ section[id],main[id]{scroll-margin-top:110px}
 @keyframes mping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(3.4);opacity:0}}
 .mapbox text{font-family:var(--mono);font-size:10px;fill:rgba(207,230,255,.55);letter-spacing:.06em;pointer-events:none}
 .mapbox .c.on text{fill:#fff}
+.mapbox text.nl{opacity:0}.mapbox .c.on text.nl,.mapbox .c:hover text.nl{opacity:1}
+.mapbox .c.on{paint-order:stroke}.mapbox .c.on text{stroke:#05070b;stroke-width:3px;paint-order:stroke}
 .mapcard{position:absolute;left:16px;bottom:16px;max-width:min(360px,calc(100% - 32px));padding:14px 16px;border-radius:16px;background:rgba(5,8,13,.88);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:14px;transition:opacity .3s}
 .mapcard b.c1{font-family:var(--disp);font-size:17px;display:block}
 .mapcard .s{color:var(--dim2);font-size:12.5px;margin:2px 0 8px}
@@ -898,12 +900,12 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     var r='<b class="c1">'+esc(gross(z.city))+'</b><div class="s">'+esc(z.station||z.icao||'')+' · '+esc(tag(z.date))+'</div>';
     if(z.high_so_far!=null) r+='<div class="r"><span>High so far</span><b>'+z.high_so_far+'°'+z.unit+'</b></div><div class="r"><span>Last reading</span><b>'+(z.last!=null?z.last+'°'+z.unit:'-')+(z.last_at?' · '+esc(z.last_at):'')+'</b></div>';
     else r+='<div class="r"><span>Station</span><b>reports on the day</b></div>';
-    if(z.favourite) r+='<div class="r"><span>Market favourite</span><b>'+esc(z.favourite.legs.join(' · '))+'</b></div><div class="r"><span>Price</span><b>'+Math.round(z.favourite.cost*100)+'c</b></div>';
+    if(z.favourite&&z.favourite.cost>=0.02&&z.favourite.cost<=0.99) r+='<div class="r"><span>Market favourite</span><b>'+esc(z.favourite.legs.join(' · '))+'</b></div><div class="r"><span>Price</span><b>'+Math.round(z.favourite.cost*100)+'c</b></div>';
     if(z.call) r+='<span class="tag">CALL OPEN FOR HOLDERS</span>';
     return r;
   }
   function zeige(i){
-    aktiv=i; var cs=box.querySelectorAll('.c'); cs.forEach(function(c,j){ c.classList.toggle('on',j===i); });
+    aktiv=i; var cs=box.querySelectorAll('.c'); cs.forEach(function(c){ var on=+c.getAttribute('data-i')===i; c.classList.toggle('on',on); if(on) c.parentNode.appendChild(c); });
     var k=document.getElementById('mapcard'); if(k) k.innerHTML=karte(i);
   }
   function malen(){
@@ -912,15 +914,28 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     for(var la=60;la>=-40;la-=20) g+='<line class="grat" x1="0" y1="'+py(la)+'" x2="'+W+'" y2="'+py(la)+'"/>';
     mass();
     var pos=D.map(function(z){ return [px(z.lon),py(z.lat)]; });
-    var c=D.map(function(z,i){ var x=pos[i][0], y=pos[i][1];
-      var rechts=x>W-140, unten=false;
-      for(var j=0;j<i;j++){ if(Math.abs(pos[j][0]-x)<70*S && Math.abs(pos[j][1]-y)<16*S){ unten=true; break; } }
-      var t='<text x="'+(rechts?-7:7)+'" y="'+(unten?14:-6)+'"'+(rechts?' text-anchor="end"':'')+'>'+esc(gross(z.city).toUpperCase())+'</text>';
+    // Beschriftung ohne Ueberlappung: je Stadt vier Plaetze probieren
+    // (rechts, links, oben, unten). Passt keiner, bleibt nur der Punkt;
+    // der Name erscheint, sobald die Stadt aktiv ist.
+    var boxes=pos.map(function(p){ return [p[0]-4,p[1]-4,p[0]+4,p[1]+4]; });
+    function frei(b){ if(b[0]<2||b[2]>W-2||b[1]<2||b[3]>H-2) return false;
+      for(var k=0;k<boxes.length;k++){ var o=boxes[k]; if(b[0]<o[2]&&b[2]>o[0]&&b[1]<o[3]&&b[3]>o[1]) return false; } return true; }
+    var reihe=D.map(function(_,i){return i;}).sort(function(a,b){ return (D[b].call?2:0)+(D[b].high_so_far!=null?1:0)-((D[a].call?2:0)+(D[a].high_so_far!=null?1:0)); });
+    var lab=[];
+    reihe.forEach(function(i){ var x=pos[i][0], y=pos[i][1], w=gross(D[i].city).length*6.7+2, h=11;
+      var opt=[[7,3.5,'start',[x+6,y-6,x+8+w,y+6]],[-7,3.5,'end',[x-8-w,y-6,x-6,y+6]],
+               [0,-8,'middle',[x-w/2,y-8-h,x+w/2,y-6]],[0,16,'middle',[x-w/2,y+6,x+w/2,y+7+h]]];
+      for(var o=0;o<opt.length;o++){ if(frei(opt[o][3])){ boxes.push(opt[o][3]); lab[i]=opt[o]; return; } }
+      lab[i]=[7,3.5,'start',null];
+    });
+    var c=D.map(function(z,i){ var x=pos[i][0], y=pos[i][1], L=lab[i];
+      if(MOB){ L=[x>W-140?-7:7,-6,x>W-140?'end':'start',1]; }
+      var t='<text x="'+L[0]+'" y="'+L[1]+'" text-anchor="'+L[2]+'"'+(L[3]?'':' class="nl"')+'>'+esc(gross(z.city).toUpperCase())+'</text>';
       return '<g class="c'+(z.high_so_far!=null?' rep':'')+(z.call?' call':'')+'" data-i="'+i+'" transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+S+')">'+
-        '<circle class="h" r="14"/><circle class="p" r="4"/><circle class="d" r="3.4"/>'+t+'</g>'; }).join('');
+        '<circle class="h" r="'+(MOB?14:8)+'"/><circle class="p" r="4"/><circle class="d" r="3.4"/>'+t+'</g>'; }).join('');
     box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Map of the cities the engine reads"><defs>'+
       '<filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'+
-      '<linearGradient id="sw" x1="0" x2="1"><stop offset="0" stop-color="#4aa3ff" stop-opacity="0"/><stop offset=".85" stop-color="#4aa3ff" stop-opacity=".10"/><stop offset="1" stop-color="#8cc4ff" stop-opacity=".35"/></linearGradient></defs>'+
+      '<linearGradient id="sw" x1="0" x2="1"><stop offset="0" stop-color="#4aa3ff" stop-opacity="0"/><stop offset=".8" stop-color="#4aa3ff" stop-opacity=".08"/><stop offset=".96" stop-color="#8cc4ff" stop-opacity=".22"/><stop offset="1" stop-color="#8cc4ff" stop-opacity="0"/></linearGradient></defs>'+
       g+'<rect class="sweep" x="0" y="0" width="160" height="'+H+'"/>'+c+'</svg><div class="mapcard" id="mapcard"></div>';
     box.querySelectorAll('.c').forEach(function(el){ el.addEventListener('click',function(){ clearInterval(timer); zeige(+el.getAttribute('data-i')); }); });
     var start=D.findIndex(function(z){return z.call;}); if(start<0) start=D.findIndex(function(z){return z.high_so_far!=null;}); zeige(start<0?0:start);
