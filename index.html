@@ -381,6 +381,43 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
   #rain{display:none}
   .flo video.clip{animation:none}
 }
+/* TORCH-AUTO */
+body.torch a:hover{color:#8affc8}
+body.torch .aurora{
+  background:radial-gradient(35% 45% at 20% 30%,rgba(18,183,106,.35),transparent 70%),
+             radial-gradient(30% 40% at 80% 20%,rgba(94,224,195,.16),transparent 70%),
+             radial-gradient(30% 35% at 55% 60%,rgba(120,80,255,.16),transparent 70%)}
+body.torch .btn-blue{box-shadow:0 0 0 0 rgba(18,183,106,.5)}
+body.torch .btn-blue:hover{box-shadow:0 0 0 7px rgba(18,183,106,.18),0 10px 40px rgba(18,183,106,.45)}
+body.torch .elive .frame{background:linear-gradient(135deg,rgba(62,240,160,.6),rgba(94,224,195,.25) 40%,rgba(167,139,250,.4) 80%,rgba(62,240,160,.55))}
+body.torch .elive .orb i{box-shadow:0 0 20px rgba(62,240,160,.6)}
+body.torch .elive .orb i+i{border:1px solid rgba(62,240,160,.35)}
+body.torch .elive .station .k{background:rgba(62,240,160,.14)}
+body.torch .flash{background:radial-gradient(ellipse at 72% 8%,rgba(190,220,255,.65),rgba(120,240,190,.12) 45%,transparent 70%)}
+body.torch .hero .ringglow{box-shadow:0 0 120px 40px rgba(18,183,106,.35)}
+body.torch .flo img{filter:hue-rotate(-78deg) saturate(1.25) brightness(1.05) drop-shadow(0 30px 60px rgba(18,183,106,.35))}
+body.torch .eye .glow{background:radial-gradient(circle,transparent 36%,rgba(62,240,160,.6) 44%,rgba(18,183,106,.2) 55%,transparent 68%)}
+body.torch .art::before{background:radial-gradient(circle,rgba(18,183,106,.28),transparent 65%)}
+body.torch .board{background:linear-gradient(180deg,rgba(18,183,106,.10),rgba(18,183,106,.02));border:1px solid rgba(62,240,160,.35);
+  box-shadow:inset 0 0 30px rgba(18,183,106,.12),0 0 24px rgba(18,183,106,.10)}
+body.torch .board .t{text-shadow:0 0 18px rgba(62,240,160,.55)}
+body.torch .leg{background:rgba(18,183,106,.18);border:1px solid rgba(62,240,160,.5)}
+body.torch .trk{
+  background:linear-gradient(180deg,rgba(94,224,195,.07),rgba(18,183,106,.03))}
+body.torch .tiers .hot{border-color:rgba(62,240,160,.55);box-shadow:0 0 40px rgba(18,183,106,.18)}
+body.torch a.board:hover{border-color:rgba(62,240,160,.6)}
+body.torch .nextc .tp{color:var(--blue2,#3ef0a0)}
+body.torch .spot:hover{border-color:rgba(62,240,160,.45)}
+body.torch .spot::before{
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(18,183,106,.22),transparent 45%)}
+body.torch .spot .ic{background:rgba(18,183,106,.16);border:1px solid rgba(62,240,160,.4)}
+body.torch .dive .ring{
+  box-shadow:0 0 0 2px rgba(200,230,255,.9),0 0 30px 8px rgba(62,240,160,.8),inset 0 0 30px 6px rgba(62,240,160,.6)}
+body.torch .dive .light{background:radial-gradient(circle at 50% 50%,rgba(170,215,255,1) 0%,rgba(18,183,106,.9) 30%,rgba(5,7,11,1) 75%)}
+body.torch .dive .grid{
+  background-image:linear-gradient(rgba(62,240,160,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(62,240,160,.28) 1px,transparent 1px)}
+body.torch .dive .cities span{
+  border:1px solid rgba(62,240,160,.45);background:rgba(18,183,106,.12);box-shadow:0 0 18px rgba(18,183,106,.25)}
 </style>
 </head>
 <body>
@@ -755,7 +792,7 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
       var n=Math.round((innerWidth<700?70:160)); drops=[]; for(var i=0;i<n;i++) drops.push({x:Math.random()*W,y:Math.random()*H,l:(8+Math.random()*18)*dpr,v:(7+Math.random()*9)*dpr,a:.08+Math.random()*.22}); }
     size(); addEventListener('resize',size);
     (function f(){ cx.clearRect(0,0,W,H); cx.lineWidth=1*dpr;
-      for(var i=0;i<drops.length;i++){ var d=drops[i]; cx.strokeStyle='rgba(150,195,255,'+d.a+')'; cx.beginPath(); cx.moveTo(d.x,d.y); cx.lineTo(d.x-d.l*.18,d.y+d.l); cx.stroke();
+      for(var i=0;i<drops.length;i++){ var d=drops[i]; cx.strokeStyle=(document.body.classList.contains('torch')?'rgba(150,255,205,':'rgba(150,195,255,')+d.a+')'; cx.beginPath(); cx.moveTo(d.x,d.y); cx.lineTo(d.x-d.l*.18,d.y+d.l); cx.stroke();
         d.y+=d.v; d.x-=d.v*.18; if(d.y>H){ d.y=-20; d.x=Math.random()*W*1.1; } }
       requestAnimationFrame(f); })();
   })();
@@ -769,14 +806,18 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
     var link = 'https://app.torchpad.fun/trade/robinhood/' + CA;
     document.querySelectorAll('.buy').forEach(function(b){ b.href=link; b.target='_blank'; b.rel='noopener'; b.removeAttribute('aria-disabled'); });
     var h=document.getElementById('howbuy'); if(h) h.style.display='';
-    powerUp();
   }
   function powerUp(){
     if(document.body.classList.contains('torch')) return;
     var f=document.createElement('div'); f.className='powerflash'; document.body.appendChild(f);
-    setTimeout(function(){ document.body.classList.add('torch'); },180);
+    setTimeout(function(){ document.body.classList.add('torch');
+      // Icons im Tab und auf dem Homescreen gleich mit umfaerben
+      document.querySelectorAll('link[rel="icon"],link[rel="apple-touch-icon"]').forEach(function(l){ l.href=l.getAttribute('href').replace(/(ring|icon-180)\.png$/,'$1-torch.png'); });
+      document.querySelectorAll('.nav .brand img,footer img[src="ring.png"]').forEach(function(i){ i.src='ring-torch.png'; i.style.filter='none'; });
+    },180);
     setTimeout(function(){ f.remove(); },1800);
   }
+  window.powerUpTorch=powerUp;
   if(/[?&]torch=1/.test(location.search)) setTimeout(powerUp,900);
   if(CA){ setCA(CA); } else { document.getElementById('copyca').style.display='none'; }
   document.getElementById('copyca').addEventListener('click',function(){
@@ -874,8 +915,16 @@ footer a{color:var(--dim);display:inline-block;padding:10px 2px}
   }
   var settled=[];
   window.__settled=function(rows){ settled=rows; var withLegs=rows.filter(function(x){return x.legs&&x.legs.length;}); if(withLegs.length) sigCard(withLegs[0]); };
+  // Seit v25: gruen wird es mit dem Torch-Schalter auf admin.html. Offene
+  // Seiten fragen jede Minute nach und schalten live um, mit Lichtblitz.
+  function torchPruefen(){ fetch(API+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
+    if(!CA && /^0x[0-9a-fA-F]{40}$/.test(String(d.mint||''))) setCA(d.mint);
+    if(d.torch) { window.powerUpTorch && window.powerUpTorch(); clearInterval(window.__tp); }
+  }).catch(function(){}); }
+  window.__tp=setInterval(torchPruefen,60000);
   fetch(API+'/v1/tiers').then(function(r){return r.json();}).then(function(d){
     if(!CA && /^0x[0-9a-fA-F]{40}$/.test(String(d.mint||''))) setCA(d.mint);
+    if(d.torch) { window.powerUpTorch && window.powerUpTorch(); clearInterval(window.__tp); }
     (d.tiers||[]).forEach(function(t){ var id=t.tier==='holder'?'tHold':t.tier==='pro'?'tPro':null; if(id&&t.min_usd) document.getElementById(id).textContent='$'+Math.round(t.min_usd).toLocaleString('en-US'); });
   }).catch(function(){});
   fetch(API+'/v1/signals?hours=48').then(function(r){return r.json();}).then(function(d){
