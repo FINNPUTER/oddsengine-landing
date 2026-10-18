@@ -316,6 +316,10 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(34px,5.4vw,64px);line
 a.board{display:block;color:inherit;text-decoration:none;transition:transform .2s,border-color .2s}
 a.board:hover{transform:translateY(-3px);border-color:rgba(74,163,255,.6)}
 @media (max-width:900px){.cards{grid-template-columns:1fr}}
+.nextc .locked .lk{color:var(--dim2);margin-bottom:10px;display:block}
+.nextc .locked .zu h3{color:var(--dim)}
+.nextc .locked{background:repeating-linear-gradient(135deg,rgba(255,255,255,.015) 0 10px,transparent 10px 20px),var(--card)}
+.nextc .locked.open{background:var(--card)}
 .nextc{grid-template-columns:repeat(4,minmax(0,1fr))}.nextc .tp{font-size:11.5px;letter-spacing:.1em;color:var(--blue2,#4aa3ff);margin-bottom:10px}.nextc .sp-p{margin:0;color:var(--dim);font-size:15px;line-height:1.5}
 @media (max-width:1000px){.nextc{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.nextc{grid-template-columns:1fr}}
@@ -602,7 +606,7 @@ body.torch .dive .cities span{
       <a class="btn btn-ghost" id="howbuy" href="https://docs.oddsengine.live/#buy" style="min-height:40px;font-size:12px">How to buy</a>
     </div>
     <p class="fine rv">The contract address is posted first on <a href="https://x.com/OddsEngine" target="_blank" rel="noopener">@OddsEngine</a> and shown right here. Trust no other address.</p>
-    <p class="fine rv">No revenue share, no staking yield, no promises about price. $ODDS is access to a product. The signals are information, not financial advice. Polymarket is not available in every country.</p>
+    <p class="fine rv">$ODDS is access to a product. The Torch contract pays 1.05% of every buy to holders, OddsEngine itself pays out nothing. No promises about price. The signals are information, not financial advice. Polymarket is not available in every country.</p>
   </div>
 </section>
 
@@ -610,16 +614,16 @@ body.torch .dive .cities span{
   <div class="wrap">
     <div class="chnum rv">06</div>
     <h2 class="rv d1">Launch is<br><span class="shiny">day one.</span></h2>
-    <p class="p rv d2">What is live today and what ships next, in this order. A new piece every few days. Each one goes live before the next gets announced.</p>
+    <p class="p rv d2">What is live today. Every few days another piece switches on, and you find out the day it does. Not before.</p>
     <div class="cards nextc">
       <div class="spot rv"><div class="tp mono">live today</div><h3>Every call, live</h3><p class="sp-p">Hold $ODDS, verify once, and every call lands in the app and the holder group the moment it fires.</p></div>
       <div class="spot rv d1 hot"><div class="tp mono">live today</div><h3>Your own Engine</h3><p class="sp-p">A personal agent in Telegram. Your cities, your stake, your risk, your quiet hours. It only pings you with the calls that fit. You place the trade yourself, your money never leaves your wallet.</p></div>
       <div class="spot rv d2"><div class="tp mono">live today</div><h3>Engine Live &amp; the map</h3><p class="sp-p">Watch it work: every scan, every station reading, every result, as it happens.</p></div>
-      <div class="spot rv d3"><div class="tp mono">this week</div><h3>Station Live</h3><p class="sp-p">Each call shows the official station ticking in real time: high so far, last reading.</p></div>
-      <div class="spot rv"><div class="tp mono">this week</div><h3>Set up in 3 taps</h3><p class="sp-p">Your Engine with buttons instead of commands. Stake, cities, risk, done.</p></div>
-      <div class="spot rv d1"><div class="tp mono">this week</div><h3>Proof of call</h3><p class="sp-p">Every call gets a fingerprint the moment it fires, so anyone can check nothing was changed later.</p></div>
-      <div class="spot rv d2 hot"><div class="tp mono">this week</div><h3>Beat the Engine</h3><p class="sp-p">Season 1. Free daily game against the machine. Holders get more picks, weekly winners get Pro and a shoutout.</p></div>
-      <div class="spot rv d3"><div class="tp mono">next week</div><h3>Engine vs Crowd &amp; Kalshi</h3><p class="sp-p">The market favourite scored next to the engine, and every US call tracked on Kalshi too, each with its own record.</p></div>
+      <div class="spot rv d3 locked" data-reveal="station"><div class="tp mono">drop 01 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Station Live</h3><p class="sp-p">Each call shows the official station ticking in real time: high so far, last reading.</p></div></div>
+      <div class="spot rv locked"><div class="tp mono">drop 02 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div></div>
+      <div class="spot rv d1 locked"><div class="tp mono">drop 03 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div></div>
+      <div class="spot rv d2 locked"><div class="tp mono">drop 04 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div></div>
+      <div class="spot rv d3 locked" data-reveal="crowd"><div class="tp mono">drop 05 · <span class="wh">next week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Engine vs Crowd</h3><p class="sp-p">The market favourite scored next to the engine, each with its own record.</p></div></div>
     </div>
     <p class="fine rv" style="margin-top:18px">No promises about price or profit. Just the engine, out in the open.</p>
   </div>
@@ -1025,6 +1029,20 @@ body.torch .dive .cities span{
     }).catch(function(){});
   }
   laden(); setInterval(laden,45000);
+})();
+
+/* Roadmap: gesperrte Karten oeffnen sich, sobald der Schalter auf admin.html an ist. */
+(function(){
+  var API=window.ODDSENGINE_API; if(!API) return;
+  fetch(API+'/v1/features').then(function(r){return r.json();}).then(function(d){
+    var f=(d&&d.features)||{};
+    document.querySelectorAll('.nextc [data-reveal]').forEach(function(k){
+      if(!f[k.getAttribute('data-reveal')]) return;
+      var zu=k.querySelector('.zu'), auf=k.querySelector('.auf'), wh=k.querySelector('.wh');
+      if(zu) zu.hidden=true; if(auf) auf.hidden=false; if(wh) wh.textContent='live now';
+      k.classList.add('open');
+    });
+  }).catch(function(){});
 })();
 </script>
 </body>
