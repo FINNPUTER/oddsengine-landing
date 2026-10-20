@@ -439,7 +439,8 @@ body.torch .dive .cities span{
   <a class="brand" href="#top"><img src="ring.png" alt="" width="22" height="22">OddsEngine</a>
   <span class="sp"></span>
   <a class="l" href="#record">Record</a>
-  <a class="l" href="#game">Game</a>
+  <a class="l" id="navGame" href="#game" style="display:none">Game</a>
+  <a class="l" id="navCrypto" href="https://terminal.oddsengine.live" style="display:none">Crypto</a>
   <a class="l" href="#odds">$ODDS</a><a class="l" href="https://docs.oddsengine.live">Docs</a>
   <a class="btn btn-ghost app" href="https://public.oddsengine.live">Open app</a>
   <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
@@ -462,7 +463,8 @@ body.torch .dive .cities span{
       <p class="lead rv d2">It forecasts the daily high in <b>50 cities</b> and trades it on Polymarket. Every call is posted <b>before</b> the station reports. Every miss stays up.</p>
       <div class="ctas rv d3">
         <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
-        <a class="btn btn-ghost" href="#game">Play free</a>
+        <a class="btn btn-ghost" id="heroGame" href="#game" style="display:none">Play free</a>
+        <a class="btn btn-ghost" id="heroRec" href="#record">See the record</a>
       </div>
       <div class="stats rv d4">
         <div class="stat"><div class="v" data-count="50">0</div><div class="k">Cities</div></div>
@@ -562,7 +564,7 @@ body.torch .dive .cities span{
 </section>
 
 <!-- 04 GAME -->
-<section class="ch" id="game">
+<section class="ch" id="game" hidden>
   <div class="wrap split rev">
     <div class="art from-left rv"><div class="bot" data-par="0.1"><div class="flo"><img src="robot-point.webp" alt="The Engine pointing at the viewer" loading="lazy" width="820" height="1230"><div class="eye" style="left:72.8%;top:15.85%;width:19.3%" aria-hidden="true"><div class="glow"></div><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47"></circle></svg></div></div></div></div>
     <div>
@@ -570,7 +572,7 @@ body.torch .dive .cities span{
       <h2 class="rv d1">Think you<br>can beat it?</h2>
       <p class="p rv d2">Every day the engine's cities become game rounds. Pick up to three temperatures before the market closes. <b>Cheap and right pays big, the favourite pays little.</b> Tonight you see who was closer: you or the machine.</p>
       <p class="p rv d3">Streaks, weekly and season leaderboards, a card to post your win on X. <b>Free to play.</b> In your browser and inside Telegram.</p>
-      <div class="ctas rv d4" style="margin-top:26px"><a class="btn btn-blue" aria-disabled="true" href="#game">Season 1 soon</a><a class="btn btn-ghost" href="https://t.me/OddsEngine">Get notified</a></div>
+      <div class="ctas rv d4" style="margin-top:26px"><a class="btn btn-blue" id="gameCta" href="https://public.oddsengine.live/#beat">Play now</a><a class="btn btn-ghost" href="https://t.me/OddsEngine">Get notified</a></div>
     </div>
   </div>
 </section>
@@ -1067,7 +1069,8 @@ body.torch .dive .cities span{
       if(zu) zu.hidden=true; if(auf) auf.hidden=false; if(wh) wh.textContent='live now';
       k.classList.add('open');
     });
-    if(f.crypto){ var xs=document.getElementById('crypto'); if(xs) xs.hidden=false; }
+    if(f.beat){ var gs=document.getElementById('game'); if(gs) gs.hidden=false; var ng=document.getElementById('navGame'); if(ng) ng.style.display=''; var hg=document.getElementById('heroGame'); if(hg) hg.style.display=''; var hr=document.getElementById('heroRec'); if(hr) hr.style.display='none'; }
+    if(f.crypto){ var xs=document.getElementById('crypto'); if(xs) xs.hidden=false; var nc=document.getElementById('navCrypto'); if(nc) nc.style.display=''; }
   }).catch(function(){});
 })();
 </script>
