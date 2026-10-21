@@ -142,6 +142,11 @@ body.torch .btn-blue:hover{box-shadow:0 0 0 7px rgba(18,183,106,.2),0 10px 40px 
 body.torch .shiny{background-image:linear-gradient(100deg,#eef7f2 25%,#7dffc4 42%,#ffffff 50%,#7dffc4 58%,#eef7f2 75%)}
 body.torch .nav .brand img{filter:hue-rotate(-78deg) saturate(1.3)}
 body.torch .hero .ringglow{box-shadow:0 0 120px 40px rgba(18,183,106,.4)}
+.aipill{display:inline-flex;align-items:center;gap:10px;margin:0 0 14px;padding:6px 14px 6px 6px;border-radius:99px;border:1px solid rgba(62,240,160,.45);background:rgba(62,240,160,.08);color:var(--tx,#eaf6ef);font-size:14px;text-decoration:none;max-width:100%;backdrop-filter:blur(8px)}
+.aipill[hidden]{display:none}
+.aipill b{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:3px 8px;border-radius:99px;background:#3ef0a0;color:#04110d}
+.aipill:hover{border-color:#3ef0a0}
+@media (max-width:420px){.aipill{font-size:12.5px;gap:8px}}
 .torchpill{display:none;align-items:center;gap:8px;margin:0 0 14px;padding:7px 14px;border-radius:99px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:#04110d;background:#3ef0a0;box-shadow:0 0 30px rgba(62,240,160,.55);width:max-content;max-width:100%}
 body.torch .torchpill{display:flex;animation:pillin .8s cubic-bezier(.2,.9,.3,1.3) both}
 @keyframes pillin{from{transform:scale(.6);opacity:0}}
@@ -441,6 +446,7 @@ body.torch .dive .cities span{
   <a class="l" href="#record">Record</a>
   <a class="l" id="navGame" href="#game" style="display:none">Game</a>
   <a class="l" id="navCrypto" href="https://terminal.oddsengine.live" style="display:none">Crypto</a>
+  <a class="l" id="navAI" href="https://engine.oddsengine.live/#chat" style="display:none">AI</a>
   <a class="l" href="#odds">$ODDS</a><a class="l" href="https://docs.oddsengine.live">Docs</a>
   <a class="btn btn-ghost app" href="https://public.oddsengine.live">Open app</a>
   <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
@@ -458,6 +464,7 @@ body.torch .dive .cities span{
   <div class="wrap" style="width:100%">
     <div class="copy">
       <span class="torchpill" id="torchpill">● $ODDS IS LIVE ON TORCH</span>
+      <a class="aipill" id="aipill" href="https://engine.oddsengine.live/#chat" hidden><b>NEW</b>OddsEngine AI: every model in one chat <span aria-hidden="true">→</span></a>
       <span class="eyebrow rv"><span class="dot"></span>Live on Polymarket weather markets</span>
       <h1 class="rv d1"><span class="shiny">Beat the<br>Engine.</span></h1>
       <p class="lead rv d2">It forecasts the daily high in <b>50 cities</b> and trades it on Polymarket. Every call is posted <b>before</b> the station reports. Every miss stays up.</p>
@@ -646,7 +653,7 @@ body.torch .dive .cities span{
       <div class="spot rv d3 locked" data-reveal="station"><div class="tp mono">drop 01 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Station Live</h3><p class="sp-p">Each call shows the official station ticking in real time: high so far, last reading.</p></div></div>
       <div class="spot rv locked" data-reveal="beat"><div class="tp mono">drop 02 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Beat the Engine</h3><p class="sp-p">A free daily game for holders: pick three cities before the engine does, climb the weekly board.</p></div></div>
       <div class="spot rv d1 locked" data-reveal="crypto"><div class="tp mono">drop 03 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Crypto Edition</h3><p class="sp-p">Up or Down on BTC, ETH, SOL, XRP, DOGE, BNB and HYPE. Engine odds against the order book, every pick tracked in public. <a href="https://terminal.oddsengine.live">Open it</a>.</p></div></div>
-      <div class="spot rv d2 locked"><div class="tp mono">drop 04 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div></div>
+      <div class="spot rv d2 locked" data-reveal="ai"><div class="tp mono">drop 04 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>OddsEngine AI</h3><p class="sp-p">Claude, GPT, Gemini, Grok and hundreds more in one chat. Create images, compare models side by side, pay per message with $ODDS. <a href="https://engine.oddsengine.live/#chat">Open it</a>.</p></div></div>
       <div class="spot rv d3 locked" data-reveal="crowd"><div class="tp mono">drop 05 · <span class="wh">next week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Engine vs Crowd</h3><p class="sp-p">The market favourite scored next to the engine, each with its own record.</p></div></div>
     </div>
     <p class="fine rv" style="margin-top:18px">No promises about price or profit. Just the engine, out in the open.</p>
@@ -1070,6 +1077,7 @@ body.torch .dive .cities span{
       k.classList.add('open');
     });
     if(f.beat){ var gs=document.getElementById('game'); if(gs) gs.hidden=false; var ng=document.getElementById('navGame'); if(ng) ng.style.display=''; var hg=document.getElementById('heroGame'); if(hg) hg.style.display=''; var hr=document.getElementById('heroRec'); if(hr) hr.style.display='none'; }
+    if(f.ai){ var na=document.getElementById('navAI'); if(na) na.style.display=''; var ap=document.getElementById('aipill'); if(ap) ap.hidden=false; }
     if(f.crypto){ var xs=document.getElementById('crypto'); if(xs) xs.hidden=false; var nc=document.getElementById('navCrypto'); if(nc) nc.style.display=''; }
   }).catch(function(){});
 })();
