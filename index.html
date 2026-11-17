@@ -440,6 +440,7 @@ h1.h1b{font-size:clamp(32px,4.9vw,66px);line-height:1.04}
 .axk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:34px}
 .axk div{padding:18px 18px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);min-width:0}
 .axk b{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(20px,2.3vw,28px);letter-spacing:-.02em;white-space:nowrap}
+.axk b.sm{font-size:clamp(17px,1.75vw,23px);line-height:1.5}
 .axk span{display:block;font-size:13px;color:var(--dim2);margin-top:6px;line-height:1.35}
 .axc{margin-top:14px;padding:24px;border-radius:22px;background:linear-gradient(180deg,rgba(34,240,138,.045),transparent 55%),var(--card);border:1px solid var(--line)}
 .axc:empty{display:none}
@@ -532,7 +533,7 @@ body.has-auto .tiers{grid-template-columns:repeat(4,minmax(0,1fr))}
       </div>
       <div class="stats rv d4" id="statsAx" hidden>
         <div class="stat"><div class="v up" id="axPnl">$0</div><div class="k">BTC and ETH, since day one</div></div>
-        <div class="stat"><div class="v" id="axN">0</div><div class="k">Calls scored</div></div>
+        <div class="stat"><div class="v" id="axN">0</div><div class="k" id="axNk">Calls scored</div></div>
         <div class="stat"><div class="v" id="axDays">0</div><div class="k">Days green</div></div>
       </div>
       <div class="stats rv d4" id="statsWx">
@@ -558,7 +559,7 @@ body.has-auto .tiers{grid-template-columns:repeat(4,minmax(0,1fr))}
       <div><span class="tp mono" style="color:var(--blue2)">live right now</span><h3 id="axLive">The engine is reading the markets</h3><p class="sp-p">The live calls go to $ODDS holders.<span data-show="options_autotrade" hidden> In Auto mode the engine buys them for you in your own Kalshi account.</span></p></div>
       <div class="ctas"><a class="btn btn-blue buy" href="#odds">Buy $ODDS</a><a class="btn btn-ghost" href="https://terminal.oddsengine.live/#above">Every settled call</a></div>
     </div>
-    <p class="fine rv">Calls are tracked at the live market price, 10 contracts each, fees included. Past results are no guarantee of future results. The engine is not right every time.</p>
+    <p class="fine rv" id="axFine">Calls are tracked at the live market price, 10 contracts each, fees included. Past results are no guarantee of future results. The engine is not right every time.</p>
   </div>
 </section>
 
@@ -1270,17 +1271,22 @@ body.has-auto .tiers{grid-template-columns:repeat(4,minmax(0,1fr))}
     const dz=O.days||null, cal=O.calibration||[], c1=cal.find(c=>c.hours_before===1);
     const mal=c1&&c1.options_brier>0&&c1.options_brier<c1.market_brier?(c1.market_brier/c1.options_brier):null;
     const cls=v=>v>=0?'up':'dn';
+    const K=(O.capital&&O.capital.start>0)?O.capital:null, d0=v=>'$'+big(Math.round(v)), pz=v=>(v>=0?'+':'')+Math.round(v*100)+'%';
     $('#axTiles').innerHTML=
-      `<div><b class="${cls(r.pnl)}">${m2(r.pnl)}</b><span>result on $${big(Math.round(r.cost))} staked</span></div>`+
-      `<div><b>${big(r.n)}</b><span>calls settled, every one counted</span></div>`+
-      `<div><b class="${cls(r.roi)}">${(r.roi>=0?'+':'')+(r.roi*100).toFixed(1)}%</b><span>return on stake, fees included</span></div>`+
+      `<div><b class="${cls(r.pnl)}">${m2(r.pnl)}</b><span>result on ${big(r.n)} calls, every one counted</span></div>`+
+      (K?`<div><b class="sm">${d0(K.start)} <i style="font-style:normal;color:var(--dim2)">to</i> ${d0(K.now)}</b><span>start balance to today</span></div>`+
+         `<div><b class="${cls(K.return)}">${pz(K.return)}</b><span>return since the start${dz?', '+dz.count+' days':''}</span></div>`
+        :`<div><b>${big(r.n)}</b><span>calls settled, every one counted</span></div>`+
+         `<div><b class="${cls(r.roi)}">${(r.roi>=0?'+':'')+(r.roi*100).toFixed(1)}%</b><span>result per dollar put in, fees included</span></div>`)+
       `<div><b>${dz?dz.green+' of '+dz.count:'n/a'}</b><span>days green since day one</span></div>`+
       `<div><b>${mal?mal.toFixed(1)+'x':'collecting'}</b><span>${mal?'closer to the result than the market, 1 hour before close':'accuracy against the market'}</span></div>`;
     drawDays(O.by_day||[], r.pnl);
     const lg=O.live_gaps!=null?O.live_gaps:(O.top||[]).length;
     $('#axLive').textContent=lg>0?(lg+(lg===1?' call is':' calls are')+' open right now'):'The engine is reading the markets';
     $('#axPnl').textContent=m0(r.pnl); $('#axPnl').className='v '+cls(r.pnl);
-    $('#axN').textContent=big(r.n); $('#axDays').textContent=dz?dz.green+' of '+dz.count:'n/a';
+    if(K){ $('#axN').textContent=pz(K.return); $('#axN').className='v '+cls(K.return); $('#axNk').textContent='From a '+d0(K.start)+' start to '+d0(K.now); $('#axFine').textContent='Tracked account: starts with '+d0(K.start)+', takes every call with 10 contracts at the live market price, fees included. Past results are no guarantee of future results. The engine is not right every time.'; }
+    else { $('#axN').textContent=big(r.n); }
+    $('#axDays').textContent=dz?dz.green+' of '+dz.count:'n/a';
     $('#above').hidden=false; $('#statsAx').hidden=false; $('#statsWx').hidden=true;
     $('#navAbove').style.display=''; $('#heroAbove').style.display='';
     document.querySelectorAll('#above .rv').forEach(e=>e.classList.add('in'));
