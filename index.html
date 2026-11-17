@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>OddsEngine · Beat the Engine</title>
-<meta name="description" content="An engine that forecasts the daily high in 50 cities and trades it on Polymarket. Every call posted before the station reports. Every miss stays up. Hold $ODDS and see every call live.">
+<title>OddsEngine · Built to help you make money</title>
+<meta name="description" content="An engine that reads the markets all day, finds where they are wrong and acts on it. BTC and ETH on Kalshi, weather in 50 cities on Polymarket. Every call tracked in public. $ODDS is the key.">
 <meta name="theme-color" content="#05070b">
 <link rel="canonical" href="https://oddsengine.live/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OddsEngine">
 <meta property="og:url" content="https://oddsengine.live/">
-<meta property="og:title" content="OddsEngine · Beat the Engine">
-<meta property="og:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call live.">
+<meta property="og:title" content="OddsEngine · Built to help you make money">
+<meta property="og:description" content="It reads the markets all day, finds where they are wrong and acts on it. Every call tracked in public. $ODDS is the key.">
 <meta property="og:image" content="https://oddsengine.live/og-image.jpg">
 <meta property="og:image:secure_url" content="https://oddsengine.live/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -20,8 +20,8 @@
 <meta property="og:image:alt" content="The Engine, a black robot with a glowing blue ring for a face">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OddsEngine">
-<meta name="twitter:title" content="OddsEngine · Beat the Engine">
-<meta name="twitter:description" content="It calls the daily high in 50 cities on Polymarket before the station reports. $ODDS holders see every call live.">
+<meta name="twitter:title" content="OddsEngine · Built to help you make money">
+<meta name="twitter:description" content="It reads the markets all day, finds where they are wrong and acts on it. Every call tracked in public. $ODDS is the key.">
 <meta name="twitter:image" content="https://oddsengine.live/og-image.jpg">
 <meta name="twitter:image:alt" content="The Engine, a black robot with a glowing blue ring for a face">
 <link rel="icon" href="ring.png">
@@ -432,6 +432,60 @@ body.torch .dive .grid{
   background-image:linear-gradient(rgba(62,240,160,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(62,240,160,.28) 1px,transparent 1px)}
 body.torch .dive .cities span{
   border:1px solid rgba(62,240,160,.45);background:rgba(18,183,106,.12);box-shadow:0 0 18px rgba(18,183,106,.25)}
+/* ── Above X und Auto mode (v5) ─────────────────────── */
+:root{--g:#22f08a}
+h1.h1b{font-size:clamp(32px,4.9vw,66px);line-height:1.04}
+.stat .v.up,.up{color:var(--g)} .dn{color:var(--red)}
+.stats[hidden]{display:none!important}
+.axk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:34px}
+.axk div{padding:18px 18px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);min-width:0}
+.axk b{display:block;font-family:var(--mono);font-weight:700;font-size:clamp(20px,2.3vw,28px);letter-spacing:-.02em;white-space:nowrap}
+.axk span{display:block;font-size:13px;color:var(--dim2);margin-top:6px;line-height:1.35}
+.axc{margin-top:14px;padding:24px;border-radius:22px;background:linear-gradient(180deg,rgba(34,240,138,.045),transparent 55%),var(--card);border:1px solid var(--line)}
+.axc:empty{display:none}
+.axl{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:14px;padding:24px;border-radius:22px;background:var(--card);border:1px solid var(--line)}
+.axl h3{font-family:var(--disp);font-size:19px;margin:6px 0 6px} .axl .sp-p{margin:0;color:var(--dim);font-size:15px;max-width:60ch} .axl .tp{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+.axl .ctas{margin:0}
+.steps5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.steps5 .spot{padding:20px} .steps5 h3{font-size:16px} .steps5 .sp-p,#auto .sp-p{margin:0;color:var(--dim);font-size:14.5px;line-height:1.5}
+.stn{font-family:var(--mono);font-size:12px;color:var(--blue2);letter-spacing:.14em;margin-bottom:12px}
+#auto .tp{font-size:11.5px;letter-spacing:.1em;color:var(--blue2);margin-bottom:10px;text-transform:uppercase}
+#auto .hot{border-color:rgba(74,163,255,.55);box-shadow:0 0 40px rgba(8,120,240,.18)}
+body.torch #auto .hot{border-color:rgba(62,240,160,.55);box-shadow:0 0 40px rgba(18,183,106,.18)}
+body.has-auto .tiers{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1100px){.steps5{grid-template-columns:repeat(3,minmax(0,1fr))}body.has-auto .tiers{grid-template-columns:repeat(2,minmax(0,1fr))}.axk{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.steps5,body.has-auto .tiers{grid-template-columns:1fr}.axk{grid-template-columns:1fr 1fr}.axk div:first-child{grid-column:1/-1}.axc{padding:18px 14px}.axl{padding:20px}}
+.xcr{padding-top:0}
+.od-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.od-h h3{font-family:var(--disp);font-size:19px;margin:0 0 2px} .od-h .note{font-size:13px;color:var(--dim2)}
+.od-k{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim)}
+.od-k span{display:inline-flex;align-items:center;gap:7px}
+.od-k i{display:inline-block;width:10px;height:10px;border-radius:3px}
+.od-k i.l{height:2px;width:16px;border-radius:2px;background:var(--g)} .od-k i.u{background:var(--g)} .od-k i.d{background:var(--red)}
+.od-plot{position:relative;margin-top:18px;padding-left:58px;padding-right:74px;cursor:crosshair;user-select:none}
+.od-top{position:relative;height:230px}
+.od-top svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.od-g{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(255,255,255,.07)}
+.od-g.z{border-top:1px solid rgba(255,255,255,.16)}
+.od-y{position:absolute;left:0;top:0;width:50px;height:230px}
+.od-y span{position:absolute;right:0;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--dim2)}
+.od-dot{position:absolute;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--g);box-shadow:0 0 0 4px rgba(34,240,138,.18),0 0 18px rgba(34,240,138,.7)}
+.od-tag{position:absolute;right:-70px;transform:translateY(-50%);font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;color:#02130a;background:var(--g);padding:3px 7px;border-radius:7px;white-space:nowrap}
+.od-bot{position:relative;height:66px;margin-top:16px}
+.od-z{position:absolute;left:0;right:0;height:0;border-top:1px solid rgba(255,255,255,.14)}
+.od-b{position:absolute;display:block}
+.od-b u{display:block;height:100%;margin:0 16%;text-decoration:none;border-radius:3px}
+.od-b.u u{background:linear-gradient(180deg,var(--g),rgba(34,240,138,.45))} .od-b.d u{background:linear-gradient(180deg,rgba(255,107,107,.5),var(--red))}
+.od-x{position:relative;height:18px;margin-top:8px}
+.od-x span{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--dim2);white-space:nowrap}
+.od-cur{position:absolute;top:0;bottom:26px;width:0;border-left:1px solid rgba(255,255,255,.28);opacity:0;pointer-events:none;transition:opacity .15s}
+.od-tip{position:absolute;top:-6px;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .15s;background:rgba(8,12,18,.96);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:9px 12px;font-size:12px;min-width:128px;box-shadow:0 12px 30px rgba(0,0,0,.5);z-index:2}
+.od-tip b{display:block;font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:5px;font-weight:500}
+.od-tip span{display:flex;justify-content:space-between;gap:14px;color:var(--dim)} .od-tip em{font-style:normal;font-family:var(--mono);color:var(--tx)}
+.od-f{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.od-f span{font-size:12px;color:var(--dim)} .od-f b{display:block;font-family:var(--mono);font-size:15px;color:var(--tx);margin-top:2px}
+.od-f b.up{color:var(--g)} .od-f b.dn{color:var(--red)}
+@media(max-width:720px){.od-plot{padding-left:44px;padding-right:8px}.od-y{width:38px}.od-tag{right:auto;left:8px;top:8px!important;transform:none}.od-top,.od-y{height:180px}.od-f{grid-template-columns:1fr 1fr}.od-k{display:none}}
 </style>
 </head>
 <body>
@@ -443,9 +497,11 @@ body.torch .dive .cities span{
 <nav class="nav" aria-label="Main">
   <a class="brand" href="#top"><img src="ring.png" alt="" width="22" height="22">OddsEngine</a>
   <span class="sp"></span>
-  <a class="l" href="#record">Record</a>
+  <a class="l" id="navAbove" href="#above" style="display:none">Above X</a>
+  <a class="l" id="navAuto" href="#auto" style="display:none">Auto mode</a>
+  <a class="l" href="#record">Weather</a>
   <a class="l" id="navGame" href="#game" style="display:none">Game</a>
-  <a class="l" id="navCrypto" href="https://terminal.oddsengine.live" style="display:none">Crypto</a>
+  <a class="l" id="navCrypto" href="https://terminal.oddsengine.live" style="display:none">Terminal</a>
   <a class="l" id="navAI" href="https://engine.oddsengine.live/" style="display:none">AI</a>
   <a class="l" href="#odds">$ODDS</a><a class="l" href="https://docs.oddsengine.live">Docs</a>
   <a class="btn btn-ghost app" href="https://public.oddsengine.live">Open app</a>
@@ -465,15 +521,21 @@ body.torch .dive .cities span{
     <div class="copy">
       <span class="torchpill" id="torchpill">● $ODDS IS LIVE ON TORCH</span>
       <a class="aipill" id="aipill" href="https://engine.oddsengine.live/" hidden><b>NEW</b>OddsEngine AI: every model in one chat <span aria-hidden="true">→</span></a>
-      <span class="eyebrow rv"><span class="dot"></span>Live on Polymarket weather markets</span>
-      <h1 class="rv d1"><span class="shiny">Beat the<br>Engine.</span></h1>
-      <p class="lead rv d2">It forecasts the daily high in <b>50 cities</b> and trades it on Polymarket. Every call is posted <b>before</b> the station reports. Every miss stays up.</p>
+      <span class="eyebrow rv"><span class="dot"></span>Live on Kalshi and Polymarket</span>
+      <h1 class="rv d1 h1b">Built to help<br>you make money.<br><span class="shiny">Automatically.</span></h1>
+      <p class="lead rv d2">An engine that reads the markets all day, finds where they are <b>wrong</b> and acts on it. Bitcoin and Ethereum on Kalshi, the weather in <b>50 cities</b> on Polymarket. Every call is tracked in public. Every miss stays up.</p>
       <div class="ctas rv d3">
         <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
+        <a class="btn btn-ghost" id="heroAbove" href="#above" style="display:none">See the results</a>
         <a class="btn btn-ghost" id="heroGame" href="#game" style="display:none">Play free</a>
         <a class="btn btn-ghost" id="heroRec" href="#record">See the record</a>
       </div>
-      <div class="stats rv d4">
+      <div class="stats rv d4" id="statsAx" hidden>
+        <div class="stat"><div class="v up" id="axPnl">$0</div><div class="k">BTC and ETH, since day one</div></div>
+        <div class="stat"><div class="v" id="axN">0</div><div class="k">Calls scored</div></div>
+        <div class="stat"><div class="v" id="axDays">0</div><div class="k">Days green</div></div>
+      </div>
+      <div class="stats rv d4" id="statsWx">
         <div class="stat"><div class="v" data-count="50">0</div><div class="k">Cities</div></div>
         <div class="stat"><div class="v" id="sScored">0</div><div class="k">Signals scored</div></div>
         <div class="stat"><div class="v" id="sHit">0%</div><div class="k">Hit rate, fixed rules</div></div>
@@ -483,6 +545,46 @@ body.torch .dive .cities span{
 </section>
 
 <!-- ENGINE LIVE -->
+
+<!-- ABOVE X -->
+<section class="ch" id="above" hidden>
+  <div class="wrap">
+    <div class="chnum rv">ABOVE X · BTC AND ETH</div>
+    <h2 class="rv d1">The engine<br><span class="shiny">against the market.</span></h2>
+    <p class="p rv d2">"Will Bitcoin be above $64,000 at 5pm?" Kalshi and Polymarket trade questions like this all day. The engine works out its own fair price for every one of them. Where the market is off by more than the fee, it makes a call. <b>Every call is tracked at the live price and settled on the real result. None is removed.</b></p>
+    <div class="axk rv d2" id="axTiles"></div>
+    <div class="axc rv d3" id="axChart"></div>
+    <div class="axl rv">
+      <div><span class="tp mono" style="color:var(--blue2)">live right now</span><h3 id="axLive">The engine is reading the markets</h3><p class="sp-p">The live calls go to $ODDS holders.<span data-show="options_autotrade" hidden> In Auto mode the engine buys them for you in your own Kalshi account.</span></p></div>
+      <div class="ctas"><a class="btn btn-blue buy" href="#odds">Buy $ODDS</a><a class="btn btn-ghost" href="https://terminal.oddsengine.live/#above">Every settled call</a></div>
+    </div>
+    <p class="fine rv">Calls are tracked at the live market price, 10 contracts each, fees included. Past results are no guarantee of future results. The engine is not right every time.</p>
+  </div>
+</section>
+
+<!-- AUTO MODE -->
+<section class="ch" id="auto" hidden>
+  <div class="wrap">
+    <div class="chnum rv">AUTO MODE · CLOSED TESTING</div>
+    <h2 class="rv d1">Five steps.<br><span class="shiny">Then it trades for you.</span></h2>
+    <p class="p rv d2">The engine buys its Bitcoin and Ethereum calls in <b>your own Kalshi account</b>, inside limits you set. No app to open, no button to press. Your money never leaves Kalshi, and you can stop it at any second.</p>
+    <div class="cards steps5">
+      <div class="spot rv"><div class="stn">01</div><h3>Create a Kalshi key</h3><p class="sp-p">In Kalshi: Account and security, API Keys. Save the Key ID and the private key.</p></div>
+      <div class="spot rv d1"><div class="stn">02</div><h3>Get invited</h3><p class="sp-p">Send us your wallet address. That is all we need from you.</p></div>
+      <div class="spot rv d2"><div class="stn">03</div><h3>Connect and verify</h3><p class="sp-p">Open the app, connect the wallet and verify your $ODDS.</p></div>
+      <div class="spot rv d1"><div class="stn">04</div><h3>Paste your key</h3><p class="sp-p">In the Auto mode card. It is stored encrypted and never shown again.</p></div>
+      <div class="spot rv d2"><div class="stn">05</div><h3>Set your limits</h3><p class="sp-p">Dollars per call and per day. Start small, then let it run.</p></div>
+    </div>
+    <div class="cards">
+      <div class="spot rv hot"><div class="tp mono">the seat</div><h3>Hold 1% of the supply</h3><p class="sp-p">Checked on the chain before every single buy. Drop below and Auto mode pauses at once.</p></div>
+      <div class="spot rv d1"><div class="tp mono">the fee</div><h3>20% of profit, nothing else</h3><p class="sp-p">Taken from your $ODDS balance when your result reaches a new high. No profit, no fee. Half of every fee is burned.</p></div>
+      <div class="spot rv d2"><div class="tp mono">your money</div><h3>Stays on Kalshi</h3><p class="sp-p">The engine can place orders, nothing else. Delete the key in Kalshi and it stops on the spot.</p></div>
+    </div>
+    <div class="ctas rv" style="margin-top:26px"><a class="btn btn-blue" href="https://t.me/OddsEnginePublicBot" target="_blank" rel="noopener">Apply for a seat</a><a class="btn btn-ghost" href="https://docs.oddsengine.live">How it works</a></div>
+    <p class="fine rv">Kalshi is a US regulated exchange. It asks for ID and is not available in every country.</p>
+  </div>
+</section>
+
 <section class="elive" id="live" aria-label="Engine Live" hidden>
   <div class="wrap">
     <div class="frame rv"><div class="in">
@@ -604,12 +706,17 @@ body.torch .dive .cities span{
       <div class="spot rv d1 hot">
         <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0"></path></svg></div>
         <h3>Holder</h3><div class="tp">hold <b id="tHold">$100</b> in $ODDS</div>
-        <ul><li>Every call, live, the moment it fires</li><li>The split for your stake on every block</li><li>Straight to the market on Polymarket</li></ul>
+        <ul><li>Every call, live, the moment it fires</li><li>The split for your stake on every block</li><li>Straight to the market on Polymarket</li><li data-show="options_calls" hidden>The Bitcoin and Ethereum calls on Kalshi</li></ul>
       </div>
       <div class="spot rv d2">
         <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15v-4"></path><path d="M12 15V8"></path><path d="M16 15v-6"></path></svg></div>
         <h3>Pro</h3><div class="tp">hold <b id="tPro">$1,000</b> · pass soon</div>
         <ul><li>Everything in Holder</li><li>The engine board: engine vs market, every city</li><li>Monthly pass by burning $ODDS, coming soon</li></ul>
+      </div>
+      <div class="spot rv d3" data-show="options_autotrade" hidden>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4aa3ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg></div>
+        <h3>Auto mode seat</h3><div class="tp">hold <b>1%</b> of the supply</div>
+        <ul><li>Everything in Pro</li><li>The engine buys its calls in your own Kalshi account</li><li>20% of profit, paid in $ODDS, half of it burned</li></ul>
       </div>
     </div>
     <div class="ca rv">
@@ -626,37 +733,29 @@ body.torch .dive .cities span{
 
 <section class="ch xcr" id="crypto" hidden>
   <div class="wrap">
-    <div class="chnum rv">NEW</div>
-    <h2 class="rv d1">OddsEngine<br><span class="shiny">Crypto Edition.</span></h2>
-    <p class="p rv d2">Up or Down markets on seven coins, in windows of five minutes, fifteen minutes and four hours. The engine prices every window itself and puts its number next to the order book. Five modules pick a side every window, and every result is counted in public.</p>
-    <div class="xcoins rv d2">
-      <img src="coins/btc.png" alt="BTC"><img src="coins/eth.png" alt="ETH"><img src="coins/sol.png" alt="SOL"><img src="coins/xrp.png" alt="XRP"><img src="coins/doge.png" alt="DOGE"><img src="coins/bnb.png" alt="BNB"><img class="hx" src="coins/hype.png" alt="HYPE">
+    <div class="axl rv">
+      <div><span class="tp mono" style="color:var(--blue2)">the terminal</span><h3>Every number, in the open</h3><p class="sp-p">The full Above X record day by day, every settled call, and the engine's read on seven coins next to the order book.</p></div>
+      <div class="ctas"><a class="btn btn-blue" href="https://terminal.oddsengine.live">Open the terminal</a></div>
     </div>
-    <div class="cards">
-      <div class="spot rv"><div class="tp mono">5 min · 15 min · 4 hours</div><h3>21 markets at once</h3><p class="sp-p">Every open window, with a live clock, the start price and where the coin trades now.</p></div>
-      <div class="spot rv d1"><div class="tp mono">engine vs book</div><h3>Edge, after fees</h3><p class="sp-p">When the engine sees more than the price plus Polymarket's fee, the market gets an edge tag.</p></div>
-      <div class="spot rv d2"><div class="tp mono">counted in public</div><h3>Five modules, five records</h3><p class="sp-p">Engine edge, crypto lag, both sides, cheap side and late favourite. Real asks, real fees, every result.</p></div>
-    </div>
-    <div class="ctas rv" style="margin-top:26px"><a class="btn btn-blue" href="https://terminal.oddsengine.live">Open the terminal</a></div>
   </div>
 </section>
 
 <section class="ch" id="next">
   <div class="wrap">
     <div class="chnum rv">06</div>
-    <h2 class="rv d1">Launch is<br><span class="shiny">day one.</span></h2>
-    <p class="p rv d2">What is live today. Every few days another piece switches on, and you find out the day it does. Not before.</p>
+    <h2 class="rv d1">What runs<br><span class="shiny">today.</span></h2>
+    <p class="p rv d2">Nothing on this page is a plan. Every card below is switched on and working right now. When a new piece goes live, it shows up here the same day.</p>
     <div class="cards nextc">
-      <div class="spot rv"><div class="tp mono">live today</div><h3>Every call, live</h3><p class="sp-p">Hold $ODDS, verify once, and every call lands in the app and the holder group the moment it fires.</p></div>
-      <div class="spot rv d1 hot"><div class="tp mono">live today</div><h3>Your own Engine</h3><p class="sp-p">A personal agent in Telegram. Your cities, your stake, your risk, your quiet hours. It only pings you with the calls that fit. You place the trade yourself, your money never leaves your wallet.</p></div>
-      <div class="spot rv d2"><div class="tp mono">live today</div><h3>Engine Live &amp; the map</h3><p class="sp-p">Watch it work: every scan, every station reading, every result, as it happens.</p></div>
-      <div class="spot rv d3 locked" data-reveal="station"><div class="tp mono">drop 01 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Station Live</h3><p class="sp-p">Each call shows the official station ticking in real time: high so far, last reading.</p></div></div>
-      <div class="spot rv locked" data-reveal="beat"><div class="tp mono">drop 02 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Beat the Engine</h3><p class="sp-p">A free daily game for holders: pick three cities before the engine does, climb the weekly board.</p></div></div>
-      <div class="spot rv d1 locked" data-reveal="crypto"><div class="tp mono">drop 03 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Crypto Edition</h3><p class="sp-p">Up or Down on BTC, ETH, SOL, XRP, DOGE, BNB and HYPE. Engine odds against the order book, every pick tracked in public. <a href="https://terminal.oddsengine.live">Open it</a>.</p></div></div>
-      <div class="spot rv d2 locked" data-reveal="ai"><div class="tp mono">drop 04 · <span class="wh">this week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>OddsEngine AI</h3><p class="sp-p">Claude, GPT, Gemini, Grok and hundreds more in one chat. Create images, compare models side by side, pay per message with $ODDS. <a href="https://engine.oddsengine.live/">Open it</a>.</p></div></div>
-      <div class="spot rv d3 locked" data-reveal="crowd"><div class="tp mono">drop 05 · <span class="wh">next week</span></div><div class="zu"><svg class="lk" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg><h3>Locked</h3><p class="sp-p">Revealed the day it goes live.</p></div><div class="auf" hidden><h3>Engine vs Crowd</h3><p class="sp-p">The market favourite scored next to the engine, each with its own record.</p></div></div>
+      <div class="spot rv hot" data-show="options" hidden><div class="tp mono">live</div><h3>Above X</h3><p class="sp-p">The engine prices every "Bitcoin above X" and "Ethereum above X" market on Kalshi and Polymarket and tracks every call in public.</p></div>
+      <div class="spot rv d1" data-show="options_autotrade" hidden><div class="tp mono">closed testing</div><h3>Auto mode</h3><p class="sp-p">The engine buys its calls in your own Kalshi account, inside your limits. First seats are being filled now.</p></div>
+      <div class="spot rv d2"><div class="tp mono">live</div><h3>Every weather call</h3><p class="sp-p">Hold $ODDS, verify once, and every call lands in the app and the holder group the moment it fires.</p></div>
+      <div class="spot rv d3"><div class="tp mono">live</div><h3>Your own Engine</h3><p class="sp-p">A personal agent in Telegram. Your cities, your stake, your quiet hours. It only pings you with the calls that fit.</p></div>
+      <div class="spot rv"><div class="tp mono">live</div><h3>Engine Live and the map</h3><p class="sp-p">Watch it work: every scan, every station reading, every result, as it happens.</p></div>
+      <div class="spot rv d1" data-show="station" hidden><div class="tp mono">live</div><h3>Station Live</h3><p class="sp-p">Each call shows the official station ticking toward the high, reading by reading.</p></div>
+      <div class="spot rv d2" data-show="beat" hidden><div class="tp mono">live</div><h3>Beat the Engine</h3><p class="sp-p">A free daily game for holders: pick three cities, call them yourself and see if you beat the machine.</p></div>
+      <div class="spot rv d3" data-show="ai" hidden><div class="tp mono">live</div><h3>OddsEngine AI</h3><p class="sp-p">Claude, GPT, Gemini, Grok and hundreds more in one chat, paid in $ODDS.</p></div>
+      <div class="spot rv" data-show="crowd" hidden><div class="tp mono">live</div><h3>Engine vs Crowd</h3><p class="sp-p">The market favourite scored next to the engine, city by city.</p></div>
     </div>
-    <p class="fine rv" style="margin-top:18px">No promises about price or profit. Just the engine, out in the open.</p>
   </div>
 </section>
 
@@ -672,6 +771,9 @@ body.torch .dive .cities span{
       <div class="spot rv"><div class="tp mono">live</div><h3>Voice in, voice out</h3><p class="sp-p">Ask with a voice note and get the answer back as a voice message. Text works just as well.</p></div>
       <div class="spot rv d1"><div class="tp mono">live</div><h3>Stock tokens 24/7</h3><p class="sp-p">Robinhood stock tokens around the clock: prices, daily movers and the gap to the exchange price.</p></div>
       <div class="spot rv d2"><div class="tp mono">live</div><h3>Project research</h3><p class="sp-p">Website, X, Telegram and GitHub of a project, read for you and summed up in plain words.</p></div>
+      <div class="spot rv"><div class="tp mono">live</div><h3>Elysium scans</h3><p class="sp-p">Scans cover Elysium too: dev wallet, who funded it, holders, price and market cap, straight from the chain.</p></div>
+      <div class="spot rv d1"><div class="tp mono">live</div><h3>Coin links across chains</h3><p class="sp-p">Compare several coins and the engine checks every EVM chain for shared devs, funders and early buyers.</p></div>
+      <div class="spot rv d2" data-show="deals" hidden><div class="tp mono">live</div><h3>Deals</h3><p class="sp-p">Ask for any product and get the live deals from your country, with price, shop, community vote and codes.</p></div>
       <div class="spot rv"><div class="tp mono">live</div><h3>ODDS Locker</h3><p class="sp-p">Lock or vest tokens on Robinhood Chain. Pay the fee in ETH or in $ODDS, which gets burned. <a href="https://engine.oddsengine.live/lock/" style="color:var(--blue2)">Open the locker</a></p></div>
       <div class="spot rv d1"><div class="tp mono">live</div><h3>Built for AI agents</h3><p class="sp-p">Any agent can buy a full scan per call with x402: USDC on Base or Solana, or $ODDS. No key, no signup.</p></div>
       <div class="spot rv d2"><div class="tp mono">live</div><h3>Every ship, dated</h3><p class="sp-p">Nothing is announced before it runs. Every update is in the changelog with its date. <a href="https://engine.oddsengine.live/changelog/" style="color:var(--blue2)">Read the changelog</a></p></div>
@@ -682,7 +784,7 @@ body.torch .dive .cities span{
 
 <section class="final">
   <div class="wrap">
-    <h2 class="rv"><span class="shiny">The machine is waiting.</span></h2>
+    <h2 class="rv"><span class="shiny">The machine is working.</span></h2>
     <div class="ctas rv d1" style="justify-content:center;margin-top:26px">
       <a class="btn btn-blue buy" href="#odds">Buy $ODDS</a>
       <a class="btn btn-ghost" href="https://public.oddsengine.live">Watch it live</a>
@@ -1094,16 +1196,97 @@ body.torch .dive .cities span{
   function preview(f,d){ if(d&&d.admin){ var all={}; Object.keys(f).forEach(function(k){all[k]=true;}); adminBar(); return all; } return f; }
   fetch(API+'/v1/features',ADM?{headers:{'X-OddsEngine-Admin':ADM}}:{}).then(function(r){return r.json();}).then(function(d){
     var f=preview((d&&d.features)||{},d);
-    document.querySelectorAll('.nextc [data-reveal]').forEach(function(k){
-      if(!f[k.getAttribute('data-reveal')]) return;
-      var zu=k.querySelector('.zu'), auf=k.querySelector('.auf'), wh=k.querySelector('.wh');
-      if(zu) zu.hidden=true; if(auf) auf.hidden=false; if(wh) wh.textContent='live now';
-      k.classList.add('open');
-    });
+    document.querySelectorAll('[data-show]').forEach(function(k){ if(f[k.getAttribute('data-show')]) k.hidden=false; });
+    if(f.options_autotrade){ var au=document.getElementById('auto'); if(au) au.hidden=false; var nu=document.getElementById('navAuto'); if(nu) nu.style.display=''; document.body.classList.add('has-auto'); }
     if(f.beat){ var gs=document.getElementById('game'); if(gs) gs.hidden=false; var ng=document.getElementById('navGame'); if(ng) ng.style.display=''; var hg=document.getElementById('heroGame'); if(hg) hg.style.display=''; var hr=document.getElementById('heroRec'); if(hr) hr.style.display='none'; }
     if(f.ai){ var na=document.getElementById('navAI'); if(na) na.style.display=''; var ap=document.getElementById('aipill'); if(ap) ap.hidden=false; }
     if(f.crypto){ var xs=document.getElementById('crypto'); if(xs) xs.hidden=false; var nc=document.getElementById('navCrypto'); if(nc) nc.style.display=''; }
   }).catch(function(){});
+})();
+</script>
+<script>
+/* Above X: Bilanz live aus /v1/options (oeffentliche Sicht) */
+(function(){
+  var API=window.ODDSENGINE_API; if(!API) return;
+  const $=q=>document.querySelector(q);
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function drawDays(bd,total){
+    const el=$('#axChart'); if(!el) return;
+    if(bd.length<2){ el.style.display='none'; return; }
+    el.style.display='';
+    const m2=v=>(v>=0?'+':'-')+'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const m0=v=>(v<0?'-':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US');
+    const dl=d=>{const t=new Date(d+'T00:00:00Z'); return t.toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});};
+    /* Verlauf: der Endstand ist die Gesamtbilanz, davon rueckwaerts */
+    const sum=bd.reduce((a,d)=>a+d.pnl,0), end=total==null?sum:total; let c=end-sum;
+    const pts=bd.map(d=>{ c+=d.pnl; return {day:d.day,pnl:d.pnl,cum:c}; });
+    const n=pts.length, start=end-sum;
+    let lo=Math.min(start,...pts.map(p=>p.cum)), hi=Math.max(start,...pts.map(p=>p.cum));
+    const step=[50,100,200,250,500,1000,2000,2500,5000,10000].find(x=>(hi-lo)/x<=6.5)||20000;
+    lo=Math.floor(lo/step)*step; hi=Math.ceil(hi/step)*step; if(hi===lo) hi=lo+step;
+    const X=i=>(i+.5)/n*100, Y=v=>(1-(v-lo)/(hi-lo))*100;
+    const line=pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(2)+' '+Y(p.cum).toFixed(2)).join(' ');
+    const area=line+` L${X(n-1).toFixed(2)} 100 L${X(0).toFixed(2)} 100 Z`;
+    const ticks=[]; for(let v=lo;v<=hi+1e-9;v+=step) ticks.push(v);
+    const mp=Math.max(0,...pts.map(p=>p.pnl)), mn=Math.max(0,...pts.map(p=>-p.pnl)), zero=mp+mn?mp/(mp+mn)*100:50;
+    const best=pts.reduce((a,b)=>b.pnl>a.pnl?b:a), worst=pts.reduce((a,b)=>b.pnl<a.pnl?b:a), gr=pts.filter(p=>p.pnl>0).length;
+    const ev=Math.max(1,Math.round(n/(window.innerWidth<720?3:6)));
+    el.innerHTML=`
+      <div class="od-h"><div><h3>Day by day</h3><span class="note">every call, settled, fees included · UTC</span></div>
+        <div class="od-k"><span><i class="l"></i>Total since day one</span><span><i class="u"></i>Green day</span><span><i class="d"></i>Red day</span></div></div>
+      <div class="od-plot" id="odPlot">
+        <div class="od-y">${ticks.map(v=>`<span style="top:${Y(v).toFixed(2)}%">${m0(v)}</span>`).join('')}</div>
+        <div class="od-top">
+          ${ticks.map(v=>`<i class="od-g${v===0?' z':''}" style="top:${Y(v).toFixed(2)}%"></i>`).join('')}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="odF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22f08a" stop-opacity=".30"/><stop offset="1" stop-color="#22f08a" stop-opacity="0"/></linearGradient></defs>
+            <path d="${area}" fill="url(#odF)"/><path d="${line}" fill="none" stroke="#22f08a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+          <b class="od-dot" style="left:${X(n-1).toFixed(2)}%;top:${Y(pts[n-1].cum).toFixed(2)}%"></b>
+          <em class="od-tag" style="top:${Y(pts[n-1].cum).toFixed(2)}%">${m2(pts[n-1].cum)}</em>
+        </div>
+        <div class="od-bot"><i class="od-z" style="top:${zero.toFixed(2)}%"></i>
+          ${pts.map((p,i)=>{const h=p.pnl>=0?(mp?p.pnl/mp*zero:0):(mn?-p.pnl/mn*(100-zero):0);
+            return `<i class="od-b ${p.pnl>=0?'u':'d'}" style="left:${(i/n*100).toFixed(2)}%;width:${(100/n).toFixed(2)}%;${p.pnl>=0?'bottom:'+(100-zero).toFixed(2)+'%':'top:'+zero.toFixed(2)+'%'};height:${Math.max(1.5,h).toFixed(2)}%"><u></u></i>`;}).join('')}
+        </div>
+        <div class="od-x">${pts.map((p,i)=>(i%ev===0||i===n-1)&&!(i!==n-1&&n-1-i<ev*.6)?`<span style="left:${X(i).toFixed(2)}%">${esc(dl(p.day))}</span>`:'').join('')}</div>
+        <i class="od-cur" id="odCur"></i><div class="od-tip" id="odTip"></div>
+      </div>
+      <div class="od-f"><span>Best day <b class="up">${m2(best.pnl)}</b></span><span>Toughest day <b class="${worst.pnl<0?'dn':'up'}">${m2(worst.pnl)}</b></span><span>Green days <b>${gr} of ${n}</b></span><span>Average day <b class="${sum>=0?'up':'dn'}">${m2(sum/n)}</b></span></div>`;
+    const plot=$('#odPlot'), cur=$('#odCur'), tip=$('#odTip'), top=plot.querySelector('.od-top');
+    const mv=e=>{ const r=top.getBoundingClientRect(), pr=plot.getBoundingClientRect(); const cx=(e.touches?e.touches[0].clientX:e.clientX);
+      const i=Math.max(0,Math.min(n-1,Math.floor((cx-r.left)/r.width*n))); const p=pts[i], x=r.left-pr.left+r.width*X(i)/100;
+      cur.style.left=x+'px'; cur.style.opacity=1; tip.style.opacity=1;
+      tip.innerHTML=`<b>${esc(dl(p.day))}</b><span>Day <em class="${p.pnl>=0?'up':'dn'}">${m2(p.pnl)}</em></span><span>Total <em>${m2(p.cum)}</em></span>`;
+      tip.style.left=Math.max(70,Math.min(pr.width-70,x))+'px'; };
+    const out=()=>{ cur.style.opacity=0; tip.style.opacity=0; };
+    plot.onmousemove=mv; plot.onmouseleave=out; plot.ontouchstart=mv; plot.ontouchmove=mv; plot.ontouchend=out;
+  }
+  
+  function fill(O){
+    if(!O||!O.enabled) return;
+    const r=(O.record||{}).all; if(!r||!r.n) return;
+    const big=n=>Number(n).toLocaleString('en-US');
+    const m2=v=>(v>=0?'+':'-')+'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const m0=v=>(v>=0?'+':'-')+'$'+big(Math.abs(Math.round(v)));
+    const dz=O.days||null, cal=O.calibration||[], c1=cal.find(c=>c.hours_before===1);
+    const mal=c1&&c1.options_brier>0&&c1.options_brier<c1.market_brier?(c1.market_brier/c1.options_brier):null;
+    const cls=v=>v>=0?'up':'dn';
+    $('#axTiles').innerHTML=
+      `<div><b class="${cls(r.pnl)}">${m2(r.pnl)}</b><span>result on $${big(Math.round(r.cost))} staked</span></div>`+
+      `<div><b>${big(r.n)}</b><span>calls settled, every one counted</span></div>`+
+      `<div><b class="${cls(r.roi)}">${(r.roi>=0?'+':'')+(r.roi*100).toFixed(1)}%</b><span>return on stake, fees included</span></div>`+
+      `<div><b>${dz?dz.green+' of '+dz.count:'n/a'}</b><span>days green since day one</span></div>`+
+      `<div><b>${mal?mal.toFixed(1)+'x':'collecting'}</b><span>${mal?'closer to the result than the market, 1 hour before close':'accuracy against the market'}</span></div>`;
+    drawDays(O.by_day||[], r.pnl);
+    const lg=O.live_gaps!=null?O.live_gaps:(O.top||[]).length;
+    $('#axLive').textContent=lg>0?(lg+(lg===1?' call is':' calls are')+' open right now'):'The engine is reading the markets';
+    $('#axPnl').textContent=m0(r.pnl); $('#axPnl').className='v '+cls(r.pnl);
+    $('#axN').textContent=big(r.n); $('#axDays').textContent=dz?dz.green+' of '+dz.count:'n/a';
+    $('#above').hidden=false; $('#statsAx').hidden=false; $('#statsWx').hidden=true;
+    $('#navAbove').style.display=''; $('#heroAbove').style.display='';
+    document.querySelectorAll('#above .rv').forEach(e=>e.classList.add('in'));
+  }
+  function load(){ fetch(API+'/v1/options',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(fill).catch(function(){}); }
+  load(); setInterval(load,120000);
 })();
 </script>
 <script>
