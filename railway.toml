@@ -1,0 +1,14 @@
+# Seit 2.61.8: Railpack statt Nixpacks. Railway nimmt Nixpacks nicht mehr an,
+# deshalb brach der Build sofort ab ("next stop: builder v4", danach nichts).
+#
+# railway.toml gilt fuer JEDEN Dienst. start.py liest RAILWAY_SERVICE_NAME und startet
+# das Passende: web -> uvicorn api:app, worker -> main.py, crypto -> krypto_main.py.
+
+[build]
+builder = "RAILPACK"
+
+[deploy]
+startCommand = "python start.py"
+numReplicas = 1
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
