@@ -1,0 +1,22 @@
+# OddsEngine
+
+> Your Engine is a crypto and AI assistant on the web (engine.oddsengine.live) and in Telegram (@OddsEnginePublicBot). It scans tokens on 9 chains, guards wallets, gives access to hundreds of AI models, cuts long videos and X Spaces into short clips, and rents GPUs by the hour. Payments are pay per use from a balance topped up with $ODDS (Robinhood Chain) or other supported tokens.
+
+## Use cases
+
+- [AI Clipping](https://engine.oddsengine.live/clipping/): Turn long videos, Twitch streams, YouTube videos, podcasts and X Spaces into short clips with word by word subtitles for TikTok, Reels and Shorts. Pay per video, no subscription.
+- [Rent a GPU](https://engine.oddsengine.live/gpu/): Rent a ready to use cloud GPU from an RTX 4090 up to NVIDIA H100, H200 and B200. Make images with ComfyUI, run your own private AI chat or Jupyter. Pay by the hour with crypto, unused time comes back.
+- [Token scanner](https://engine.oddsengine.live/scan/): Scan any token before you buy: launch bundles, snipers, the dev and who funded the dev, fresh and prepared wallets, wallet groups, LP locks and contract checks. Robinhood Chain, Solana, Base, Ethereum, BNB Chain and more.
+- [Every AI model](https://engine.oddsengine.live/ai/): Use hundreds of AI models in one chat: text, images, voice, 3D and video. No subscription, pay only for what you use, from a few cents, with $ODDS or other crypto.
+- [For AI agents](https://engine.oddsengine.live/agents/): Give your AI agent a safety check before it buys or signs: scan_token, check_before_sign and wallet approvals over MCP. Pay per call with x402 in USDC on Base or Solana, no signup.
+
+## For developers and agents
+
+- [Docs](https://engine.oddsengine.live/docs.html): API, MCP server and x402 pay per call
+- [Changelog](https://engine.oddsengine.live/changelog/): every ship, dated
+
+## Links
+
+- Telegram bot: https://t.me/OddsEnginePublicBot
+- Main site: https://oddsengine.live
+- Rules of use: https://engine.oddsengine.live/terms/
